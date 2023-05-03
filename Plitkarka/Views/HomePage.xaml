@@ -6,6 +6,8 @@
             x:Class="Plitkarka.Views.HomePage">
     <TabbedPage.Children>
         <pages:ProfilePage/>
+        <pages:RegistrationPage/>
+        <pages:LoginPage/>
     </TabbedPage.Children>
 
 </TabbedPage>

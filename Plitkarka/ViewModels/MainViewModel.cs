@@ -13,11 +13,11 @@ public class MainViewModel : ReactiveObject
     public MainViewModel(INavigation navigation)
     {
         _navigation = navigation;
-        
+
         OpenRegistrationFormCommand = ReactiveCommand.Create(async () =>
         {
-            //await _navigation.PushAsync(new RegistrationPage());
             await _navigation.PushAsync(new ProfilePage());
+            //await Shell.Current.GoToAsync(nameof(HomePage));
         });
         
         OpenLoginFormCommand = ReactiveCommand.Create(async () =>

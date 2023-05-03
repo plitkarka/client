@@ -10,9 +10,6 @@
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <ResourceDictionary>
-                <converters:EqualityConverter x:Key="EqualityConverter" />
-            </ResourceDictionary>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

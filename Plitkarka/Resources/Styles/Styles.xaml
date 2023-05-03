@@ -13,6 +13,54 @@
         <Setter Property="SelectedIndicatorColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray100}}"/>
     </Style>
 
+
+    <Style x:Key="CustomRadioButtonStyle" TargetType="RadioButton">
+        <Setter Property="ControlTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid RowDefinitions="20,2" Margin="17,24,0,0">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroupList>
+                                <VisualStateGroup x:Name="CheckedStates">
+                                    <VisualState x:Name="Checked">
+                                        <VisualState.Setters>
+                                            <Setter
+                                                        TargetName="TextLabel"
+                                                        Property="Label.TextColor"
+                                                        Value="{StaticResource Primary}"/>
+                                            <Setter
+                               
+                                                        TargetName="Indicator"
+                                                        Property="BoxView.Color"
+                                                        Value="{StaticResource Primary}"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Unchecked">
+                                        <VisualState.Setters>
+                                            <Setter
+                                                                TargetName="TextLabel"
+                                                                Property="Label.TextColor"
+                                                                Value="Black"/>
+                                            <Setter
+                                                            TargetName="Indicator"
+                                                            Property="BoxView.Color"
+                                                            Value="Transparent"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateGroupList>
+                        </VisualStateManager.VisualStateGroups>
+                        <Label FontAttributes="Bold" FontSize="12" HorizontalOptions="Center" Text="{TemplateBinding Content}" x:Name="TextLabel" />
+                        <BoxView x:Name="Indicator" Grid.Row="1" Color="Transparent"/>
+                    </Grid>
+                </ControlTemplate>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
     <Style TargetType="Border">
         <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
         <Setter Property="StrokeShape" Value="Rectangle"/>
