@@ -48,7 +48,14 @@
         <MauiImage Update="Resources\Images\person.svg" BaseSize="24,24" />
         <MauiImage Update="Resources\Images\close.svg" BaseSize="24,24" />
         <MauiImage Update="Resources\Images\close_dark.svg" BaseSize="24,24" />
-
+        <MauiImage Update="Resources\Images\close_light.svg" BaseSize="24,24" />
+        <MauiImage Update="Resources\Images\back_button.svg" BaseSize="11,20" />
+        <MauiImage Update="Resources\Images\like.svg" BaseSize="14,14" />
+        <MauiImage Update="Resources\Images\comment.svg" BaseSize="14,14" />
+        <MauiImage Update="Resources\Images\replit.svg" BaseSize="14,14" />
+        <MauiImage Update="Resources\Images\send.svg" BaseSize="14,14" />
+        <MauiImage Update="Resources\Images\save.svg" BaseSize="14,14" />
+        <MauiImage Update="Resources\Images\meatballs_menu.svg" BaseSize="13,10" />
 
         <!-- Custom Fonts -->
         <MauiFont Include="Resources\Fonts\*" />
@@ -62,6 +69,8 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
         <PackageReference Include="ReactiveUI.Fody" Version="18.4.22" />
         <PackageReference Include="ReactiveUI.Maui" Version="18.4.22" />
+        <PackageReference Include="CommunityToolkit.Maui" Version="5.1.0" />
+
     </ItemGroup>
 
     <ItemGroup>
@@ -85,6 +94,6 @@
       <Folder Include="ValueConverters\" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\Plitkarka.Core\Plitkarka.Infrastructure.csproj" />
+      <ProjectReference Include="..\Plitkarka.Infrastructure\Plitkarka.Infrastructure.csproj" />
     </ItemGroup>
 </Project>

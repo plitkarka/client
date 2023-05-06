@@ -7,9 +7,9 @@ using Plitkarka.ViewModels;
 
 namespace Plitkarka.Views;
 
-public partial class LoginPage : ContentPage
+public partial class ProfilePage : ContentPage
 {
-    public LoginPage()
+    public ProfilePage()
     {
         InitializeComponent();
     }

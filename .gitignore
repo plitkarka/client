@@ -512,7 +512,6 @@ obj/
 buildTools/
 extras/
 licenses/
-platforms/
 tools/
 
 # MAUI iOS SDK
