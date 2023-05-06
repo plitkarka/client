@@ -4,23 +4,9 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Plitkarka"
-    xmlns:pages="clr-namespace:Plitkarka.Views"
     Shell.FlyoutBehavior="Disabled">
-
-    <ShellContent
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-    <ShellContent
-        ContentTemplate="{DataTemplate pages:HomePage}"
-        Route="HomePage" />
-    <ShellContent
-        ContentTemplate="{DataTemplate pages:LoginPage}"
-        Route="LoginPage" />
-    <ShellContent
-        ContentTemplate="{DataTemplate pages:RegistrationPage}"
-        Route="RegistrationPage" />
-    <ShellContent
-        ContentTemplate="{DataTemplate pages:ProfilePage}"
-        Route="ProfilePage" />
-
+    
+    <ShellItem Route="main" Title="Main" FlyoutItemIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
+    </ShellItem>
 </Shell>

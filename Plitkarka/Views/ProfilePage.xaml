@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             Shell.BackButtonBehavior="{BackButtonBehavior IsVisible=False}"
              Shell.NavBarIsVisible="False"
              x:Class="Plitkarka.Views.ProfilePage"
              xmlns:vm="clr-namespace:Plitkarka.ViewModels"
@@ -10,8 +9,6 @@
     <ContentPage.Behaviors>
         <mct:StatusBarBehavior StatusBarColor="{StaticResource Primary}" />
     </ContentPage.Behaviors>
-
-
 
     <ScrollView>
         <StackLayout>
@@ -28,10 +25,6 @@
                     Margin="20"
                     HorizontalOptions="EndAndExpand"
                     Source="settings.png">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer
-                            Command="{Binding OpenEditPageCommand}"/>
-                    </Image.GestureRecognizers>
                 </Image>
             </StackLayout>
             <!--Main info-->
@@ -46,10 +39,9 @@
                     <StackLayout VerticalOptions="Start" Orientation="Horizontal" Margin="0,17,0,0">
                         <Label
                         VerticalOptions="CenterAndExpand"
-                        Text="Олександр Петров"
+                        Text="{Binding Profile.Name}"
                         FontSize="16"
-                        FontAttributes="Bold"
-                        />
+                        FontAttributes="Bold"/>
                         <Image
                         Margin="9,0,0,0"
                         VerticalOptions="CenterAndExpand"
@@ -59,14 +51,15 @@
                     <StackLayout Margin="0,6,0,0">
                         <Label
                         FontSize="14"
-                        Text="@OleksandrPetrov"/>
+                        Text="{Binding Profile.Nickname}"/>
                     </StackLayout>
                     <Button
-                    FontAttributes="Bold"
-                    Margin="0,23,0,0"
-                    FontSize="12"
-                    Text="Редагувати профіль"
-                    CornerRadius="8"/>
+                        Command="{Binding OpenEditPageCommand}"
+                        FontAttributes="Bold"
+                        Margin="0,23,0,0"
+                        FontSize="12"
+                        Text="Редагувати профіль"
+                        CornerRadius="8"/>
                 </StackLayout>
             </StackLayout>
             <!--Status-->
@@ -75,7 +68,7 @@
                 Margin="16,27,0,0"
                 FontAttributes="Bold"
                 FontSize="14"
-                Text="Ви не фотографуєте, ви створюєте!"/>
+                Text="{Binding Profile.Bio}"/>
             </StackLayout>
             <!--Followers-->
             <StackLayout Orientation="Horizontal">
@@ -88,16 +81,16 @@
                     <Label Margin="8,13,0,0" FontSize="14" >
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="71 " FontAttributes="Bold"/>
-                                <Span Text="читає"/>
+                                <Span Text="{Binding Profile.Following}" FontAttributes="Bold"/>
+                                <Span Text=" читає"/>
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
                     <Label Margin="16,13,0,0" FontSize="14">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="212 " FontAttributes="Bold"/>
-                                <Span Text="читачів"/>
+                                <Span Text="{Binding Profile.Followers}" FontAttributes="Bold"/>
+                                <Span Text=" читачів"/>
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>

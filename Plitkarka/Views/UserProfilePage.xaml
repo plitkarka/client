@@ -1,0 +1,239 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Plitkarka.Views.UserProfilePage"
+             Shell.NavBarIsVisible="False"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
+
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource Primary}" />
+    </ContentPage.Behaviors>
+
+    <ScrollView>
+        <StackLayout>
+            <StackLayout BackgroundColor="{StaticResource Primary}" Orientation="Horizontal">
+                <Image
+                    VerticalOptions="Start"
+                    Margin="12,12,0,16"
+                    HorizontalOptions="Start"
+                    Source="back_button.png">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding GoBackCommand}" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="Center"
+                    Margin="0,12,20,16"
+                    FontSize="21"
+                    Text="ПЛІТКАРКА"
+                    TextColor="White"
+                    FontAttributes="Bold" />
+            </StackLayout>
+            <!--Main info-->
+            <StackLayout Orientation="Horizontal">
+                <!--Photo-->
+                <StackLayout Margin="13">
+                    <Ellipse Fill="Red" WidthRequest="120" HeightRequest="120" />
+                </StackLayout>
+                <!--Bio-->
+                <StackLayout>
+                    <!--Name-->
+                    <StackLayout VerticalOptions="Start" Orientation="Horizontal" Margin="0,17,0,0">
+                        <Label
+                            VerticalOptions="CenterAndExpand"
+                            Text="Олександр Петров"
+                            FontSize="16"
+                            FontAttributes="Bold" />
+                        <Image
+                            Margin="9,0,0,0"
+                            VerticalOptions="CenterAndExpand"
+                            Source="new_releases.png" />
+                    </StackLayout>
+                    <!--Username-->
+                    <StackLayout Margin="0,6,0,0">
+                        <Label
+                            FontSize="14"
+                            Text="@OleksandrPetrov" />
+                    </StackLayout>
+                    <Button
+                        FontAttributes="Bold"
+                        Margin="0,23,0,0"
+                        FontSize="12"
+                        Text="Редагувати профіль"
+                        CornerRadius="8" />
+                </StackLayout>
+            </StackLayout>
+            <!--Status-->
+            <StackLayout>
+                <Label
+                    Margin="16,27,0,0"
+                    FontAttributes="Bold"
+                    FontSize="14"
+                    Text="Ви не фотографуєте, ви створюєте!" />
+            </StackLayout>
+            <!--Followers-->
+            <StackLayout Orientation="Horizontal">
+                <StackLayout VerticalOptions="Center">
+                    <Image
+                        Margin="19,11,0,0"
+                        Source="person.png" />
+                </StackLayout>
+                <StackLayout VerticalOptions="Center" Orientation="Horizontal">
+                    <Label Margin="8,13,0,0" FontSize="14">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="71 " FontAttributes="Bold" />
+                                <Span Text="читає" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label Margin="16,13,0,0" FontSize="14">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="212 " FontAttributes="Bold" />
+                                <Span Text="читачів" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+            </StackLayout>
+            <!--Segmented Control-->
+            <HorizontalStackLayout BindableLayout.ItemsSource="{Binding Segments}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton Margin="20,0,0,0" Content="{Binding SegmentName}"
+                                     Style="{StaticResource CustomRadioButtonStyle}" />
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </HorizontalStackLayout>
+            <!--Posts-->
+            <StackLayout BindableLayout.ItemsSource="{Binding Posts}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Margin="24" Spacing="10">
+                            <StackLayout Orientation="Horizontal" Spacing="10">
+                                <!-- <Image -->
+                                <!--     Source="{Binding AuthorProfileImage}" -->
+                                <!--     HeightRequest="40" -->
+                                <!--     WidthRequest="40" -->
+                                <!--     Aspect="AspectFill" -->
+                                <!--     VerticalOptions="Center" /> -->
+                                <Ellipse
+                                    VerticalOptions="Center"
+                                    Fill="Red"
+                                    WidthRequest="34"
+                                    HeightRequest="34" />
+
+                                <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                                    <Label
+                                        Text="{Binding AuthorName}"
+                                        FontSize="15"
+                                        Margin="8, 0, 0, 0"
+                                        FontAttributes="Bold"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Center" />
+                                    <StackLayout
+                                        Orientation="Horizontal"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center">
+                                        <Ellipse
+                                            Margin="12,0"
+                                            WidthRequest="5"
+                                            HeightRequest="5"
+                                            Fill="Gray"/>
+
+                                        <Label
+                                        Text="{Binding PostDate, StringFormat='{0:dd/MM}'}"
+                                        FontSize="14"
+                                        TextColor="Gray" />
+
+                                    </StackLayout>
+
+                                    <Image
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="EndAndExpand"
+                                        Source="meatballs_menu.png"/>
+                                </StackLayout>
+                            </StackLayout>
+
+                            <Label
+                                Text="{Binding PostContent}"
+                                FontSize="15"
+                                LineBreakMode="WordWrap" />
+
+                            <Grid ColumnDefinitions="*,*,*,*,*">
+                                <StackLayout Orientation="Horizontal" Grid.Column="0">
+                                    <Image
+                                        Source="like.png"
+                                        HeightRequest="20"
+                                        VerticalOptions="Center" />
+
+                                    <Label
+                                        Text="{Binding LikesCount}"
+                                        FontSize="14"
+                                        Margin="4,0,0,0"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal" Grid.Column="1">
+                                    <Image
+                                        Source="comment.png"
+                                        HeightRequest="20"
+                                        Margin="12,0,0,0"
+                                        VerticalOptions="Center" />
+
+                                    <Label
+                                        Text="{Binding CommentsCount}"
+                                        FontSize="14"
+                                        Margin="4,0,0,0"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal" Grid.Column="2">
+                                    <Image
+                                        Source="replit.png"
+                                        HeightRequest="20"
+                                        Margin="12,0,0,0"
+                                        VerticalOptions="Center" />
+
+                                    <Label
+                                        Text="{Binding ReplitsCount}"
+                                        FontSize="14"
+                                        Margin="4,0,0,0"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal" Grid.Column="3">
+                                    <Image
+                                        Source="send.png"
+                                        HeightRequest="20"
+                                        Margin="12,0,0,0"
+                                        VerticalOptions="Center" />
+
+                                    <Label
+                                        Text="{Binding SharesCount}"
+                                        FontSize="14"
+                                        Margin="4,0,0,0"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal" Grid.Column="4">
+                                    <Image
+                                        Source="save.png"
+                                        HeightRequest="20"
+                                        Margin="12,0,0,0"
+                                        VerticalOptions="Center" />
+
+                                    <Label
+                                        Text="{Binding SavesCount}"
+                                        FontSize="14"
+                                        Margin="4,0,0,0"
+                                        VerticalOptions="Center" />
+                                </StackLayout>
+                            </Grid>
+                        </StackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
