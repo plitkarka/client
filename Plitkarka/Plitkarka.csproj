@@ -56,6 +56,7 @@
         <MauiImage Update="Resources\Images\send.svg" BaseSize="14,14" />
         <MauiImage Update="Resources\Images\save.svg" BaseSize="14,14" />
         <MauiImage Update="Resources\Images\meatballs_menu.svg" BaseSize="13,10" />
+
         <!-- Custom Fonts -->
         <MauiFont Include="Resources\Fonts\*" />
 
@@ -69,6 +70,7 @@
         <PackageReference Include="ReactiveUI.Fody" Version="18.4.22" />
         <PackageReference Include="ReactiveUI.Maui" Version="18.4.22" />
         <PackageReference Include="CommunityToolkit.Maui" Version="5.1.0" />
+
     </ItemGroup>
 
     <ItemGroup>

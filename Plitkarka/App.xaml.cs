@@ -4,8 +4,7 @@ public partial class App : Application
 {
     public App()
     {
-        InitializeComponent();
-        
+        InitializeComponent();        
         var app = MauiProgram.CreateMauiApp();
         MainPage = app.Services.GetService<AppShell>();
     }

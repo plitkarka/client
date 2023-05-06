@@ -8,6 +8,6 @@
         <pages:ProfilePage/>
         <pages:RegistrationPage/>
         <pages:LoginPage/>
-    </TabbedPage.Children>
+
 
 </TabbedPage>
