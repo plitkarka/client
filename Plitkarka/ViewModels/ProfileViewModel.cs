@@ -4,6 +4,7 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Plitkarka.Infrastructure.Interfaces;
 using Plitkarka.Models;
+using Plitkarka.Views;
 
 namespace Plitkarka.ViewModels
 {
@@ -72,7 +73,7 @@ namespace Plitkarka.ViewModels
 
             OpenEditPageCommand = ReactiveCommand.Create(() =>
             {
-                _navigationService.NavigateToAsync("editprofile");
+                _navigationService.NavigateToAsync(nameof(EditProfilePage));
             });
 
             GoBackCommand = ReactiveCommand.Create(() =>

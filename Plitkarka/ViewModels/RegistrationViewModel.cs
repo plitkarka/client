@@ -4,79 +4,45 @@ using ReactiveUI;
 using Plitkarka.Infrastructure.StringResources;
 using Plitkarka.Views;
 using Plitkarka.Infrastructure.Helpers;
+using ReactiveUI.Fody.Helpers;
+using Plitkarka.Infrastructure.Interfaces;
 
 namespace Plitkarka.ViewModels;
 
 public class RegistrationViewModel : ReactiveObject
 {
-    private string _name;
-    private string _surname;
-    private DateTime _birthDate;
-    private string _email;
-    private string _password;
-    private string _confirmPassword;
-    private string _errorText;
-    
-    private readonly INavigation _navigation;
+    private readonly INavigationService _navigationService;
 
-    public string Name
-    {
-        get => _name;
-        set => this.RaiseAndSetIfChanged(ref _name, value);
-    }
-    
-    public string Surname
-    {
-        get => _surname;
-        set => this.RaiseAndSetIfChanged(ref _surname, value);
-    }
-    
-    public DateTime BirthDate
-    {
-        get => _birthDate;
-        set => this.RaiseAndSetIfChanged(ref _birthDate, value);
-    }
-    
-    public string Email
-    {
-        get => _email;
-        set => this.RaiseAndSetIfChanged(ref _email, value);
-    }
+    [Reactive] public string Name { get; set; }
 
-    public string Password
-    {
-        get => _password;
-        set => this.RaiseAndSetIfChanged(ref _password, value);
-    }
-    
-    public string ConfirmPassword
-    {
-        get => _confirmPassword;
-        set => this.RaiseAndSetIfChanged(ref _confirmPassword, value);
-    }
+    [Reactive] public string Surname { get; set; }
 
-    public string ErrorText
-    {
-        get => _errorText;
-        set => this.RaiseAndSetIfChanged(ref _errorText, value);
-    }
+    [Reactive] public DateTime BirthDate { get; set; }
+
+    [Reactive] public string Email { get; set; }
+
+    [Reactive] public string Password { get; set; }
+
+    [Reactive] public string ConfirmPassword { get; set; }
+
+    [Reactive] public string ErrorText { get; set; }
 
     public ReactiveCommand<Unit, Task> RegisterCommand { get; }
 
-    public RegistrationViewModel(INavigation navigation)
+    public RegistrationViewModel(INavigationService navigationService)
     {
-        _navigation = navigation;
+        _navigationService = navigationService;
 
         RegisterCommand = ReactiveCommand.Create(async () =>
         {
             var validationRules = new Dictionary<string, Func<bool>>
             {
-                { "Name", () => ValidationHelper.IsNameValid(Name) },
-                { "Surname", () => ValidationHelper.IsSurnameValid(Surname) },
-                { "Email", () => ValidationHelper.IsEmailValid(Email) },
-                { "Password", () => ValidationHelper.IsPasswordValid(Password) },
-                { "ConfirmPassword", () => ValidationHelper.IsPasswordConfirmed(Password, ConfirmPassword) },
-                { "BirthDate", () => ValidationHelper.IsBirthDateValid(BirthDate)}
+                { nameof(Name), () => ValidationHelper.IsNameValid(Name) },
+                { nameof(Surname), () => ValidationHelper.IsSurnameValid(Surname) },
+                { nameof(Email), () => ValidationHelper.IsEmailValid(Email) },
+                { nameof(Password), () => ValidationHelper.IsPasswordValid(Password) },
+                { nameof(ConfirmPassword), () => ValidationHelper.IsPasswordConfirmed(Password, ConfirmPassword) },
+                { nameof(BirthDate), () => ValidationHelper.IsBirthDateValid(BirthDate)}
             };
 
             foreach (var rule in validationRules)
@@ -87,8 +53,8 @@ public class RegistrationViewModel : ReactiveObject
                     return;
                 }
             }
-            
-            await _navigation.PushAsync(new HomePage());
+
+            await _navigationService.NavigateToAsync(nameof(HomePage));
         });
     }
 }

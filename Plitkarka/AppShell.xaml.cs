@@ -1,5 +1,7 @@
 ﻿using Plitkarka.Views;
 
+namespace Plitkarka;
+
 public partial class AppShell : Shell
 {
     public AppShell()
@@ -10,11 +12,11 @@ public partial class AppShell : Shell
     
     private void RegisterRoutes()
     {
-        Routing.RegisterRoute("profile", typeof(ProfilePage));
-        Routing.RegisterRoute("login", typeof(LoginPage));
-        Routing.RegisterRoute("registration", typeof(RegistrationPage));
-        Routing.RegisterRoute("main", typeof(MainPage));
-        Routing.RegisterRoute("editprofile", typeof(EditProfilePage));
-        Routing.RegisterRoute("userprofile", typeof(UserProfilePage));
+        Routing.RegisterRoute(nameof(ProfilePage), typeof(ProfilePage));
+        Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+        Routing.RegisterRoute(nameof(RegistrationPage), typeof(RegistrationPage));
+        Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
+        Routing.RegisterRoute(nameof(EditProfilePage), typeof(EditProfilePage));
+        Routing.RegisterRoute(nameof(UserProfilePage), typeof(UserProfilePage));
     }
 }
