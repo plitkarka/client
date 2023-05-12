@@ -1,40 +1,27 @@
 using System.Reactive;
+using Plitkarka.Infrastructure.Interfaces;
 using Plitkarka.Infrastructure.StringResources;
 using Plitkarka.Views;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace Plitkarka.ViewModels;
 
 public class LoginViewModel : ReactiveObject
 {
-    private string _email;
-    private string _password;
-    private string _errorText;
-    private readonly INavigation _navigation;
+    private readonly INavigationService _navigationService;
 
-    public string Email
-    {
-        get => _email;
-        set => this.RaiseAndSetIfChanged(ref _email, value);
-    }
+    [Reactive] public string Email { get; set; }
 
-    public string Password
-    {
-        get => _password;
-        set => this.RaiseAndSetIfChanged(ref _password, value);
-    }
-
-    public string ErrorText
-    {
-        get => _errorText;
-        set => this.RaiseAndSetIfChanged(ref _errorText, value);
-    }
-
+    [Reactive] public string Password { get; set; }
+    
+    [Reactive] public string ErrorText { get; set; }
+  
     public ReactiveCommand<Unit, Task> LoginCommand { get; }
 
-    public LoginViewModel(INavigation navigation)
+    public LoginViewModel(INavigationService navigationService)
     {
-        _navigation = navigation;
+        _navigationService = navigationService;
 
         LoginCommand = ReactiveCommand.Create(async () =>
         {
@@ -50,7 +37,7 @@ public class LoginViewModel : ReactiveObject
                 return;
             }
 
-            await _navigation.PushAsync(new HomePage());
+            await _navigationService.NavigateToAsync(nameof(HomePage));
         });
     }
 }

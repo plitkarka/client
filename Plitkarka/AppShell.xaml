@@ -4,8 +4,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Plitkarka"
-    Shell.FlyoutBehavior="Disabled">    
-    <ShellItem Route="main" Title="Main" FlyoutItemIsVisible="False">
-        <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
-    </ShellItem>
+    Shell.FlyoutBehavior="Disabled">
+
+    <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
+
 </Shell>

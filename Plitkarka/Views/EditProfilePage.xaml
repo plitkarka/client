@@ -59,12 +59,7 @@
                     FontSize="12"
                     TextColor="#8A8A8A"
                     Text="Ім’я користувача"/>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="1" />
-                    </Grid.RowDefinitions>
-                    <Entry
+                 <Entry
                         Text="{Binding Profile.NickName, Mode=TwoWay}"
                         Grid.Row="0"
                         PlaceholderColor="Transparent"
@@ -73,21 +68,13 @@
                         FontFamily="12"
                         BackgroundColor="Transparent"
                         Margin="0,8,0,0"/>
-                
-                    <BoxView Grid.Row="1" HeightRequest="1" BackgroundColor="#D8D8D8" />
-                </Grid>
             </StackLayout>
             <StackLayout Margin="0,19,0,0">
                 <Label
                     FontSize="12"
                     TextColor="#8A8A8A"
                     Text="Ім’я"/>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="1" />
-                    </Grid.RowDefinitions>
-                    <Entry
+                <Entry
                         Text="{Binding Profile.Name, Mode=TwoWay}"
                         Grid.Row="0"
                         PlaceholderColor="Transparent"
@@ -96,21 +83,13 @@
                         FontFamily="12"
                         BackgroundColor="Transparent"
                         Margin="0,8,0,0"/>
-                
-                    <BoxView Grid.Row="1" HeightRequest="1" BackgroundColor="#D8D8D8" />
-                </Grid>
             </StackLayout>
             <StackLayout Margin="0,19,0,0">
                 <Label
                     FontSize="12"
                     TextColor="#8A8A8A"
                     Text="Про себе"/>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="1" />
-                    </Grid.RowDefinitions>
-                    <Entry
+                <Entry
                         Text="{Binding Profile.Bio, Mode=TwoWay}"
                         Grid.Row="0"
                         PlaceholderColor="Transparent"
@@ -119,9 +98,6 @@
                         FontFamily="12"
                         BackgroundColor="Transparent"
                         Margin="0,8,0,0"/>
-                
-                    <BoxView Grid.Row="1" HeightRequest="1" BackgroundColor="#D8D8D8" />
-                </Grid>
             </StackLayout>
         </StackLayout>
     </StackLayout>
