@@ -1,6 +1,7 @@
 using System.Reactive;
 using Plitkarka.Infrastructure.Interfaces;
 using Plitkarka.Models;
+using Plitkarka.Views;
 using ReactiveUI;
 
 namespace Plitkarka.ViewModels;
@@ -14,24 +15,33 @@ public class EditProfileViewModel : ReactiveObject
     public ReactiveCommand<Unit, Unit> SaveChangesCommand { get; }
 
     public ReactiveCommand<Unit, Unit> CancelChangesCommand { get; }
+
+    public ReactiveCommand<Unit, Unit> EditProfilePhotoCommand { get; }
     
     public EditProfileViewModel(INavigationService navigationService)
     {
         _navigationService = navigationService;
         
-        SaveChangesCommand = ReactiveCommand.Create(SaveChanges);
+        SaveChangesCommand = ReactiveCommand.CreateFromTask(SaveChanges);
         
-        CancelChangesCommand = ReactiveCommand.Create(CancelChanges);
+        CancelChangesCommand = ReactiveCommand.CreateFromTask(CancelChanges);
+
+        EditProfilePhotoCommand = ReactiveCommand.CreateFromTask(EditProfilePhoto);
     }
     
-    private void SaveChanges()
+    private async Task SaveChanges()
     {
         // TODO: add saves later
-        _navigationService.GoBackAsync();
+        await _navigationService.GoBackAsync();
     }
     
-    private void CancelChanges()
+    private async Task CancelChanges()
     {
-        _navigationService.GoBackAsync();
+        await _navigationService.GoBackAsync();
+    }
+
+    private async Task EditProfilePhoto()
+    {
+        await _navigationService.NavigateToAsync(nameof(EditProfilePhotoPage));
     }
 }
