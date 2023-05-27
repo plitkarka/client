@@ -3,9 +3,13 @@
     x:Class="Plitkarka.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Plitkarka"
+    xmlns:views="clr-namespace:Plitkarka.Views"
     Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
-
+    <TabBar>
+        <ShellContent Title="Profile" ContentTemplate="{DataTemplate views:ProfilePage}"/>
+        <ShellContent Title="Search" ContentTemplate="{DataTemplate views:SearchPage}"/>
+        <ShellContent Title="Feed" ContentTemplate="{DataTemplate views:FeedDashboard}"/>
+        <ShellContent Title="Another user" ContentTemplate="{DataTemplate views:UserProfilePage}"/>
+    </TabBar>
 </Shell>

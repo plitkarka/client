@@ -54,7 +54,7 @@ public class RegistrationViewModel : ReactiveObject
                 }
             }
 
-            await _navigationService.NavigateToAsync(nameof(HomePage));
+            await _navigationService.NavigateToTabAsync(nameof(HomePage));
         });
     }
 }
