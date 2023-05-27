@@ -60,7 +60,7 @@ namespace Plitkarka.ViewModels
             {
                 new Post{ AuthorProfileImage = "https://example.com/user1.jpg", AuthorName = "LinaBoyko_HR", PostDate = DateTime.Now, PostContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget aliquam ultricies, nunc nisl ultricies nunc, quis aliquam nisl nisl eu nisl. Sed euismod, nisl eget aliquam ultricies, nunc nisl ultricies nunc, quis aliquam nisl nisl eu nisl.", LikesCount = 10, CommentsCount = 5 , ReplitsCount = 2, SavesCount = 5, SharesCount = 1},
                 new Post{ AuthorProfileImage = "https://example.com/user2.jpg", AuthorName = "LinaBoyko_HR", PostDate = DateTime.Now, PostContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget aliquam ultricies, nunc nisl ultricies nunc, quis aliquam nisl nisl eu nisl. Sed euismod, nisl eget aliquam ultricies, nunc nisl ultricies nunc, quis aliquam nisl nisl eu nisl.", LikesCount = 10, CommentsCount = 5 , ReplitsCount = 4, SavesCount = 2, SharesCount = 1},
-                new Post{AuthorProfileImage = "https://example.com/user3.jpg", AuthorName = "LinaBoyko_HR", PostDate = DateTime.Now, PostContent = "Example of content", CommentsCount = 500, LikesCount = 20000, ReplitsCount = 450, SavesCount = 200, SharesCount = 100}
+                new Post{ AuthorProfileImage = "https://example.com/user3.jpg", AuthorName = "LinaBoyko_HR", PostDate = DateTime.Now, PostContent = "Example of content", CommentsCount = 500, LikesCount = 20000, ReplitsCount = 450, SavesCount = 200, SharesCount = 100}
             };
 
             ChangeContentCommand = ReactiveCommand.Create<Segment>(ChangeContent);

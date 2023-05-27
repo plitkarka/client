@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              Shell.NavBarIsVisible="False"
-             x:Class="Plitkarka.Views.HomePage"
-             xmlns:vm="clr-namespace:Plitkarka.ViewModels"
-             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
-
+             x:Class="Plitkarka.Views.FeedDashboard"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+             xmlns:viewModels="clr-namespace:Plitkarka.ViewModels">
+    
+    
     <ContentPage.Behaviors>
         <mct:StatusBarBehavior StatusBarColor="{StaticResource Primary}" />
     </ContentPage.Behaviors>
@@ -20,7 +20,7 @@
                     FontSize="21"
                     Text="ПЛІТКАРКА"
                     TextColor="White"
-                    FontAttributes="Bold"/>
+                    FontAttributes="Bold" />
                 <Image
                     VerticalOptions="Center"
                     Margin="20"
@@ -28,131 +28,142 @@
                     Source="bell.png">
                 </Image>
             </StackLayout>
-            <StackLayout BindableLayout.ItemsSource="{Binding Posts}">
-                <BindableLayout.ItemTemplate>
+
+            <ListView HasUnevenRows="True" x:Name="PostList" ItemsSource="{Binding Posts}">
+                <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Margin="24" Spacing="10">
-                            <StackLayout Orientation="Horizontal" Spacing="10">
-                                <!-- <Image -->
-                                <!--     Source="{Binding AuthorProfileImage}" -->
-                                <!--     HeightRequest="40" -->
-                                <!--     WidthRequest="40" -->
-                                <!--     Aspect="AspectFill" -->
-                                <!--     VerticalOptions="Center" /> -->
-                                <Ellipse
+                        <ViewCell>
+                            <StackLayout Margin="24" Spacing="10">
+                                <StackLayout Orientation="Horizontal">
+                                    <!--Photo-->
+                                    <!--<Image
+                                     Source="{Binding AuthorProfileImage}" 
+                                     HeightRequest="34" 
+                                     WidthRequest="34" 
+                                     Aspect="AspectFill"
+                                     VerticalOptions="Center" />-->
+                                    <Ellipse
                                     VerticalOptions="Center"
                                     Fill="Red"
                                     WidthRequest="34"
                                     HeightRequest="34" />
 
-                                <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
-                                    <Label
+                                    <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                                        <!--Name-->
+                                        <Label
                                         Text="{Binding AuthorName}"
                                         FontSize="15"
                                         Margin="8, 0, 0, 0"
                                         FontAttributes="Bold"
                                         HorizontalOptions="Start"
                                         VerticalOptions="Center" />
-                                    <StackLayout
+                                        <StackLayout
                                         Orientation="Horizontal"
                                         HorizontalOptions="Center"
                                         VerticalOptions="Center">
-                                        <Ellipse
+                                            <Ellipse
                                             Margin="12,0"
                                             WidthRequest="5"
                                             HeightRequest="5"
-                                            Fill="Gray"/>
+                                            Fill="Gray" />
+                                            <!--Date-->
+                                            <Label
+                                            Text="{Binding PostDate, StringFormat='{0:dd/MM}'}"
+                                            FontSize="14"
+                                            TextColor="Gray" />
 
-                                        <Label
-                                        Text="{Binding PostDate, StringFormat='{0:dd/MM}'}"
-                                        FontSize="14"
-                                        TextColor="Gray" />
+                                        </StackLayout>
 
-                                    </StackLayout>
-
-                                    <Image
+                                        <Image
                                         VerticalOptions="Center"
                                         HorizontalOptions="EndAndExpand"
-                                        Source="meatballs_menu.png"/>
+                                        Source="meatballs_menu.png" />
+                                    </StackLayout>
                                 </StackLayout>
-                            </StackLayout>
-
-                            <Label
+                                <!--Content of post-->
+                                <Label
                                 Text="{Binding PostContent}"
                                 FontSize="15"
                                 LineBreakMode="WordWrap" />
 
-                            <Grid ColumnDefinitions="*,*,*,*,*">
-                                <StackLayout Orientation="Horizontal" Grid.Column="0">
-                                    <Image
+                                <Grid ColumnDefinitions="*,*,*,*,*">
+                                    <StackLayout Orientation="Horizontal" Grid.Column="0">
+                                        <Image
                                         Source="like.png"
                                         HeightRequest="20"
                                         VerticalOptions="Center" />
 
-                                    <Label
+                                        <Label
                                         Text="{Binding LikesCount}"
                                         FontSize="14"
                                         Margin="4,0,0,0"
                                         VerticalOptions="Center" />
-                                </StackLayout>
-                                <StackLayout Orientation="Horizontal" Grid.Column="1">
-                                    <Image
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" Grid.Column="1">
+                                        <Image
                                         Source="comment.png"
                                         HeightRequest="20"
                                         Margin="12,0,0,0"
                                         VerticalOptions="Center" />
 
-                                    <Label
+                                        <Label
                                         Text="{Binding CommentsCount}"
                                         FontSize="14"
                                         Margin="4,0,0,0"
                                         VerticalOptions="Center" />
-                                </StackLayout>
-                                <StackLayout Orientation="Horizontal" Grid.Column="2">
-                                    <Image
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" Grid.Column="2">
+                                        <Image
                                         Source="replit.png"
                                         HeightRequest="20"
                                         Margin="12,0,0,0"
                                         VerticalOptions="Center" />
 
-                                    <Label
+                                        <Label
                                         Text="{Binding ReplitsCount}"
                                         FontSize="14"
                                         Margin="4,0,0,0"
                                         VerticalOptions="Center" />
-                                </StackLayout>
-                                <StackLayout Orientation="Horizontal" Grid.Column="3">
-                                    <Image
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" Grid.Column="3">
+                                        <Image
                                         Source="send.png"
                                         HeightRequest="20"
                                         Margin="12,0,0,0"
                                         VerticalOptions="Center" />
 
-                                    <Label
+                                        <Label
                                         Text="{Binding SharesCount}"
                                         FontSize="14"
                                         Margin="4,0,0,0"
                                         VerticalOptions="Center" />
-                                </StackLayout>
-                                <StackLayout Orientation="Horizontal" Grid.Column="4">
-                                    <Image
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" Grid.Column="4">
+                                        <Image
                                         Source="save.png"
                                         HeightRequest="20"
                                         Margin="12,0,0,0"
                                         VerticalOptions="Center" />
 
-                                    <Label
+                                        <Label
                                         Text="{Binding SavesCount}"
                                         FontSize="14"
                                         Margin="4,0,0,0"
                                         VerticalOptions="Center" />
-                                </StackLayout>
-                            </Grid>
-                        </StackLayout>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </StackLayout>
-        </StackLayout>
+                                    </StackLayout>
+                                </Grid>
 
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                    Command="{Binding Path=BindingContext.OpenSelectedPostCommand, Source={x:Reference PostList}}"
+                                    CommandParameter="{Binding}"/>
+
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
     </ScrollView>
 </ContentPage>

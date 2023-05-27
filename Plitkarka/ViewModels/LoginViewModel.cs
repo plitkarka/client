@@ -37,7 +37,7 @@ public class LoginViewModel : ReactiveObject
                 return;
             }
 
-            await _navigationService.NavigateToAsync(nameof(HomePage));
+            await _navigationService.NavigateToTabAsync(nameof(HomePage));
         });
     }
 }

@@ -9,6 +9,11 @@ public class NavigationService : INavigationService
         await Shell.Current.GoToAsync($"{route}");
     }
 
+    public async Task NavigateToTabAsync(string route)
+    {
+        await Shell.Current.GoToAsync($"///{route}");
+    }
+
     public async Task GoBackAsync()
     {
         await Shell.Current.Navigation.PopAsync();
