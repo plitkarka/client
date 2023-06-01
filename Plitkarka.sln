@@ -3,15 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plitkarka", "Plitkarka\Plitkarka.csproj", "{67030EA1-1B67-4386-8382-C0CB3E6C2AF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plitkarka", "Plitkarka\Plitkarka.csproj", "{67030EA1-1B67-4386-8382-C0CB3E6C2AF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plitkarka.Infrastructure", "Plitkarka.Infrastructure\Plitkarka.Infrastructure.csproj", "{6D908487-C24C-4BF9-B8EE-8CA9AFF8AB5A}"
-
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plitkarka.Infrastructure", "Plitkarka.Infrastructure\Plitkarka.Infrastructure.csproj", "{6D908487-C24C-4BF9-B8EE-8CA9AFF8AB5A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EB073D99-5344-46E2-A453-C2483E052233}"
 	ProjectSection(SolutionItems) = preProject
 		1.txt = 1.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plitkarka.Client", "Plitkarka.Client\Plitkarka.Client\Plitkarka.Client.csproj", "{9064BAF9-ACAA-49C8-93AD-C768EA3E19EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,17 +22,20 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{67030EA1-1B67-4386-8382-C0CB3E6C2AF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{67030EA1-1B67-4386-8382-C0CB3E6C2AF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67030EA1-1B67-4386-8382-C0CB3E6C2AF7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{67030EA1-1B67-4386-8382-C0CB3E6C2AF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67030EA1-1B67-4386-8382-C0CB3E6C2AF7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6D908487-C24C-4BF9-B8EE-8CA9AFF8AB5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6D908487-C24C-4BF9-B8EE-8CA9AFF8AB5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D908487-C24C-4BF9-B8EE-8CA9AFF8AB5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D908487-C24C-4BF9-B8EE-8CA9AFF8AB5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9064BAF9-ACAA-49C8-93AD-C768EA3E19EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9064BAF9-ACAA-49C8-93AD-C768EA3E19EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9064BAF9-ACAA-49C8-93AD-C768EA3E19EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9064BAF9-ACAA-49C8-93AD-C768EA3E19EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F4D03BAC-5F2D-474C-8432-CDEB3B72D008}
