@@ -12,16 +12,13 @@ namespace Plitkarka.Client.Services;
 public class MyHttpClient
 {
     private readonly HttpClient _httpClient;
-   // private readonly HttpClientConfiguration _httpClientConfiguration;
-    public MyHttpClient(HttpClient httpClient/*,IOptions<HttpClientConfiguration> httpClientConfiguration*/)
+    public MyHttpClient(HttpClient httpClient)
     {
         _httpClient = httpClient;
-        //_httpClientConfiguration = httpClientConfiguration.Value;
     }
 
     public async Task<T> GetRequest<T>(string url,HttpMethod httpMethod,HttpContent? httpContent = null)
     {
-        //string endpointPath = _httpClientConfiguration.BaseUrl + url;
         string endpointPath = _httpClient.BaseAddress + url;
 
         var authToken = JsonConvert.DeserializeObject<TokenPairResponse>(File.ReadAllText(@"tokenpair.json"));
