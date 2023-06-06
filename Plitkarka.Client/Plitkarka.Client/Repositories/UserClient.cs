@@ -2,6 +2,7 @@
 using Plitkarka.Client.Handler;
 using Plitkarka.Client.Interfaces;
 using Plitkarka.Client.Models;
+using Plitkarka.Client.Models.User;
 using Plitkarka.Client.Services;
 using Plitkarka.Infrastructure.Configurations;
 using System.Net.Http.Headers;
@@ -10,19 +11,20 @@ namespace Plitkarka.Client.Repositories;
 
 public class UserClient : MyHttpClient, IUserClient
 {
-    public UserClient(IOptions<HttpClientConfiguration> httpClientConfiguration) : base(httpClientConfiguration) {}
+    public UserClient(HttpClient httpClient/*,IOptions<HttpClientConfiguration> httpClientConfiguration*/) 
+        : base(httpClient/*,httpClientConfiguration*/) {}
 
     public async Task<IdResponse> SetUserImage(SetUserImageRequestModel image)
     {
-        MultipartFormDataContent content = new MultipartFormDataContent();
+        var content = new MultipartFormDataContent();
         var streamContent = new StreamContent(image.Image.OpenReadStream());
         streamContent.Headers.ContentType = new MediaTypeHeaderValue("image/png");
         content.Add(streamContent,"Image","image.png");
-        return await GetRequest<IdResponse>(UserHandler.SendUserImage(), HttpMethod.Post,content);
+        return await GetRequest<IdResponse>(UserHandler.SendUserImage(), HttpMethod.Post, content);
     }
     public async Task<StringResponse> GetImageUrlByUserId(Guid id)
     {
-        return await GetRequest<StringResponse>(UserHandler.GetUserImageById(id),HttpMethod.Get);
+        return await GetRequest<StringResponse>(UserHandler.GetUserImageById(id), HttpMethod.Get);
     }
     public async Task<PaginationResponse<UserPreview>> GetAll()
     {
@@ -32,6 +34,6 @@ public class UserClient : MyHttpClient, IUserClient
     }
     public async Task<UserData> GetByIdAsync(Guid id)
     {
-        return await GetRequest<UserData>(UserHandler.GetUserById(id),HttpMethod.Get);
+        return await GetRequest<UserData>(UserHandler.GetUserById(id), HttpMethod.Get);
     }
 }

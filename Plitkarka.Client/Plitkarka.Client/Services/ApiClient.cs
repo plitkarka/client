@@ -6,8 +6,12 @@ public class ApiClient: IApiClient
 {
     public IUserClient UserClient { get; }
 
-    public ApiClient(IUserClient userClient)
+    public IAuthClient AuthClient { get; }
+
+    public ApiClient(IUserClient userClient,
+        IAuthClient authClient)
     {
         UserClient = userClient;
+        AuthClient = authClient;
     }   
 }

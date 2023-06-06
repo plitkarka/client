@@ -1,56 +1,65 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Plitkarka.Client.Models;
+using Plitkarka.Client.Models.Authorization;
 using Plitkarka.Infrastructure.Configurations;
+using System.Web;
 
 namespace Plitkarka.Client.Services;
 
 public class MyHttpClient
 {
     private readonly HttpClient _httpClient;
-    private readonly HttpClientConfiguration _httpClientConfiguration;
-    public MyHttpClient(IOptions<HttpClientConfiguration> httpClientConfiguration)
+   // private readonly HttpClientConfiguration _httpClientConfiguration;
+    public MyHttpClient(HttpClient httpClient/*,IOptions<HttpClientConfiguration> httpClientConfiguration*/)
     {
-        _httpClient = new HttpClient();
-        _httpClientConfiguration = httpClientConfiguration.Value;
+        _httpClient = httpClient;
+        //_httpClientConfiguration = httpClientConfiguration.Value;
     }
 
     public async Task<T> GetRequest<T>(string url,HttpMethod httpMethod,HttpContent? httpContent = null)
     {
-        string endpointPath = _httpClientConfiguration.BaseUrl + url;
+        //string endpointPath = _httpClientConfiguration.BaseUrl + url;
+        string endpointPath = _httpClient.BaseAddress + url;
 
+        var authToken = JsonConvert.DeserializeObject<TokenPairResponse>(File.ReadAllText(@"tokenpair.json"));
+        _httpClient.DefaultRequestHeaders.Remove("AuthToken");
 
-        /*
-        HttpRequestMessage request = new HttpRequestMessage(httpMethod, endpointPath);
-        HttpResponseMessage response = await _httpClient.SendAsync(request);
-        */
-
-        HttpResponseMessage response = httpMethod.Method switch
+        if (authToken != null && authToken.AccessToken !="")
         {
-            "GET" => response = await _httpClient.GetAsync(endpointPath),
-            "POST" => response = await _httpClient.PostAsync(endpointPath, httpContent),
-            "PUT" => response = await _httpClient.PutAsync(endpointPath, httpContent),
-            "DELETE" => response = await _httpClient.DeleteAsync(endpointPath),
+            _httpClient.DefaultRequestHeaders.Add("AuthToken", authToken.AccessToken);
+        }
+
+        HttpResponseMessage response = httpMethod switch
+        {
+            HttpMethod m when m == HttpMethod.Get => response = await _httpClient.GetAsync(endpointPath),
+            HttpMethod m when m == HttpMethod.Post => response = await _httpClient.PostAsync(endpointPath, httpContent),
+            HttpMethod m when m == HttpMethod.Put => response = await _httpClient.PutAsync(endpointPath, httpContent),
+            HttpMethod m when m == HttpMethod.Delete => response = await _httpClient.DeleteAsync(endpointPath),
             _ => response = await _httpClient.SendAsync(new HttpRequestMessage(httpMethod, endpointPath))
         };
-        Console.WriteLine("\n" + endpointPath + "\n");
-        if (((int)response.StatusCode) == StatusCodes.Status500InternalServerError)
+        
+        Console.WriteLine("\n" + endpointPath + "\n"+ await response.Content.ReadAsStringAsync());
+
+        if (((int)response.StatusCode) == StatusCodes.Status500InternalServerError || ((int)response.StatusCode) == StatusCodes.Status403Forbidden)
         {
-            throw new ArgumentException($"Server Internal Error");
+            //return await response.Content.ReadAsStringAsync();
         }
 
         if (((int)response.StatusCode) == StatusCodes.Status401Unauthorized)
         {
-            await _httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, _httpClientConfiguration.BaseUrl + "api/auth/refresh"));
+            await _httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, _httpClient.BaseAddress + "api/auth/refresh"));
         }
 
         if(response.Content == null) 
         {
             throw new ArgumentException($"The path {endpointPath} gets the following status code: " + response.StatusCode);
         }
-        return await response.Content.ReadFromJsonAsync<T>();
 
-        //return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
+        return await response.Content.ReadFromJsonAsync<T>(); // for swagger
+
+        //return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync()); // return model
     }
 }

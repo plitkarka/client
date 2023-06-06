@@ -1,5 +1,5 @@
 ﻿using Plitkarka.Client.Models;
-using Plitkarka.Client.Repositories;
+using Plitkarka.Client.Models.User;
 
 namespace Plitkarka.Client.Interfaces;
 
