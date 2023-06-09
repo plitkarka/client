@@ -24,7 +24,6 @@ public class AuthClient : MyHttpClient, IAuthClient
 
         return tokenPair;
     }
-
     public async Task<StringResponse> ResendVerificationCode(ResendVerificationCodeRequest email)
     {
         var json = JsonConvert.SerializeObject(email);
@@ -32,7 +31,6 @@ public class AuthClient : MyHttpClient, IAuthClient
 
         return await GetRequest<StringResponse>(AuthHandler.EmailResponse(), HttpMethod.Put, content);
     }
-
     public async Task<TokenPairResponse> SignIn(SignInRequest body)
     {
         var json = JsonConvert.SerializeObject(body);
@@ -42,16 +40,8 @@ public class AuthClient : MyHttpClient, IAuthClient
 
         Services.JsonSerializer.SerializeToFile("tokenpair.json", JsonConvert.SerializeObject(tokenPair, Formatting.Indented));
 
-      /*  using (FileStream fs = new FileStream("tokenpair.json", FileMode.OpenOrCreate))
-        {
-            json = JsonConvert.SerializeObject(tokenPair, Formatting.Indented);
-            byte[] serializedResult = Encoding.UTF8.GetBytes(json);
-            await fs.WriteAsync(serializedResult);
-        }*/
-
         return tokenPair;
     }
-
     public async Task<StringResponse> SignUp(SignUpRequest body)
     {
         var json = JsonConvert.SerializeObject(body);
@@ -59,7 +49,6 @@ public class AuthClient : MyHttpClient, IAuthClient
 
         return await GetRequest<StringResponse>(AuthHandler.SignUp(), HttpMethod.Post, content);
     }
-
     public async Task<TokenPairResponse> VerifyEmail(VerifyEmailRequest emailBody)
     {
         var json =JsonConvert.SerializeObject(emailBody);

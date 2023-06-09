@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Plitkarka.Client.Interfaces;
 using Plitkarka.Client.Models;
 using Plitkarka.Client.Models.Authorization;
+using Plitkarka.Client.Models.ResetPassword;
 using Plitkarka.Client.Models.User;
 
 namespace Plitkarka.Client.Controllers
@@ -95,6 +96,35 @@ namespace Plitkarka.Client.Controllers
          [FromQuery] string refreshToken)
         {
             var response = await _apiClient.AuthClient.GetNewTokenPair(refreshToken);
+
+            return Ok(response);
+        }
+
+        //Reset
+
+        [HttpPost("password/reset")]
+        public async Task<ActionResult<StringResponse>> SendEmail(
+         [FromBody] SendEmailRequest email)
+        {
+            var response = await _apiClient.ResetPasswordClient.SendEmail(email);
+
+            return Ok(response);
+        }
+
+        [HttpGet("password/reset")]
+        public async Task<ActionResult<VerifyCodeRequest>> VerifyCode(
+         [FromQuery] VerifyCodeRequest body)
+        {
+            var response = await _apiClient.ResetPasswordClient.VerifyCode(body);
+
+            return Ok(response);
+        }
+
+        [HttpPut("password/reset")]
+        public async Task<ActionResult<TokenPairResponse>> ResetPassword(
+         [FromBody] ResetPasswordRequest body)
+        {
+            var response = await _apiClient.ResetPasswordClient.ResetPassword(body);
 
             return Ok(response);
         }

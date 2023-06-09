@@ -2,6 +2,7 @@
 
 public interface IApiClient
 {
-   IUserClient UserClient { get; }
-   IAuthClient AuthClient { get; }
+    IUserClient UserClient { get; }
+    IAuthClient AuthClient { get; }
+    IResetPasswordClient ResetPasswordClient { get; }
 }
