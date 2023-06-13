@@ -1,4 +1,7 @@
-﻿namespace Plitkarka.Client.Handler;
+﻿using Plitkarka.Client.Models;
+using Plitkarka.Client.Models.Pagination;
+
+namespace Plitkarka.Client.Handler;
 
 public class UserHandler
 {
@@ -6,9 +9,15 @@ public class UserHandler
     {
         return "user?userId=" + id.ToString();
     }
-    public static string GetAllUsers(string filter="0",int page=0)
+    public static string GetAllUsers(PaginationTextRequest body)
     {
-        return $"user/all?Filter={filter}&Page={page}";
+        return body switch
+        {
+            var res when (res.Filter == string.Empty && res.Page == 0) => "user/all",
+            var res when (res.Page == 0) => $"user/all?Filter={body.Filter}",
+            var res when (res.Filter == string.Empty) => $"user/all?Page={body.Page}",
+            _ => $"user/all?Filter={body.Filter}&Page={body.Page}"
+        };
     }
     public static string GetUserImageById(Guid id)
     {

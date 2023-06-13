@@ -17,17 +17,17 @@ public class MyHttpClient
         _httpClient = httpClient;
     }
 
-    public async Task<T> GetRequest<T>(string url,HttpMethod httpMethod,HttpContent? httpContent = null)
+    public async Task<T?> GetRequest<T>(string url,HttpMethod httpMethod,HttpContent? httpContent = null)
     {
         string endpointPath = _httpClient.BaseAddress + url;
 
-        var authToken = JsonConvert.DeserializeObject<TokenPairResponse>(File.ReadAllText(@"tokenpair.json"));
+       /* var authToken = JsonConvert.DeserializeObject<TokenPairResponse>(File.ReadAllText(@"tokenpair.json"));
         _httpClient.DefaultRequestHeaders.Remove("AuthToken");
 
         if (authToken != null && authToken.AccessToken !="")
         {
             _httpClient.DefaultRequestHeaders.Add("AuthToken", authToken.AccessToken);
-        }
+        }*/
 
         HttpResponseMessage response = httpMethod switch
         {
@@ -39,6 +39,11 @@ public class MyHttpClient
         };
         
         Console.WriteLine("\n" + endpointPath + "\n"+ await response.Content.ReadAsStringAsync());
+
+        if (response.Content.Headers.ContentType.MediaType == "text/plain")
+        {
+            return (T?) (object) await response.Content.ReadAsStringAsync();
+        }
 
         if (((int)response.StatusCode) == StatusCodes.Status500InternalServerError || ((int)response.StatusCode) == StatusCodes.Status403Forbidden)
         {

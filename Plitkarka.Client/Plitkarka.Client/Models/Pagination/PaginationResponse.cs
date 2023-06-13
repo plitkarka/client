@@ -1,4 +1,4 @@
-﻿namespace Plitkarka.Client.Models;
+﻿namespace Plitkarka.Client.Models.Pagination;
 
 public record PaginationResponse<T>
 {

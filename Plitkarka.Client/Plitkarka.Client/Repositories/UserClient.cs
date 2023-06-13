@@ -2,6 +2,7 @@
 using Plitkarka.Client.Handler;
 using Plitkarka.Client.Interfaces;
 using Plitkarka.Client.Models;
+using Plitkarka.Client.Models.Pagination;
 using Plitkarka.Client.Models.User;
 using Plitkarka.Client.Services;
 using Plitkarka.Infrastructure.Configurations;
@@ -25,9 +26,9 @@ public class UserClient : MyHttpClient, IUserClient
     {
         return await GetRequest<StringResponse>(UserHandler.GetUserImageById(id), HttpMethod.Get);
     }
-    public async Task<PaginationResponse<UserPreview>> GetAll()
+    public async Task<PaginationResponse<UserPreview>> GetAll(PaginationTextRequest body)
     {
-        var result = await GetRequest<PaginationResponse<UserPreview>>("user/all", HttpMethod.Get);
+        var result = await GetRequest<PaginationResponse<UserPreview>>(UserHandler.GetAllUsers(body), HttpMethod.Get);
        
         return result;
     }

@@ -10,6 +10,8 @@ public static partial class Program
     {
         services.AddSingleton<IUserClient, UserClient>();
         services.AddSingleton<IAuthClient, AuthClient>();
+        services.AddSingleton<ICommentClient, CommentClient>();
+        services.AddSingleton<ISubscriptionClient, SubscriptionClient>();
         services.AddSingleton<IResetPasswordClient, ResetPasswordClient>();
         services.AddSingleton<IApiClient, ApiClient>();
     }

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Plitkarka.Client.Interfaces;
 using Plitkarka.Client.Models;
 using Plitkarka.Client.Models.Authorization;
+using Plitkarka.Client.Models.Pagination;
 using Plitkarka.Client.Models.ResetPassword;
 using Plitkarka.Client.Models.User;
 
@@ -46,9 +47,10 @@ namespace Plitkarka.Client.Controllers
         }
 
         [HttpGet("user/all")]
-        public async Task<ActionResult<PaginationResponse<UserPreview>>> GetAllUserData()
+        public async Task<ActionResult<PaginationResponse<UserPreview>>> GetAllUserData(
+            [FromQuery] PaginationTextRequest body)
         {
-            var response = await _apiClient.UserClient.GetAll();
+            var response = await _apiClient.UserClient.GetAll(body);
 
             return Ok(response);
         }
@@ -125,6 +127,46 @@ namespace Plitkarka.Client.Controllers
          [FromBody] ResetPasswordRequest body)
         {
             var response = await _apiClient.ResetPasswordClient.ResetPassword(body);
+
+            return Ok(response);
+        }
+
+        //Sub
+
+        [HttpPost("sub")]
+        public async Task<ActionResult<IdResponse>> Subscribe(
+         [FromQuery] Guid SubscribeToId)
+        {
+            var response = await _apiClient.SubscriptionClient.Subscribe(SubscribeToId);
+
+            return Ok(response);
+        }
+
+        [HttpDelete("sub")]
+        public async Task<ActionResult<IdResponse>> Unsubscribe(
+         [FromQuery] Guid UnsubscribeFromId)
+        {
+            var response = await _apiClient.SubscriptionClient.Unsubscribe(UnsubscribeFromId);
+
+            return Ok(response);
+        }
+
+        [HttpGet("sub/subscribers/all")]
+        public async Task<ActionResult<TokenPairResponse>> GetSubscribers(
+             [FromQuery] Guid filter, int page)
+        {
+            var response = await _apiClient.SubscriptionClient.GetAllSubscribers(new PaginationIdRequest() 
+            { Id = filter, Page = page});
+
+            return Ok(response);
+        }
+
+        [HttpGet("sub/subscription/all")]
+        public async Task<ActionResult<TokenPairResponse>> GetSubscription(
+             [FromQuery] Guid filter, int page)
+        {
+            var response = await _apiClient.SubscriptionClient.GetAllSuscriptions(new PaginationIdRequest()
+            { Id = filter, Page = page });
 
             return Ok(response);
         }
