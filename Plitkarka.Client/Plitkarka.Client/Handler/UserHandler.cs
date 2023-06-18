@@ -9,14 +9,14 @@ public class UserHandler
     {
         return "user?userId=" + id.ToString();
     }
-    public static string GetAllUsers(PaginationTextRequest body)
+    public static string GetAllUsers(PaginationTextRequest request)
     {
-        return body switch
+        return request switch
         {
             var res when (res.Filter == string.Empty && res.Page == 0) => "user/all",
-            var res when (res.Page == 0) => $"user/all?Filter={body.Filter}",
-            var res when (res.Filter == string.Empty) => $"user/all?Page={body.Page}",
-            _ => $"user/all?Filter={body.Filter}&Page={body.Page}"
+            var res when (res.Page == 0) => $"user/all?Filter={request.Filter}",
+            var res when (res.Filter == string.Empty) => $"user/all?Page={request.Page}",
+            _ => $"user/all?Filter={request.Filter}&Page={request.Page}"
         };
     }
     public static string GetUserImageById(Guid id)

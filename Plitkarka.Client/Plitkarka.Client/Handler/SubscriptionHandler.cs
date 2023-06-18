@@ -12,13 +12,13 @@ public class SubscriptionHandler
     {
         return "subscription?UnsubscribeFromId=" + id.ToString();
     }
-    public static string GetAllSubscribers(PaginationIdRequest body)
+    public static string GetAllSubscribers(PaginationIdRequest request)
     {
-        return $"user/all?Filter={body.Id}&Page={body.Page}";
+        return $"user/all?Filter={request.Id}&Page={request.Page}";
     }
 
-    public static string GetAllSuscriptions(PaginationIdRequest body)
+    public static string GetAllSuscriptions(PaginationIdRequest request)
     {
-        return $"user/all?Filter={body.Id} &Page= {body.Page}";
+        return $"user/all?Filter={request.Id} &Page= {request.Page}";
     }
 }

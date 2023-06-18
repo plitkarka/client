@@ -1,7 +1,3 @@
 ﻿namespace Plitkarka.Client.Models;
 
-public class SetUserImageRequestModel
-{
-    public IFormFile Image { get; set; }
-    
-}
+public record SetUserImageRequestModel(IFormFile Image);

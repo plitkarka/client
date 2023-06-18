@@ -8,6 +8,6 @@ public interface IUserClient
 {
     Task<IdResponse> SetUserImage(SetUserImageRequestModel image);
     Task<StringResponse> GetImageUrlByUserId(Guid id);
-    Task<PaginationResponse<UserPreview>> GetAll(PaginationTextRequest body);
+    Task<PaginationResponse<UserPreview>> GetAll(PaginationTextRequest request);
     Task<UserData> GetByIdAsync(Guid id);
 }

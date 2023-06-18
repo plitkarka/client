@@ -14,17 +14,13 @@ public class SubscriptionClient : MyHttpClient, ISubscriptionClient
 {
     public SubscriptionClient(HttpClient httpClient) : base(httpClient) {}
 
-    public async Task<PaginationResponse<UserPreview>> GetAllSubscribers(PaginationIdRequest body)
+    public async Task<PaginationResponse<UserPreview>> GetAllSubscribers(PaginationIdRequest request)
     {
-        var result = await GetRequest<PaginationResponse<UserPreview>>(SubscriptionHandler.GetAllSubscribers(body), HttpMethod.Get);
-
-        return result;
+        return await GetRequest<PaginationResponse<UserPreview>>(SubscriptionHandler.GetAllSubscribers(request), HttpMethod.Get);
     }
-    public async Task<PaginationResponse<UserPreview>> GetAllSuscriptions(PaginationIdRequest body)
+    public async Task<PaginationResponse<UserPreview>> GetAllSuscriptions(PaginationIdRequest request)
     {
-        var result = await GetRequest<PaginationResponse<UserPreview>>(SubscriptionHandler.GetAllSuscriptions(body), HttpMethod.Get);
-
-        return result;
+        return await GetRequest<PaginationResponse<UserPreview>>(SubscriptionHandler.GetAllSuscriptions(request), HttpMethod.Get);
     }
     public async Task<IdResponse> Subscribe(Guid subscribeToId)
     {

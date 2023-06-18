@@ -2,9 +2,14 @@ using Microsoft.AspNetCore.Mvc;
 using Plitkarka.Client.Interfaces;
 using Plitkarka.Client.Models;
 using Plitkarka.Client.Models.Authorization;
+using Plitkarka.Client.Models.Comments;
 using Plitkarka.Client.Models.Pagination;
+using Plitkarka.Client.Models.Post;
 using Plitkarka.Client.Models.ResetPassword;
 using Plitkarka.Client.Models.User;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.Design;
 
 namespace Plitkarka.Client.Controllers
 {
@@ -73,6 +78,14 @@ namespace Plitkarka.Client.Controllers
             var response = await _apiClient.AuthClient.SignIn(body);
 
             return Ok(response);
+        }
+
+        [HttpGet("auth/signout")]
+        public Task SingOut()
+        {
+            _apiClient.AuthClient.SignOut();
+
+            return null;
         }
 
         [HttpPost("email")]
@@ -167,6 +180,163 @@ namespace Plitkarka.Client.Controllers
         {
             var response = await _apiClient.SubscriptionClient.GetAllSuscriptions(new PaginationIdRequest()
             { Id = filter, Page = page });
+
+            return Ok(response);
+        }
+    }
+    [ApiController]
+    [Route("[controller]")]
+    public class SubComPostController : ControllerBase
+    {
+        private IApiClient _apiClient { get; init; }
+
+        public SubComPostController(
+            IApiClient apiClient)
+        {
+            _apiClient = apiClient;
+        }
+        [HttpPost("comment")]
+        public async Task<ActionResult<IdResponse>> CreateComment
+            ([FromBody] CreateCommentRequest request)
+        {
+            var response = await _apiClient.CommentClient.CreateComment(request);
+
+            return Ok(response);
+        }
+        [HttpDelete("comment")]
+        public async Task<ActionResult> DeleteComment
+           ([FromQuery] Guid guid)
+        {
+            var response = await _apiClient.CommentClient.DeleteComment(guid);
+
+            return Ok(response);
+        }
+        [HttpGet("comment/all")]
+        public async Task<ActionResult> GetComment(
+        [FromQuery] PaginationIdRequest query)
+        {
+            var response = await _apiClient.CommentClient.GetAll(query);
+
+            return Ok(response);
+        }
+
+        [HttpPost("comment/like")]
+        public async Task<ActionResult<IdResponse>> CreateCommentLike(
+        [Required] Guid CommentId)
+        {
+            var response = await _apiClient.CommentClient.CreateCommentLike(CommentId);
+
+            return Ok(response);
+        }
+        [HttpDelete("comment/like")]
+        public async Task<ActionResult> DeleteCommentLike(
+        [Required] Guid CommentId)
+        {
+            var response = await _apiClient.CommentClient.DeleteCommentLike(CommentId);
+
+            return Ok(response);
+        }
+
+        //Post
+
+        [HttpPost("post")]
+        public async Task<ActionResult<IdResponse>> CreatePost(
+        [FromForm] CreatePostRequest request)
+        {
+            var response = await _apiClient.PostClient.CreatePost(request);
+
+            return Ok(response);
+        }
+        [HttpDelete("post")]
+        public async Task<ActionResult> DeletePost(
+        [FromForm] Guid PostId)
+        {
+            var response = await _apiClient.PostClient.DeletePost(PostId);
+
+            return Ok(response);
+        }
+        [HttpGet("post")]
+        public async Task<ActionResult<PaginationResponse<PostResponse>>> GetPosts(
+        [FromQuery] PaginationIdRequest query)
+        {
+            var response = await _apiClient.PostClient.GetPosts(query);
+
+            return Ok(response);
+        }
+        [HttpPost("post/like")]
+        public async Task<ActionResult<IdResponse>> CreatePostLike(
+        [Required] Guid PostId)
+        {
+            var response = await _apiClient.PostClient.CreatePostLike(PostId);
+
+            return Ok(response);
+        }
+        [HttpDelete("post/like")]
+        public async Task<ActionResult> DeletePostLike(
+        [Required] Guid PostId)
+        {
+            var response = await _apiClient.PostClient.DeletePostLike(PostId);
+
+            return Ok(response);
+        }
+        [HttpGet("post/like")]
+        public async Task<ActionResult> GetLikedPosts(
+        [FromQuery] PaginationIdRequest request)
+        {
+
+            var response = await _apiClient.PostClient.GetLikedPosts(request);
+
+            return Ok(response);
+        }
+
+        [HttpPost("post/pin")]
+        public async Task<ActionResult<IdResponse>> PinPost(
+      [Required] Guid PostId)
+        {
+            var response = await _apiClient.PostClient.PinPost(PostId);
+
+            return Ok(response);
+        }
+        [HttpDelete("post/pin")]
+        public async Task<ActionResult> UnpinPost(
+        [Required] Guid PostId)
+        {
+            var response = await _apiClient.PostClient.UnpinPost(PostId);
+
+            return Ok(response);
+        }
+        [HttpGet("post/pin")]
+        public async Task<ActionResult> GetPinnedPost(
+        [FromQuery] PaginationIdRequest request)
+        {
+
+            var response = await _apiClient.PostClient.GetPinnedPosts(request);
+
+            return Ok(response);
+        }
+
+        [HttpPost("post/share")]
+        public async Task<ActionResult<IdResponse>> SharePost(
+     [Required] Guid PostId)
+        {
+            var response = await _apiClient.PostClient.SharePost(PostId);
+
+            return Ok(response);
+        }
+        [HttpDelete("post/share")]
+        public async Task<ActionResult> DeleteSharedPost(
+        [Required] Guid PostId)
+        {
+            var response = await _apiClient.PostClient.DeleteSharedPost(PostId);
+
+            return Ok(response);
+        }
+        [HttpGet("post/share")]
+        public async Task<ActionResult> GetSharedPosts(
+        [FromQuery] PaginationIdRequest request)
+        {
+
+            var response = await _apiClient.PostClient.GetSharedPosts(request);
 
             return Ok(response);
         }

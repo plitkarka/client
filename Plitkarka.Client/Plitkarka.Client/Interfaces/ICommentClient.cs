@@ -9,9 +9,9 @@ namespace Plitkarka.Client.Interfaces;
 
 public interface ICommentClient
 {
-    Task<IdResponse> CreateComment(CreateCommentRequest body);
+    Task<IdResponse> CreateComment(CreateCommentRequest request);
     Task<object> DeleteComment(Guid id);
-    Task<object> GetAll(PaginationIdRequest body);
+    Task<object> GetAll(PaginationIdRequest request);
     Task<IdResponse> CreateCommentLike(Guid commentId);
     Task<object> DeleteCommentLike(Guid commentId);
 }

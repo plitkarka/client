@@ -7,6 +7,6 @@ namespace Plitkarka.Client.Interfaces;
 public interface IResetPasswordClient
 {
     Task<StringResponse> SendEmail(SendEmailRequest email);
-    Task<VerifyCodeRequest> VerifyCode(VerifyCodeRequest body);
-    Task<TokenPairResponse> ResetPassword(ResetPasswordRequest body);
+    Task<VerifyCodeRequest> VerifyCode(VerifyCodeRequest request);
+    Task<TokenPairResponse> ResetPassword(ResetPasswordRequest request);
 }

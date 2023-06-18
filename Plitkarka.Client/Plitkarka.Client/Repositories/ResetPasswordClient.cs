@@ -21,13 +21,13 @@ public class ResetPasswordClient : MyHttpClient, IResetPasswordClient
 
         return await GetRequest<StringResponse>(ResetPasswordHandler.SendEmail(), HttpMethod.Post, content);
     }
-    public async Task<VerifyCodeRequest> VerifyCode(VerifyCodeRequest body)
+    public async Task<VerifyCodeRequest> VerifyCode(VerifyCodeRequest request)
     {
-        return await GetRequest<VerifyCodeRequest>(ResetPasswordHandler.VerifyCode(body.Email,body.PasswordCode), HttpMethod.Get);
+        return await GetRequest<VerifyCodeRequest>(ResetPasswordHandler.VerifyCode(request), HttpMethod.Get);
     }
-    public async Task<TokenPairResponse> ResetPassword(ResetPasswordRequest body)
+    public async Task<TokenPairResponse> ResetPassword(ResetPasswordRequest request)
     {
-        var json = JsonConvert.SerializeObject(body);
+        var json = JsonConvert.SerializeObject(request);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
         return await GetRequest<TokenPairResponse>(ResetPasswordHandler.ResetPassword(), HttpMethod.Put, content);

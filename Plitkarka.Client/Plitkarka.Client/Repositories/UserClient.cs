@@ -26,11 +26,9 @@ public class UserClient : MyHttpClient, IUserClient
     {
         return await GetRequest<StringResponse>(UserHandler.GetUserImageById(id), HttpMethod.Get);
     }
-    public async Task<PaginationResponse<UserPreview>> GetAll(PaginationTextRequest body)
+    public async Task<PaginationResponse<UserPreview>> GetAll(PaginationTextRequest request)
     {
-        var result = await GetRequest<PaginationResponse<UserPreview>>(UserHandler.GetAllUsers(body), HttpMethod.Get);
-       
-        return result;
+        return await GetRequest<PaginationResponse<UserPreview>>(UserHandler.GetAllUsers(request), HttpMethod.Get);
     }
     public async Task<UserData> GetByIdAsync(Guid id)
     {

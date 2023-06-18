@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using Plitkarka.Client.Models.ResetPassword;
+using System.Web;
 
 namespace Plitkarka.Client.Handler;
 
@@ -8,9 +9,9 @@ public class ResetPasswordHandler
     {
         return "password/reset";
     }
-    public static string VerifyCode(string email, string passwordCode)
+    public static string VerifyCode(VerifyCodeRequest request)
     {
-        return $"password/reset?Email={email}&PasswordCode={passwordCode}";
+        return $"password/reset?Email={request.Email}&PasswordCode={request.PasswordCode}";
     }
     public static string ResetPassword()
     {

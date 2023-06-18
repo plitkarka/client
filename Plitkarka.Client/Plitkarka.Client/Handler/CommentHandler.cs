@@ -13,13 +13,13 @@ public class CommentHandler
     {
         return $"comments?CommentId={id}";
     }
-    public static string GetAll(PaginationIdRequest body)
+    public static string GetAll(PaginationIdRequest request)
     {
-        return body switch {
+        return request switch {
             var res when (res.Id == Guid.Empty && res.Page == 0) => "comments",
-            var res when (res.Page == 0) => $"comments?Filter={body.Id}",
-            var res when (res.Id == Guid.Empty) => $"comments?Page={body.Page}",
-            _ => $"comments?Filter={body.Id}&Page={body.Page}"
+            var res when (res.Page == 0) => $"comments?Filter={request.Id}",
+            var res when (res.Id == Guid.Empty) => $"comments?Page={request.Page}",
+            _ => $"comments?Filter={request.Id}&Page={request.Page}"
         };
     }
     public static string ToggleCommentLike(Guid id)

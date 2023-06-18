@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Text;
+using System.Text.Json.Nodes;
 
 namespace Plitkarka.Client.Services;
 
@@ -12,5 +13,9 @@ public class JsonSerializer
             byte[] serializedResult = Encoding.UTF8.GetBytes(json);
             await fs.WriteAsync(serializedResult);
         }
+    }
+    public static async void ClearFile(string fileName)
+    {
+        File.WriteAllTextAsync(fileName, string.Empty);
     }
 }
