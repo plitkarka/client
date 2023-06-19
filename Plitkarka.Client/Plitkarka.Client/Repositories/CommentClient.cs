@@ -3,9 +3,7 @@ using Plitkarka.Client.Handler;
 using Plitkarka.Client.Interfaces;
 using Plitkarka.Client.Models;
 using Plitkarka.Client.Models.Comments;
-using Plitkarka.Client.Models.Pagination;
 using Plitkarka.Client.Services;
-using System.ComponentModel.Design;
 using System.Text;
 
 namespace Plitkarka.Client.Repositories;
@@ -14,27 +12,27 @@ public class CommentClient : MyHttpClient, ICommentClient
 {
     public CommentClient(HttpClient httpClient) : base(httpClient) {}
 
-    public async Task<IdResponse> CreateComment(CreateCommentRequest request)
+    public async Task<IdResponse> CreateCommentAsync(CreateCommentRequest request)
     {
         var json = JsonConvert.SerializeObject(request);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        return await GetRequest<IdResponse>(CommentHandler.CreateComment(), HttpMethod.Post, content);
+        return await PostRequest<IdResponse>(CommentHandler.CreateComment(), content);
     }
-    public async Task<object> DeleteComment(Guid id)
+    public async Task DeleteCommentAsync(Guid id)
     {
-        return await GetRequest<object>(CommentHandler.DeleteComment(id), HttpMethod.Delete);
+        await DeleteRequest(CommentHandler.DeleteComment(id));
     }
-    public async Task<object> GetAll(PaginationIdRequest request)
+    public async Task<object> GetAllAsync(PaginationIdRequest request)
     {
-        return await GetRequest<object>(CommentHandler.GetAll(request), HttpMethod.Get);
+        return await GetRequest<object>(CommentHandler.GetAll(request));
     }
-    public async Task<IdResponse> CreateCommentLike(Guid commentId)
+    public async Task<IdResponse> CreateCommentLikeAsync(Guid commentId)
     {
-        return await GetRequest<IdResponse>(CommentHandler.ToggleCommentLike(commentId), HttpMethod.Post);
+        return await PostRequest<IdResponse>(CommentHandler.ToggleCommentLike(commentId));
     }
-    public async Task<object> DeleteCommentLike(Guid commentId)
+    public async Task DeleteCommentLikeAsync(Guid commentId)
     {
-        return await GetRequest<IdResponse>(CommentHandler.ToggleCommentLike(commentId), HttpMethod.Delete);
+        await DeleteRequest(CommentHandler.ToggleCommentLike(commentId));
     }
 }

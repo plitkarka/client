@@ -1,5 +1,4 @@
 ﻿using Plitkarka.Client.Models;
-using Plitkarka.Client.Models.Pagination;
 
 namespace Plitkarka.Client.Handler;
 

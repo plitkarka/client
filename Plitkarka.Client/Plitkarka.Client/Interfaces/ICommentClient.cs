@@ -1,17 +1,13 @@
-﻿using Plitkarka.Client.Models.Authorization;
-using Plitkarka.Client.Models.ResetPassword;
-using Plitkarka.Client.Models;
+﻿using Plitkarka.Client.Models;
 using Plitkarka.Client.Models.Comments;
-using Plitkarka.Client.Models.User;
-using Plitkarka.Client.Models.Pagination;
 
 namespace Plitkarka.Client.Interfaces;
 
 public interface ICommentClient
 {
-    Task<IdResponse> CreateComment(CreateCommentRequest request);
-    Task<object> DeleteComment(Guid id);
-    Task<object> GetAll(PaginationIdRequest request);
-    Task<IdResponse> CreateCommentLike(Guid commentId);
-    Task<object> DeleteCommentLike(Guid commentId);
+    Task<IdResponse> CreateCommentAsync(CreateCommentRequest request);
+    Task DeleteCommentAsync(Guid id);
+    Task<object> GetAllAsync(PaginationIdRequest request);
+    Task<IdResponse> CreateCommentLikeAsync(Guid commentId);
+    Task DeleteCommentLikeAsync(Guid commentId);
 }

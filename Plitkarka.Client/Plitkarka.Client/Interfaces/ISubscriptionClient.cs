@@ -6,8 +6,8 @@ namespace Plitkarka.Client.Interfaces;
 
 public interface ISubscriptionClient
 {
-    Task<IdResponse> Subscribe(Guid subscribeToId);
-    Task<object> Unsubscribe(Guid unsubscribeFromId);
-    Task<PaginationResponse<UserPreview>> GetAllSubscribers(PaginationIdRequest request);
-    Task<PaginationResponse<UserPreview>> GetAllSuscriptions(PaginationIdRequest request);
+    Task<IdResponse> SubscribeAsync(Guid subscribeToId);
+    Task UnsubscribeAsync(Guid unsubscribeFromId);
+    Task<PaginationResponse<UserPreview>> GetAllSubscribersAsync(PaginationIdRequest request);
+    Task<PaginationResponse<UserPreview>> GetAllSuscriptionsAsync(PaginationIdRequest request);
 }

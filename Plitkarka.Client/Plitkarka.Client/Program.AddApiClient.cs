@@ -14,6 +14,7 @@ public static partial class Program
         services.AddSingleton<ICommentClient, CommentClient>();
         services.AddSingleton<ISubscriptionClient, SubscriptionClient>();
         services.AddSingleton<IResetPasswordClient, ResetPasswordClient>();
+        services.AddSingleton<IBaseNetworkApi, BaseNetworkApi>();
         services.AddSingleton<IApiClient, ApiClient>();
     }
 }

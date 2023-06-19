@@ -6,8 +6,8 @@ namespace Plitkarka.Client.Interfaces;
 
 public interface IUserClient
 {
-    Task<IdResponse> SetUserImage(SetUserImageRequestModel image);
-    Task<StringResponse> GetImageUrlByUserId(Guid id);
-    Task<PaginationResponse<UserPreview>> GetAll(PaginationTextRequest request);
+    Task<IdResponse> SetUserImageAsync(SetUserImageRequestModel image);
+    Task<StringResponse> GetImageUrlByUserIdAsync(Guid id);
+    Task<PaginationResponse<UserPreview>> GetAllAsync(PaginationTextRequest request);
     Task<UserData> GetByIdAsync(Guid id);
 }

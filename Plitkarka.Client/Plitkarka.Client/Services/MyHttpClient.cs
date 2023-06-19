@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using Plitkarka.Client.Models;
+﻿using Newtonsoft.Json;
+using Plitkarka.Client.Handler;
 using Plitkarka.Client.Models.Authorization;
-using Plitkarka.Infrastructure.Configurations;
-using System.Web;
+using System.Net;
 
 namespace Plitkarka.Client.Services;
 
@@ -17,11 +13,72 @@ public class MyHttpClient
         _httpClient = httpClient;
     }
 
-    public async Task<T?> GetRequest<T>(string url,HttpMethod httpMethod,HttpContent? httpContent = null)
+    public async Task<T?> GetRequest<T>(string url)
     {
-        string endpointPath = _httpClient.BaseAddress + url;
+        var authToken = await CheckAuthToken();
 
-        var authToken = JsonConvert.DeserializeObject<TokenPairResponse>(File.ReadAllText(@"tokenpair.json"));
+        var response = await _httpClient.GetAsync(CreateRequestURL(url));
+
+        if (response.StatusCode == HttpStatusCode.Unauthorized)
+        {
+            GetNewAuthTokenPair(authToken);
+            await GetRequest<T>(url);
+        }
+
+        CheckStatusCode(response);
+
+        return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
+    }
+    public async Task<T?> PostRequest<T>(string url, HttpContent? httpContent = null)
+    {
+        var authToken = await CheckAuthToken();
+
+        var response = await _httpClient.PostAsync(CreateRequestURL(url), httpContent);
+
+        if (response.StatusCode == HttpStatusCode.Unauthorized)
+        {
+            GetNewAuthTokenPair(authToken);
+            await PostRequest<T>(url, httpContent);
+        }
+
+        CheckStatusCode(response);
+
+        return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
+    }
+    public async Task<T?> PutRequest<T>(string url, HttpContent? httpContent = null)
+    {
+        var authToken = await CheckAuthToken();
+
+        var response = await _httpClient.PutAsync(CreateRequestURL(url), httpContent);
+
+        if (response.StatusCode == HttpStatusCode.Unauthorized)
+        {
+            GetNewAuthTokenPair(authToken);
+            await PutRequest<T>(url, httpContent);
+        }
+
+        CheckStatusCode(response);
+
+        return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
+    }
+    public async Task DeleteRequest(string url)
+    {
+        var authToken = await CheckAuthToken();
+
+        var response = await _httpClient.DeleteAsync(CreateRequestURL(url));
+
+        if (response.StatusCode == HttpStatusCode.Unauthorized)
+        {
+            GetNewAuthTokenPair(authToken);
+            await DeleteRequest(url);
+        }
+
+        CheckStatusCode(response);
+    }
+
+    private async Task<TokenPairResponse> CheckAuthToken()
+    {
+        var authToken = await JsonServices.DeserializeFromFileAsync<TokenPairResponse>("tokenpair.json");
         _httpClient.DefaultRequestHeaders.Remove("AuthToken");
 
         if (authToken != null && authToken.AccessToken != "")
@@ -29,39 +86,25 @@ public class MyHttpClient
             _httpClient.DefaultRequestHeaders.Add("AuthToken", authToken.AccessToken);
         }
 
-        HttpResponseMessage response = httpMethod switch
-        {
-            HttpMethod m when m == HttpMethod.Get => response = await _httpClient.GetAsync(endpointPath),
-            HttpMethod m when m == HttpMethod.Post => response = await _httpClient.PostAsync(endpointPath, httpContent),
-            HttpMethod m when m == HttpMethod.Put => response = await _httpClient.PutAsync(endpointPath, httpContent),
-            HttpMethod m when m == HttpMethod.Delete => response = await _httpClient.DeleteAsync(endpointPath),
-            _ => response = await _httpClient.SendAsync(new HttpRequestMessage(httpMethod, endpointPath))
-        };
+        return authToken;
+    }
+    private string CreateRequestURL(string url) => _httpClient.BaseAddress + url;
+    private async void GetNewAuthTokenPair(TokenPairResponse authTokens)
+    {
+        var authToken = await CheckAuthToken();
+        var response = await _httpClient.GetAsync(CreateRequestURL(AuthHandler.GetNewTokenPair(authToken.RefreshToken)));
         
-        Console.WriteLine("\n" + endpointPath + "\n"+ await response.Content.ReadAsStringAsync());
-
-        if (response.ReasonPhrase=="Accepted" && response.Content.Headers.ContentLength == 0)
+        if (response.IsSuccessStatusCode)
         {
-            return (T?)(object)await response.Content.ReadAsStringAsync();
+            var tokenPair = JsonConvert.DeserializeObject<TokenPairResponse>(await response.Content.ReadAsStringAsync());
+            JsonServices.SerializeToFileAsync("tokenpair.json", JsonConvert.SerializeObject(tokenPair, Formatting.Indented));
         }
-
-        if (((int)response.StatusCode) == StatusCodes.Status500InternalServerError || ((int)response.StatusCode) == StatusCodes.Status403Forbidden)
+    }
+    private void CheckStatusCode(HttpResponseMessage response)
+    {
+        if (response.StatusCode == HttpStatusCode.InternalServerError || response.StatusCode == HttpStatusCode.Forbidden)
         {
-            //return await response.Content.ReadAsStringAsync();
+            throw new Exception("Some errors occured on the server");
         }
-
-        if (((int)response.StatusCode) == StatusCodes.Status401Unauthorized)
-        {
-            await _httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, _httpClient.BaseAddress + "api/auth/refresh"));
-        }
-
-        if(response.Content == null) 
-        {
-            throw new ArgumentException($"The path {endpointPath} gets the following status code: " + response.StatusCode);
-        }
-
-        return await response.Content.ReadFromJsonAsync<T>(); // for swagger
-
-        //return JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync()); // return model
     }
 }

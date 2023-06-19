@@ -1,6 +1,6 @@
 ﻿namespace Plitkarka.Client.Models.User;
 
-public class UserData : User
+public record UserData : User
 {
     public DateTime BirthDate { get; set; }
     public DateTime LastLoginDate { get; set; }

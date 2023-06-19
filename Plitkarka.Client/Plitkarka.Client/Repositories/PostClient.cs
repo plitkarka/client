@@ -1,14 +1,10 @@
-﻿using Newtonsoft.Json;
-using Plitkarka.Client.Handler;
+﻿using Plitkarka.Client.Handler;
 using Plitkarka.Client.Interfaces;
 using Plitkarka.Client.Models;
 using Plitkarka.Client.Models.Pagination;
 using Plitkarka.Client.Models.Post;
-using Plitkarka.Client.Models.User;
 using Plitkarka.Client.Services;
 using System.Net.Http.Headers;
-using System.Text;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Plitkarka.Client.Repositories;
 
@@ -16,7 +12,7 @@ public class PostClient : MyHttpClient, IPostClient
 {
     public PostClient(HttpClient httpClient) : base(httpClient) {}
 
-    public async Task<IdResponse> CreatePost(CreatePostRequest request)
+    public async Task<IdResponse> CreatePostAsync(CreatePostRequest request)
     {
         var content = new MultipartFormDataContent();
         if (request == null)
@@ -35,50 +31,50 @@ public class PostClient : MyHttpClient, IPostClient
             content.Add(stringContent, "TextContent");
         }
 
-        return await GetRequest<IdResponse>(PostHandler.CreatePost(), HttpMethod.Post, content);
+        return await PostRequest<IdResponse>(PostHandler.CreatePost(), content);
     }
-    public async Task<object> DeletePost(Guid PostId)
+    public async Task DeletePostAsync(Guid PostId)
     {
-        return await GetRequest<object>(PostHandler.DeletePost(PostId), HttpMethod.Delete);
+        await DeleteRequest(PostHandler.DeletePost(PostId));
     }
-    public async Task<PaginationResponse<PostResponse>> GetPosts(PaginationIdRequest request)
+    public async Task<PaginationResponse<PostResponse>> GetPostsAsync(PaginationIdRequest request)
     {
-        return await GetRequest<PaginationResponse<PostResponse>>(PostHandler.GetPosts(request), HttpMethod.Get);
+        return await GetRequest<PaginationResponse<PostResponse>>(PostHandler.GetPosts(request));
     }
-    public async Task<IdResponse> CreatePostLike(Guid PostId)
+    public async Task<IdResponse> CreatePostLikeAsync(Guid PostId)
     {
-        return await GetRequest<IdResponse>(PostHandler.TogglePostLike(PostId), HttpMethod.Post);
+        return await PostRequest<IdResponse>(PostHandler.TogglePostLike(PostId));
     }
-    public async Task<object> DeletePostLike(Guid PostId)
+    public async Task DeletePostLikeAsync(Guid PostId)
     {
-        return await GetRequest<object>(PostHandler.TogglePostLike(PostId), HttpMethod.Delete);
+         await DeleteRequest(PostHandler.TogglePostLike(PostId));
     }
-    public async Task<PaginationResponse<PostResponse>> GetLikedPosts(PaginationIdRequest request)
+    public async Task<PaginationResponse<PostResponse>> GetLikedPostsAsync(PaginationIdRequest request)
     {
-        return await GetRequest<PaginationResponse<PostResponse>>(PostHandler.GetLikedPosts(request), HttpMethod.Get);
+        return await GetRequest<PaginationResponse<PostResponse>>(PostHandler.GetLikedPosts(request));
     }
-    public async Task<IdResponse> PinPost(Guid PostId)
+    public async Task<IdResponse> PinPostAsync(Guid PostId)
     {
-        return await GetRequest<IdResponse>(PostHandler.TogglePinPost(PostId), HttpMethod.Post);
+        return await PostRequest<IdResponse>(PostHandler.TogglePinPost(PostId));
     }
-    public async Task<object> UnpinPost(Guid PostId)
+    public async Task UnpinPostAsync(Guid PostId)
     {
-        return await GetRequest<object>(PostHandler.TogglePinPost(PostId), HttpMethod.Delete);
+        await DeleteRequest(PostHandler.TogglePinPost(PostId));
     }
-    public async Task<PaginationResponse<PostResponse>> GetPinnedPosts(PaginationIdRequest request)
+    public async Task<PaginationResponse<PostResponse>> GetPinnedPostsAsync(PaginationIdRequest request)
     {
-        return await GetRequest<PaginationResponse<PostResponse>>(PostHandler.GetPinnedPosts(request), HttpMethod.Get);
+        return await GetRequest<PaginationResponse<PostResponse>>(PostHandler.GetPinnedPosts(request));
     }
-    public async Task<IdResponse> SharePost(Guid PostId)
+    public async Task<IdResponse> SharePostAsync(Guid PostId)
     {
-        return await GetRequest<IdResponse>(PostHandler.ToggleSharePost(PostId), HttpMethod.Post);
+        return await PostRequest<IdResponse>(PostHandler.ToggleSharePost(PostId));
     }
-    public async Task<object> DeleteSharedPost(Guid PostId)
+    public async Task DeleteSharedPostAsync(Guid PostId)
     {
-        return await GetRequest<object>(PostHandler.ToggleSharePost(PostId), HttpMethod.Delete);
+        await DeleteRequest(PostHandler.ToggleSharePost(PostId));
     }
-    public async Task<PaginationResponse<PostResponse>> GetSharedPosts(PaginationIdRequest request)
+    public async Task<PaginationResponse<PostResponse>> GetSharedPostsAsync(PaginationIdRequest request)
     {
-        return await GetRequest<PaginationResponse<PostResponse>>(PostHandler.GetSharedPosts(request), HttpMethod.Get);
+        return await GetRequest<PaginationResponse<PostResponse>>(PostHandler.GetSharedPosts(request));
     }
 }

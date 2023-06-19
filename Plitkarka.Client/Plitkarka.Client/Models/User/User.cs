@@ -1,6 +1,6 @@
 ﻿namespace Plitkarka.Client.Models.User;
 
-public class User
+public record User
 {
     public Guid Id { get; set; }
     public string Login { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace Plitkarka.Client.Models.ResetPassword;
 
-public class SendEmailRequest
+public record SendEmailRequest
 {
     public string Email { get; set; }
 }

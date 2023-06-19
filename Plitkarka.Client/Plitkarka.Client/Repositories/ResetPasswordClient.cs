@@ -1,5 +1,4 @@
-﻿using Microsoft.OpenApi.Expressions;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Plitkarka.Client.Handler;
 using Plitkarka.Client.Interfaces;
 using Plitkarka.Client.Models;
@@ -14,22 +13,26 @@ public class ResetPasswordClient : MyHttpClient, IResetPasswordClient
 {
     public ResetPasswordClient(HttpClient httpClient) : base(httpClient) {}
 
-    public async Task<StringResponse> SendEmail(SendEmailRequest email)
+    public async Task<StringResponse> SendEmailAsync(SendEmailRequest email)
     {
         var json = JsonConvert.SerializeObject(email);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        return await GetRequest<StringResponse>(ResetPasswordHandler.SendEmail(), HttpMethod.Post, content);
+        return await PostRequest<StringResponse>(ResetPasswordHandler.SendEmail(), content);
     }
-    public async Task<VerifyCodeRequest> VerifyCode(VerifyCodeRequest request)
+    public async Task<VerifyCodeRequest> VerifyCodeAsync(VerifyCodeRequest request)
     {
-        return await GetRequest<VerifyCodeRequest>(ResetPasswordHandler.VerifyCode(request), HttpMethod.Get);
+        return await GetRequest<VerifyCodeRequest>(ResetPasswordHandler.VerifyCode(request));
     }
-    public async Task<TokenPairResponse> ResetPassword(ResetPasswordRequest request)
+    public async Task<TokenPairResponse> ResetPasswordAsync(ResetPasswordRequest request)
     {
         var json = JsonConvert.SerializeObject(request);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        return await GetRequest<TokenPairResponse>(ResetPasswordHandler.ResetPassword(), HttpMethod.Put, content);
+        var tokenPair = await PutRequest<TokenPairResponse>(ResetPasswordHandler.ResetPassword(), content);
+
+        await JsonServices.SerializeToFileAsync("tokenpair.json", JsonConvert.SerializeObject(tokenPair, Formatting.Indented));
+
+        return tokenPair;
     }
 }

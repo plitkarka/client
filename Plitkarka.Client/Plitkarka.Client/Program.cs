@@ -1,4 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Plitkarka.Client;
 using Plitkarka.Infrastructure.Configurations;

@@ -5,10 +5,10 @@ namespace Plitkarka.Client.Interfaces;
 
 public interface IAuthClient
 {
-    Task<TokenPairResponse> GetNewTokenPair(string refreshToken);
-    Task<StringResponse> SignUp(SignUpRequest request);
-    Task<TokenPairResponse> SignIn(SignInRequest request);
+    Task<TokenPairResponse> GetNewTokenPairAsync(string refreshToken);
+    Task<StringResponse> SignUpAsync(SignUpRequest request);
+    Task<TokenPairResponse> SignInAsync(SignInRequest request);
+    Task<TokenPairResponse> VerifyEmailAsync(VerifyEmailRequest emailRequest);
+    Task<StringResponse> ResendVerificationCodeAsync(ResendVerificationCodeRequest email);
     void SignOut();
-    Task<TokenPairResponse> VerifyEmail(VerifyEmailRequest emailRequest);
-    Task<StringResponse> ResendVerificationCode(ResendVerificationCodeRequest email);
 }
