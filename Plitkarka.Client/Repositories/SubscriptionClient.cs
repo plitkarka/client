@@ -9,7 +9,7 @@ namespace Plitkarka.Client.Repositories;
 
 public class SubscriptionClient : MyHttpClient, ISubscriptionClient
 {
-    public SubscriptionClient(HttpClient httpClient) : base(httpClient) {}
+    public SubscriptionClient() : base() {}
 
     public async Task<PaginationResponse<UserPreview>> GetAllSubscribersAsync(PaginationIdRequest request)
     {

@@ -10,7 +10,7 @@ namespace Plitkarka.Client.Repositories;
 
 public class CommentClient : MyHttpClient, ICommentClient
 {
-    public CommentClient(HttpClient httpClient) : base(httpClient) {}
+    public CommentClient() : base() {}
 
     public async Task<IdResponse> CreateCommentAsync(CreateCommentRequest request)
     {

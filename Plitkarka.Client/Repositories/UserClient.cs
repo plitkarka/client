@@ -12,7 +12,7 @@ namespace Plitkarka.Client.Repositories;
 
 public class UserClient : MyHttpClient, IUserClient
 {
-    public UserClient(HttpClient httpClient) : base(httpClient) {}
+    public UserClient() : base() {}
 
     public async Task<IdResponse> SetUserImageAsync(SetUserImageRequestModel image)
     {
@@ -39,11 +39,11 @@ public class UserClient : MyHttpClient, IUserClient
         return await GetRequest<UserData>(UserHandler.GetUserById(id));
     }
 
-    public async Task UpdateUserProfileAsync(UserUpdateProfile request)
+    public async Task<UserData> UpdateUserProfileAsync(UserUpdateProfile request)
     {
         var json = JsonConvert.SerializeObject(request);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        await PutRequest(UserHandler.UpdateUserProfile(), content);
+        return await PutRequest<UserData>(UserHandler.UpdateUserProfile(), content);
     }
 }

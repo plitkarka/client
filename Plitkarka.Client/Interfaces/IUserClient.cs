@@ -14,5 +14,5 @@ public interface IUserClient
 
     Task<UserData> GetByIdAsync(Guid id);
 
-    Task UpdateUserProfileAsync(UserUpdateProfile request);
+    Task<UserData> UpdateUserProfileAsync(UserUpdateProfile request);
 }

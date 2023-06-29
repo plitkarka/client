@@ -11,7 +11,7 @@ namespace Plitkarka.Client.Repositories;
 
 public class ResetPasswordClient : MyHttpClient, IResetPasswordClient
 {
-    public ResetPasswordClient(HttpClient httpClient) : base(httpClient) {}
+    public ResetPasswordClient() : base() {}
 
     public async Task<StringResponse> SendEmailAsync(SendEmailRequest email)
     {

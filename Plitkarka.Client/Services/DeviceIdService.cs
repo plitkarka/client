@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Plitkarka.Client.Handler;
-using Plitkarka.Client.Interfaces;
 using Plitkarka.Client.Models.TokenPair;
 using System.Text;
 
@@ -12,10 +11,8 @@ public class DeviceIdService
     {
         if (File.Exists(FileHandler.GetDeviceIdFileLocation()) && new FileInfo(FileHandler.GetDeviceIdFileLocation()).Length > 0)
         {
-            using (StreamReader r = new StreamReader(FileHandler.GetDeviceIdFileLocation()))
-            {
-                return await r.ReadToEndAsync();
-            }
+            var res = await JsonServices.DeserializeFromFileAsync<UniqueIdentifierRequest>(FileHandler.GetDeviceIdFileLocation());
+            return res.UniqueIdentifier;
         }
         else
         {
@@ -23,7 +20,7 @@ public class DeviceIdService
 
             using (FileStream fs = new FileStream(FileHandler.GetDeviceIdFileLocation(), FileMode.OpenOrCreate))
             {
-                UniqueIdentifierRequest request = new UniqueIdentifierRequest() {UniqueIdentifier = deviceId.ToString() };
+                UniqueIdentifierRequest request = new UniqueIdentifierRequest() { UniqueIdentifier = deviceId.ToString() };
                 byte[] serializedResult = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(request, Formatting.Indented));
                 await fs.WriteAsync(serializedResult);
             }

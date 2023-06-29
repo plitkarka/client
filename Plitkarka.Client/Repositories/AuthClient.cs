@@ -11,7 +11,7 @@ namespace Plitkarka.Client.Repositories;
 
 public class AuthClient : MyHttpClient, IAuthClient
 {
-    public AuthClient(HttpClient httpClient) : base(httpClient) {}
+    public AuthClient() : base() {}
 
     public async Task<TokenPairResponse> GetNewTokenPairAsync(TokenRequest request)
     {
@@ -33,7 +33,7 @@ public class AuthClient : MyHttpClient, IAuthClient
 
     public async Task<TokenPairResponse> SignInAsync(SignInRequest request)
     {
-        //request.UniqueIdentifier = await DeviceIdService.GetDeviceRegistrationId();
+        request.UniqueIdentifier = await DeviceIdService.GetDeviceRegistrationId();
         var json = JsonConvert.SerializeObject(request);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
