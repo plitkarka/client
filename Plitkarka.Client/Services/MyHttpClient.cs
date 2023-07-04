@@ -1,20 +1,19 @@
 ﻿using Newtonsoft.Json;
-using Plitkarka.Client.Configurations;
 using Plitkarka.Client.Handler;
 using Plitkarka.Client.Interfaces;
 using Plitkarka.Client.Models.Authorization;
 using Plitkarka.Client.Models.TokenPair;
 using System.Net;
+using System.Net.Http;
 
 namespace Plitkarka.Client.Services;
 
 public class MyHttpClient : IHttpClient
 {
     private readonly HttpClient _httpClient;
-    public MyHttpClient()
+    public MyHttpClient(HttpClient httpClient)
     {
-        var config = JsonConvert.DeserializeObject<HttpConfiguration>(File.ReadAllText(FileHandler.GetHttpConfigFileLocation()));
-        _httpClient = new HttpClient() { BaseAddress = new Uri(config.BaseUrl) };
+        _httpClient = httpClient;
     }
 
     public async Task<T?> GetRequest<T>(string url)

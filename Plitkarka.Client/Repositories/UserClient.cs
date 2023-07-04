@@ -12,7 +12,7 @@ namespace Plitkarka.Client.Repositories;
 
 public class UserClient : MyHttpClient, IUserClient
 {
-    public UserClient() : base() {}
+    public UserClient(HttpClient httpClient) : base(httpClient) {}
 
     public async Task<IdResponse> SetUserImageAsync(SetUserImageRequestModel image)
     {

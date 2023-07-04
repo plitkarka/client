@@ -10,7 +10,7 @@ namespace Plitkarka.Client.Repositories;
 
 public class PostClient : MyHttpClient, IPostClient
 {
-    public PostClient() : base() {}
+    public PostClient(HttpClient httpClient) : base(httpClient) {}
 
     public async Task<IdResponse> CreatePostAsync(CreatePostRequest request)
     {

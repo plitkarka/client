@@ -11,7 +11,7 @@ namespace Plitkarka.Client.Repositories;
 
 public class AuthClient : MyHttpClient, IAuthClient
 {
-    public AuthClient() : base() {}
+    public AuthClient(HttpClient httpClient) : base(httpClient) {}
 
     public async Task<TokenPairResponse> GetNewTokenPairAsync(TokenRequest request)
     {
