@@ -2,8 +2,10 @@
 using Microsoft.Maui.Handlers;
 using Plitkarka.Infrastructure.Interfaces;
 using Plitkarka.Infrastructure.Services;
+using Plitkarka.Stores;
 using Plitkarka.ViewModels;
 using Plitkarka.Views;
+using Plitkarka.Views.ContentViews;
 
 namespace Plitkarka;
 
@@ -14,6 +16,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         ConfigureViewsAndViewModels(builder);
         ConfigureServices(builder);
+        ConfigureStores(builder);
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
@@ -34,6 +37,11 @@ public static class MauiProgram
         builder.Services.AddTransient<IMessagingService, MessagingService>();
     }
 
+    private static void ConfigureStores(MauiAppBuilder builder)
+    {
+        builder.Services.AddSingleton<UserStore>();
+    }
+
     private static void ConfigureViewsAndViewModels(MauiAppBuilder builder)
     {
         builder.Services.AddSingleton<ProfileViewModel>();
@@ -44,7 +52,10 @@ public static class MauiProgram
         builder.Services.AddSingleton<FeedDashboardViewModel>();
         builder.Services.AddSingleton<SelectedPostViewModel>();
         builder.Services.AddSingleton<SearchViewModel>();
-        builder.Services.AddSingleton<EditProfilePhotoViewModel>();
+        builder.Services.AddSingleton<CreatePostViewModel>();
+        builder.Services.AddSingleton<SettingsViewModel>();
+        builder.Services.AddSingleton<ChangePasswordViewModel>();
+        builder.Services.AddSingleton<BlockedUsersViewModel>();
 
         builder.Services.AddTransient(s => new ProfilePage { BindingContext = s.GetRequiredService<ProfileViewModel>() });
         builder.Services.AddTransient(s => new LoginPage { BindingContext = s.GetService<LoginViewModel>() });
@@ -55,7 +66,17 @@ public static class MauiProgram
         builder.Services.AddTransient(s => new FeedDashboard { BindingContext = s.GetService<FeedDashboardViewModel>() });
         builder.Services.AddTransient(s => new SelectedPostPage { BindingContext = s.GetService<SelectedPostViewModel>() });
         builder.Services.AddTransient(s => new SearchPage { BindingContext = s.GetService<SearchViewModel>() });
-        builder.Services.AddTransient(s => new EditProfilePhotoPage { BindingContext = s.GetService<EditProfilePhotoViewModel>() });
+        builder.Services.AddTransient(s => new CreatePostPage { BindingContext = s.GetService<CreatePostViewModel>() });
+        builder.Services.AddTransient(s => new SettingsPage { BindingContext = s.GetService<SettingsViewModel>() });
+        builder.Services.AddTransient(s => new ChangePasswordPage { BindingContext = s.GetService<ChangePasswordViewModel>() });
+        builder.Services.AddTransient(s => new BlockedUsersPage { BindingContext = s.GetService<BlockedUsersViewModel>() });
+
+        builder.Services.AddTransient<ChatPage>();
+        builder.Services.AddTransient<PlitkiView>();
+        builder.Services.AddTransient<ReplitsView>();
+        builder.Services.AddTransient<MediaView>();
+        builder.Services.AddTransient<VpodobaikiView>();
+
         builder.Services.AddTransient<AppShell>();
     }
 

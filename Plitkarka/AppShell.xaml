@@ -4,12 +4,14 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:Plitkarka.Views"
+    xmlns:local="clr-namespace:Plitkarka"
     Shell.FlyoutBehavior="Disabled">
 
     <TabBar>
-        <ShellContent Title="Profile" ContentTemplate="{DataTemplate views:ProfilePage}"/>
-        <ShellContent Title="Search" ContentTemplate="{DataTemplate views:SearchPage}"/>
-        <ShellContent Title="Feed" ContentTemplate="{DataTemplate views:FeedDashboard}"/>
-        <ShellContent Title="Another user" ContentTemplate="{DataTemplate views:UserProfilePage}"/>
+        <ShellContent Icon="tab_home.png" ContentTemplate="{DataTemplate views:FeedDashboard}"/>
+        <ShellContent Icon="tab_search.png"  ContentTemplate="{DataTemplate views:SearchPage}"/>
+        <ShellContent Icon="tab_addpost.png" ContentTemplate="{DataTemplate views:CreatePostPage}"/>
+        <ShellContent Icon="tab_chat.png" ContentTemplate="{DataTemplate views:ChatPage}"/>
+        <ShellContent Icon="tab_profile.png" ContentTemplate="{DataTemplate views:ProfilePage}"/>
     </TabBar>
 </Shell>

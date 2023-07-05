@@ -7,6 +7,7 @@
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
+
 		<!-- Display name -->
 		<ApplicationTitle>Plitkarka</ApplicationTitle>
 		<!-- App Identifier -->
@@ -22,10 +23,12 @@
 		<CreatePackage>false</CreatePackage>
 	</PropertyGroup>
 	<ItemGroup>
+	</ItemGroup>
+	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#3B7043" />
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#3B7043" />
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
 		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
@@ -44,17 +47,35 @@
 		<MauiImage Update="Resources\Images\save.svg" BaseSize="14,14" />
 		<MauiImage Update="Resources\Images\meatballs_menu.svg" BaseSize="13,10" />
 		<MauiImage Update="Resources\Images\bell.svg" BaseSize="20,20" />
+		<MauiImage Update="Resources\Images\back_button_dark.svg" BaseSize="20,20" />
+		<MauiImage Update="Resources\Images\block.svg" BaseSize="20,20" />
+		<MauiImage Update="Resources\Images\change_password.svg" BaseSize="20,20" />
+		<MauiImage Update="Resources\Images\bell_dark.svg" BaseSize="20,20" />
+		<MauiImage Update="Resources\Images\arrow.svg" BaseSize="14,14" />
+		<MauiImage Update="Resources\Images\arrow_red.svg" BaseSize="14,14" />
+		<MauiImage Update="Resources\Images\tab_home.svg" BaseSize="28,28" />
+		<MauiImage Update="Resources\Images\tab_search.svg" BaseSize="28,28" />
+		<MauiImage Update="Resources\Images\tab_addpost.svg" BaseSize="28,28" />
+		<MauiImage Update="Resources\Images\tab_profile.svg" BaseSize="28,28" />
+		<MauiImage Remove="Resources\Images\tab_chat.svg" BaseSize="28,28" />
+		<MauiImage Update="Resources\Images\edit.svg" BaseSize="21,21" />
+		<MauiImage Update="Resources\Images\mascot_in_development1.svg" BaseSize="300,350" />
+		<MauiImage Update="Resources\Images\mascot_in_development2.svg" BaseSize="370,140" />
+		<MauiImage Update="Resources\Images\mascot_emptypost.svg" BaseSize="370,140" />
+		<MauiImage Update="Resources\Images\mascot_start.svg" BaseSize="370,140" />
+
+
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
-		<MauiImage Include="Resources\Splash\splash.svg" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="ReactiveUI.Fody" Version="18.4.22" />
 		<PackageReference Include="ReactiveUI.Maui" Version="18.4.22" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.1.0" />
+		<PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Resources\Images\settings.svg" />
@@ -65,18 +86,79 @@
 		<None Remove="Resources\Images\close.svg" />
 		<None Remove="ValueConverters\" />
 		<None Remove="Resources\Images\close_dark.svg" />
+		<None Remove="Views\ContentViews\" />
+		<None Remove="Resources\Images\back_button %28copy%29.svg" />
+		<None Remove="Resources\Images\arrow %28copy%29.svg" />
+		<None Remove="Resources\Images\tab_home %28copy%29.svg" />
+		<None Remove="Resources\Images\tab_home %28copy%29 %28another copy%29.svg" />
+		<None Remove="Resources\Images\tab_home %28copy%29 %283rd copy%29.svg" />
+		<None Remove="Resources\Images\tab_home %28copy%29 %284th copy%29.svg" />
+		<None Remove="Resources\Images\tab_search %28copy%29.svg" />
+		<None Remove="Resources\Images\tab_chat.svg" />
+		<None Remove="Resources\Images\settings %28copy%29.svg" />
+		<None Remove="Resources\Images\mascot_in_development1 %28copy%29.svg" />
+		<None Remove="Resources\Images\save %28copy%29.svg" />
+		<None Remove="Resources\Images\mascot_emptypost %28copy%29.svg" />
 	</ItemGroup>
 	<ItemGroup>
 		<BundleResource Include="Resources\Images\new_releases.svg" />
 		<BundleResource Include="Resources\Images\person.svg" />
 		<BundleResource Include="Resources\Images\close.svg" />
 		<BundleResource Include="Resources\Images\close_dark.svg" />
+		<MauiImage Include="Resources\Images\arrow.svg">
+		  <BaseSize>11,20</BaseSize>
+		</MauiImage>
+		<BundleResource Include="Resources\Images\arrow_red.svg">
+		  <BaseSize>11,20</BaseSize>
+		</BundleResource>
+		<BundleResource Include="Resources\Images\tab_home.svg">
+		  <BaseSize>11,20</BaseSize>
+		</BundleResource>
+		<BundleResource Include="Resources\Images\tab_search.svg">
+		  <BaseSize>11,20</BaseSize>
+		</BundleResource>
+		<BundleResource Include="Resources\Images\tab_profile.svg">
+		  <BaseSize>11,20</BaseSize>
+		</BundleResource>
+		<BundleResource Include="Resources\Images\tab_addpost.svg">
+		  <BaseSize>11,20</BaseSize>
+		</BundleResource>
+		<BundleResource Include="Resources\Images\chat.svg">
+		  <BaseSize>11,20</BaseSize>
+		</BundleResource>
+		<BundleResource Include="Resources\Images\tab_chat.svg">
+		  <BaseSize>11,20</BaseSize>
+		</BundleResource>
+		<BundleResource Include="Resources\Images\tab_chat.svg" />
+		<BundleResource Include="Resources\Images\tab_chat.svg">
+		  <BaseSize>28,28</BaseSize>
+		</BundleResource>
+		<BundleResource Include="Resources\Images\edit.svg">
+		  <BaseSize>11,20</BaseSize>
+		</BundleResource>
+		<BundleResource Include="Resources\Images\mascot_in_development1.svg">
+		  <BaseSize>20,20</BaseSize>
+		</BundleResource>
+		<BundleResource Include="Resources\Images\mascot_in_development2.svg">
+		  <BaseSize>20,20</BaseSize>
+		</BundleResource>
+		<BundleResource Include="Resources\Images\saved.svg">
+		  <BaseSize>14,14</BaseSize>
+		</BundleResource>
+		<BundleResource Include="Resources\Images\mascot_emptypost.svg">
+		  <BaseSize>20,20</BaseSize>
+		</BundleResource>
+		<BundleResource Include="Resources\Images\mascot_start.svg">
+		  <BaseSize>20,20</BaseSize>
+		</BundleResource>
 	</ItemGroup>
 	<ItemGroup>
-		<Folder Include="CustomElements\" />
-		<Folder Include="ValueConverters\" />
+		<Folder Include="Views\ContentViews\" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Plitkarka.Infrastructure\Plitkarka.Infrastructure.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <MauiSplashScreen Include="Resources\Splash\splash.svg" />
 	</ItemGroup>
 </Project>

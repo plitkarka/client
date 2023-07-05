@@ -10,8 +10,8 @@ namespace Plitkarka.Models
         public string AuthorName { get; set; }
         public DateTime CommentDate { get; set; }
         public string CommentContent { get; set; }
-        [Reactive] public int LikesCount { get; set; }
-        [Reactive] public bool IsLiked { get; set; }
+        public int LikesCount { get; set; }
+        public bool IsLiked { get; set; }
     }
 }
 
