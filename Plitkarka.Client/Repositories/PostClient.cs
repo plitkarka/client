@@ -46,6 +46,11 @@ public class PostClient : MyHttpClient, IPostClient
         return await GetRequest<PaginationResponse<PostResponse>>(PostHandler.GetPosts(request));
     }
 
+    public async Task<PaginationResponse<PostResponse>> GetMediaPostsAsync(PaginationIdRequest request)
+    {
+        return await GetRequest<PaginationResponse<PostResponse>>(PostHandler.GetMediaPosts(request));
+    }
+
     public async Task<PaginationResponse<PostResponse>> GetFeedAsync(PaginationRequest request)
     {
         return await GetRequest<PaginationResponse<PostResponse>>(PostHandler.GetFeed(request));

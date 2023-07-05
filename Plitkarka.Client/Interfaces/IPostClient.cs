@@ -12,6 +12,8 @@ public interface IPostClient
 
     Task<PaginationResponse<PostResponse>> GetPostsAsync(PaginationIdRequest request);
 
+    Task<PaginationResponse<PostResponse>> GetMediaPostsAsync(PaginationIdRequest request);
+
     Task<PaginationResponse<PostResponse>> GetFeedAsync(PaginationRequest request);
 
     Task<PaginationResponse<PostResponse>> SearchPostsAsync(PaginationTextRequest request);

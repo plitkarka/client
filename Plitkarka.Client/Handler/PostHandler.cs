@@ -24,6 +24,17 @@ public class PostHandler
         };
     }
 
+    public static string GetMediaPosts(PaginationIdRequest request)
+    {
+        return request switch
+        {
+            var res when (res.Id == Guid.Empty && res.Page == 0) => "posts/all/media",
+            var res when (res.Page == 0) => $"posts/all/media?Filter={request.Id}",
+            var res when (res.Id == Guid.Empty) => $"posts/all/media?Page={request.Page}",
+            _ => $"posts/all/media?Filter={request.Id}&Page={request.Page}"
+        };
+    }
+
     public static string TogglePostLike(Guid PostId)
     {
         return $"posts/like?PostId={PostId}";

@@ -20,5 +20,7 @@ public record PostResponse
 
     public int SharesCount { get; set; }
 
+    public DateTime CreatedDate { get; set; }
+
     public UserPreview UserPreview { get; set; }
 }
