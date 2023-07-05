@@ -1,12 +1,98 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Plitkarka.Views.LoginPage">
-   <StackLayout Margin="20">
-           <Entry Margin="10" Placeholder="Email" Text="{Binding Email, Mode=TwoWay}" />
-           <Entry Margin="10" Placeholder="Password" Text="{Binding Password, Mode=TwoWay}" IsPassword="True" />
-           <Label TextColor="Red" Text="{Binding ErrorText}"/>
-           <Button Margin="10" Text="LOG IN" Command="{Binding LoginCommand}" />
-       </StackLayout>
+             x:Class="Plitkarka.Views.LoginPage"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource MainColor}"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
+
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource MainColor}" />
+    </ContentPage.Behaviors>
+
+    <StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <Image
+                    VerticalOptions="Center"
+                    Margin="24, 12, 8, 12"
+                    HorizontalOptions="Start"
+                    Source="back_button.png">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                            Command="{Binding GoBackCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Label
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="Center"
+                    Margin="0,12,20,16"
+                    FontSize="21"
+                    Text="Авторизація у системі"
+                    TextColor="White"
+                    FontAttributes="Bold" />
+        </StackLayout>
+
+        <StackLayout Margin="16,100,16,0">
+            <Label HorizontalOptions="CenterAndExpand"
+                  VerticalOptions="Center"
+                  FontSize="21"
+                   Margin="0,42"
+                  Text="Раді знову тебе бачити!"
+                  TextColor="White"
+                  FontAttributes="Bold" />
+
+            <Border Margin="0,8" BackgroundColor="{StaticResource White}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                <Entry BackgroundColor="{StaticResource MainColor}"
+                        PlaceholderColor="{StaticResource MainColorSemi}"
+                        Text="{Binding Email, Mode=TwoWay}"
+                        TextColor="{StaticResource White}"
+                        Margin="1"
+                        Placeholder="Електронна пошта"/>
+            </Border>
+
+            <Border Margin="0,8" BackgroundColor="{StaticResource White}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                <Entry BackgroundColor="{StaticResource MainColor}"
+                       TextColor="{StaticResource White}"
+                       PlaceholderColor="{StaticResource MainColorSemi}"
+                       Text="{Binding Password, Mode=TwoWay}"
+                       Margin="1"
+                       Placeholder="Пароль"/>
+            </Border>
+
+            <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                <Label Text="Забули пароль?"
+                       Margin="0,8"
+                       FontAttributes="Bold"
+                       FontSize="14"
+                       TextColor="{StaticResource White}"/>
+                <Label Text=" Нажміть сюди"
+                       FontAttributes="Bold"
+                       Margin="0,8"
+                       FontSize="14"
+                       TextColor="{StaticResource SecondaryColor}"/>
+            </StackLayout>
+
+            <Label Text="{Binding ErrorText}"
+                   IsVisible="{Binding IsValid, Converter={StaticResource InverseBooleanConverter}}"
+                   FontSize="12"
+                   TextColor="{StaticResource ErrorColor}"/>
+
+            <Button Text="Увійти"
+                    Margin="0,8"
+                    IsEnabled="{Binding IsValid}"
+                    TextColor="{StaticResource MainColor}"
+                    BackgroundColor="{StaticResource White}"
+                    FontSize="12"
+                    FontAttributes="Bold"
+                    Command="{Binding LoginCommand}"/>
+        </StackLayout>
+    </StackLayout>
 </ContentPage>

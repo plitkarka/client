@@ -47,8 +47,11 @@ public class AsyncRequestBuilder
         if (_baseExceptionHandler != null)
         {
             _builder = Policy.Handle<Exception>().FallbackAsync(
-                (token) => { return Task.CompletedTask; },
-                async (ex) => _baseExceptionHandler?.Invoke(ex)).WrapAsync(_builder);
+                (token) => { return Task.CompletedTask; }, (ex) =>
+                {
+                    _baseExceptionHandler?.Invoke(ex);
+                    return Task.CompletedTask;
+                }).WrapAsync(_builder);
         }
 
         await _builder.ExecuteAsync(_requestToExecute);

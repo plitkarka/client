@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Plitkarka.Views.ProfilePage"
+             Shell.NavBarIsVisible="False"
+             xmlns:vm="clr-namespace:Plitkarka.ViewModels"
+             xmlns:views="clr-namespace:Plitkarka.Views.ContentViews"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
+
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource MainColor}" />
+    </ContentPage.Behaviors>
+    <ScrollView>
+        <StackLayout>
+            <StackLayout BackgroundColor="{StaticResource MainColor}" Orientation="Horizontal">
+                <Label
+                    VerticalOptions="Center"
+                    Margin="20"
+                    FontSize="21"
+                    Text="{Binding Profile.Nickname}"
+                    TextColor="White"
+                    FontAttributes="Bold" />
+                <Image
+                    VerticalOptions="Center"
+                    Margin="20"
+                    HorizontalOptions="EndAndExpand"
+                    Source="settings.png">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenSettingsPageCommand}" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </StackLayout>
+            <!--Main info-->
+            <StackLayout Orientation="Horizontal">
+                <!--Photo-->
+                <StackLayout Margin="13">
+                    <Image Source="{Binding Profile.PhotoUrl}"
+                           BackgroundColor="{StaticResource Gray}"
+                           WidthRequest="120"
+                           Aspect="AspectFill"
+                           HeightRequest="120">
+                        <Image.Clip>
+                            <EllipseGeometry
+                                Center="60,60"
+                                RadiusX="60"
+                                RadiusY="60"/>
+                        </Image.Clip>
+                    </Image>
+                </StackLayout>
+                <!--Bio-->
+                <StackLayout>
+                    <!--Name-->
+                    <StackLayout VerticalOptions="Start" Orientation="Horizontal" Margin="0,17,0,0">
+                        <Label
+                            VerticalOptions="CenterAndExpand"
+                            IsVisible="{Binding Profile.Name, Converter={StaticResource StringToVisibilityConverter}}"
+                            Text="{Binding Profile.Name}"
+                            FontSize="16"
+                            FontAttributes="Bold" />
+                    </StackLayout>
+                    <!--Username-->
+                    <StackLayout Margin="0,6,0,0">
+                        <Label
+                            FontSize="14"
+                            Text="{Binding Profile.Nickname}" />
+                    </StackLayout>
+                    <Button
+                        Command="{Binding OpenEditPageCommand}"
+                        FontAttributes="Bold"
+                        Margin="0,23,0,0"
+                        FontSize="12"
+                        VerticalOptions="End"
+                        BackgroundColor="{StaticResource MainColorLight}"
+                        TextColor="{StaticResource MainColor}"
+                        Text="Редагувати профіль"
+                        CornerRadius="8" />
+                </StackLayout>
+            </StackLayout>
+            <!--Bio-->
+            <StackLayout>
+                <Label
+                    IsVisible="{Binding Profile.Bio, Converter={StaticResource StringToVisibilityConverter}}"
+                    Margin="16,14,0,0"
+                    FontAttributes="Bold"
+                    FontSize="14"
+                    Text="{Binding Profile.Bio}" />
+            </StackLayout>
+            <!--Link-->
+            <StackLayout>
+                <Label
+                    IsVisible="{Binding Profile.Link, Converter={StaticResource StringToVisibilityConverter}}"
+                    Margin="16,14,0,0"
+                    FontAttributes="Bold"
+                    FontSize="14"
+                    TextColor="{StaticResource LinksColor}"
+                    Text="{Binding Profile.Link}" />
+            </StackLayout>
+            <!--Followers-->
+            <StackLayout Orientation="Horizontal">
+                <StackLayout VerticalOptions="Center">
+                    <Image
+                        Margin="19,11,0,0"
+                        Source="person.png" />
+                </StackLayout>
+                <StackLayout VerticalOptions="Center" Orientation="Horizontal">
+                    <Label Margin="8,13,0,0" FontSize="14">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding Profile.Following}" FontAttributes="Bold" />
+                                <Span TextColor="{StaticResource Gray}" Text=" читає" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Label Margin="16,13,0,0" FontSize="14">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding Profile.Followers}" FontAttributes="Bold" />
+                                <Span TextColor="{StaticResource Gray}" Text=" читачі(в)" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+            </StackLayout>
+
+            <!--Segmented Control-->
+            <StackLayout Margin="16,16,16,0" BindableLayout.ItemsSource="{Binding Segments}" Orientation="Horizontal">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalOptions="FillAndExpand">
+                            <Label Margin="0,8" HorizontalOptions="Center" FontAttributes="Bold" FontSize="12"
+                                   Text="{Binding SegmentName}" />
+                            <BoxView Color="{StaticResource SecondaryColor}" HeightRequest="2" VerticalOptions="End"
+                                     Grid.Row="1" IsVisible="{Binding IsSelected}" />
+                            <BoxView Color="#E4E4E4" HeightRequest="2" VerticalOptions="End" Grid.Row="1"
+                                     IsVisible="{Binding IsSelected, Converter={StaticResource InverseBooleanConverter}}" />
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProfileViewModel}}, Path=ChangeContentCommand}"
+                                    CommandParameter="{Binding .}" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+
+            <views:PlitkiView IsVisible="{Binding Segments[0].IsSelected}" />
+            <views:ReplitsView IsVisible="{Binding Segments[1].IsSelected}" />
+            <views:MediaView IsVisible="{Binding Segments[2].IsSelected}" />
+            <views:VpodobaikiView IsVisible="{Binding Segments[3].IsSelected}" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

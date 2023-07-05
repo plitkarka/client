@@ -1,56 +1,43 @@
 using System.Reactive;
+using Plitkarka.Infrastructure.Interfaces;
 using Plitkarka.Infrastructure.StringResources;
 using Plitkarka.Views;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace Plitkarka.ViewModels;
 
 public class LoginViewModel : ReactiveObject
 {
-    private string _email;
-    private string _password;
-    private string _errorText;
-    private readonly INavigation _navigation;
+    private readonly INavigationService _navigationService;
 
-    public string Email
+    [Reactive] public string Email { get; set; }
+    
+    [Reactive] public string Password { get; set; }
+    
+    [Reactive] public string ErrorText { get; set; }
+  
+    public ReactiveCommand<Unit, Unit> LoginCommand { get; }
+
+    public ReactiveCommand<Unit, Unit> GoBackCommand { get; }
+
+    public LoginViewModel(INavigationService navigationService)
     {
-        get => _email;
-        set => this.RaiseAndSetIfChanged(ref _email, value);
+        _navigationService = navigationService;
+
+        LoginCommand = ReactiveCommand.CreateFromTask(LoginToProfile);
+
+        GoBackCommand = ReactiveCommand.CreateFromTask(GoBack);
+    }
+    
+    private async Task LoginToProfile()
+    {
+        await _navigationService.NavigateToAsync(nameof(FeedDashboard));
     }
 
-    public string Password
+    private async Task GoBack()
     {
-        get => _password;
-        set => this.RaiseAndSetIfChanged(ref _password, value);
-    }
-
-    public string ErrorText
-    {
-        get => _errorText;
-        set => this.RaiseAndSetIfChanged(ref _errorText, value);
-    }
-
-    public ReactiveCommand<Unit, Task> LoginCommand { get; }
-
-    public LoginViewModel(INavigation navigation)
-    {
-        _navigation = navigation;
-
-        LoginCommand = ReactiveCommand.Create(async () =>
-        {
-            if (string.IsNullOrWhiteSpace(Email) || !Email.Contains("@"))
-            {
-                ErrorText = Strings.InvalidEmail;
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(Password) || Password.Length < 6)
-            {
-                ErrorText = Strings.InvalidEmail;
-                return;
-            }
-
-            await _navigation.PushAsync(new HomePage());
-        });
+        await _navigationService.GoBackAsync();
+        Email = Password = string.Empty;
     }
 }

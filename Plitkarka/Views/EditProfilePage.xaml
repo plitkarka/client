@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Plitkarka.Views.EditProfilePage"
+             Shell.NavBarIsVisible="False"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
+
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource MainColor}" />
+    </ContentPage.Behaviors>
+
+    <StackLayout>
+        <!-- Navbar -->
+        <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource MainColor}">
+            <Image
+               HorizontalOptions="StartAndExpand"
+               Margin="12,16"
+               Source="close_light.png">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding CancelChangesCommand}"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <Label
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                TextColor="White"
+                FontSize="20"
+                FontAttributes="Bold"
+                Text="Редагувати профіль"/>
+            <Image
+                HorizontalOptions="EndAndExpand"
+                Margin="12,16"
+                Source="check_light.png">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SaveChangesCommand}"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </StackLayout>
+        <!--Photo-->
+        <StackLayout Margin="0,17,0,0">
+            <Image Source="{Binding PhotoUrl}"
+                   BackgroundColor="{StaticResource Gray}"
+                   WidthRequest="120"
+                   Aspect="AspectFill"
+                   HeightRequest="120">
+                <Image.Clip>
+                    <EllipseGeometry
+                        Center="60,60"
+                        RadiusX="60"
+                        RadiusY="60"/>
+                </Image.Clip>
+            </Image>
+
+        </StackLayout>
+        <Label
+                HorizontalOptions="Center"
+                TextColor="{StaticResource MainColor}"
+                Text="Змінити фото"
+                Margin="0,16,0,0"
+                FontAttributes="Bold"
+                FontSize="12">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding EditProfilePhotoCommand}"/>
+            </Label.GestureRecognizers>
+        </Label>
+        <StackLayout Margin="16,24,17,15">
+            <StackLayout>
+                <Label
+                    FontSize="12"
+                    TextColor="#8A8A8A"
+                    Text="Ім’я користувача"/>
+                <Entry
+                     Text="{Binding Nickname, Mode=TwoWay}"
+                        PlaceholderColor="Transparent"
+                        TextColor="#8A8A8A"
+                        FontSize="16"
+                        FontFamily="12"
+                        BackgroundColor="Transparent"
+                        Margin="0,8,0,0"/>
+            </StackLayout>
+            <StackLayout Margin="0,19,0,0">
+                <Label
+                    FontSize="12"
+                    TextColor="#8A8A8A"
+                    Text="Ім’я"/>
+                <Entry
+                    Text="{Binding Name, Mode=TwoWay}"
+                        PlaceholderColor="Transparent"
+                        TextColor="#8A8A8A"
+                        FontSize="16"
+                        FontFamily="12"
+                        BackgroundColor="Transparent"
+                        Margin="0,8,0,0"/>
+            </StackLayout>
+            <StackLayout Margin="0,19,0,0">
+                <Label
+                    FontSize="12"
+                    TextColor="#8A8A8A"
+                    Text="Про себе"/>
+                <Entry
+                    Text="{Binding Bio, Mode=TwoWay}"
+                        PlaceholderColor="Transparent"
+                        TextColor="#8A8A8A"
+                        FontSize="16"
+                        FontFamily="12"
+                        BackgroundColor="Transparent"
+                        Margin="0,8,0,0"/>
+            </StackLayout>
+            <StackLayout Margin="0,19,0,0">
+                <Label
+                    FontSize="12"
+                    TextColor="#8A8A8A"
+                    Text="Посилання"/>
+                <Entry
+                    Text="{Binding Link, Mode=TwoWay}"
+                    PlaceholderColor="Transparent"
+                    TextColor="#8A8A8A"
+                    FontSize="16"
+                    FontFamily="12"
+                    BackgroundColor="Transparent"
+                    Margin="0,8,0,0"/>
+            </StackLayout>
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

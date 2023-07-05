@@ -1,4 +1,5 @@
 using System.Reactive;
+using Plitkarka.Infrastructure.Interfaces;
 using Plitkarka.Views;
 using ReactiveUI;
 
@@ -6,23 +7,22 @@ namespace Plitkarka.ViewModels;
 
 public class MainViewModel : ReactiveObject
 {
-    private readonly INavigation _navigation;
-    public ReactiveCommand<Unit, Task> OpenRegistrationFormCommand { get; }
-    public ReactiveCommand<Unit, Task> OpenLoginFormCommand { get; }
+    public ReactiveCommand<Unit, Unit> OpenRegistrationFormCommand { get; }
+    public ReactiveCommand<Unit, Unit> OpenLoginFormCommand { get; }
     
-    public MainViewModel(INavigation navigation)
+    public MainViewModel(INavigationService navigationService)
     {
-        _navigation = navigation;
-        
-        OpenRegistrationFormCommand = ReactiveCommand.Create(async () =>
+        OpenRegistrationFormCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             //await _navigation.PushAsync(new RegistrationPage());
-            await _navigation.PushAsync(new ProfilePage());
+            await navigationService.NavigateToAsync(nameof(RegistrationPage));
         });
-        
-        OpenLoginFormCommand = ReactiveCommand.Create(async () =>
+
+       OpenLoginFormCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            await _navigation.PushAsync(new LoginPage());
+            
+            await navigationService.NavigateToAsync(nameof(LoginPage));
+
         });
     }
 }

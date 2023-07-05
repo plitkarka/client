@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Plitkarka.Views.CreatePostPage"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
+
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource MainColor}" />
+    </ContentPage.Behaviors>
+
+    <StackLayout>
+        <StackLayout BackgroundColor="{StaticResource MainColor}" Orientation="Horizontal">
+            <Label
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Center"
+                Margin="15"
+                FontSize="21"
+                Text="Створити плітку"
+                TextColor="White"
+                FontAttributes="Bold" />
+        </StackLayout>
+
+        <StackLayout Margin="16,25" Orientation="Horizontal">
+            <Image Source="{Binding Profile.PhotoUrl}"
+                                       BackgroundColor="{StaticResource Gray}"
+                                       WidthRequest="34"
+                                       Aspect="AspectFill"
+                                       HeightRequest="34">
+                                    <Image.Clip>
+                                        <EllipseGeometry
+                                            Center="17,17"
+                                            RadiusX="17"
+                                            RadiusY="17"/>
+                                    </Image.Clip>
+                                </Image>
+
+            <Label Text="{Binding Profile.Nickname}"
+                   Margin="8,0"
+                   VerticalOptions="Center"
+                   FontSize="15"
+                   FontAttributes="Bold" />
+
+            <Button HorizontalOptions="EndAndExpand"
+                    Text="Плітнути"
+                    Command="{Binding AddNewPostCommand}"
+                    CornerRadius="14"
+                    FontAttributes="Bold"
+                    FontSize="12"
+                    BorderWidth="1" />
+        </StackLayout>
+
+        <StackLayout Margin="16,0" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+            <Editor Placeholder="Час поширювати плітки..."
+                    FontSize="15"
+                    AutoSize="TextChanges"
+                    VerticalOptions="StartAndExpand"
+                    HorizontalOptions="FillAndExpand"
+                    Text="{Binding Content, Mode=TwoWay}"
+                    TextColor="{StaticResource Black}"
+                    PlaceholderColor="{StaticResource Gray}"/>
+               <Label HorizontalOptions="End"
+                      VerticalOptions="Start"
+                      Margin="5"
+                      FontSize="15"
+                      TextColor="{StaticResource Gray}"
+                      Text="{Binding RemainingCharacters}"/>
+        </StackLayout>
+        <StackLayout Margin="16,0">
+              <Button Text="Додати зображення"
+                    FontSize="12"
+                    HorizontalOptions="Start"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource MainColor}"
+                    BackgroundColor="Transparent"
+                    Command="{Binding AddImageCommand}"/>
+            <Frame IsClippedToBounds="True"
+                   CornerRadius="14"
+                   IsVisible="{Binding PostImage, Converter={StaticResource StringToVisibilityConverter}}"
+                   Padding="0">
+                <Image Source="{Binding PostImage}"
+                       Aspect="AspectFill"
+                       HeightRequest="240"
+                       IsVisible="{Binding PostImage, Converter={StaticResource StringToVisibilityConverter}}"/>
+            </Frame>
+
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

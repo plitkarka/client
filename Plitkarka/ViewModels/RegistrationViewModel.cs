@@ -3,92 +3,91 @@ using System.Resources;
 using ReactiveUI;
 using Plitkarka.Infrastructure.StringResources;
 using Plitkarka.Views;
+using ReactiveUI.Fody.Helpers;
+using Plitkarka.Infrastructure.Interfaces;
+using ReactiveUI.Fody.Helpers;
+using Plitkarka.Infrastructure.Interfaces;
 using Plitkarka.Infrastructure.Helpers;
+
+using Validator = Plitkarka.Infrastructure.Helpers.ValidationHelper;
 
 namespace Plitkarka.ViewModels;
 
 public class RegistrationViewModel : ReactiveObject
 {
-    private string _name;
-    private string _surname;
-    private DateTime _birthDate;
-    private string _email;
-    private string _password;
-    private string _confirmPassword;
-    private string _errorText;
-    
-    private readonly INavigation _navigation;
+    private readonly INavigationService _navigationService;
 
-    public string Name
-    {
-        get => _name;
-        set => this.RaiseAndSetIfChanged(ref _name, value);
-    }
-    
-    public string Surname
-    {
-        get => _surname;
-        set => this.RaiseAndSetIfChanged(ref _surname, value);
-    }
-    
-    public DateTime BirthDate
-    {
-        get => _birthDate;
-        set => this.RaiseAndSetIfChanged(ref _birthDate, value);
-    }
-    
-    public string Email
-    {
-        get => _email;
-        set => this.RaiseAndSetIfChanged(ref _email, value);
-    }
+    [Reactive] public string Name { get; set; }
 
-    public string Password
-    {
-        get => _password;
-        set => this.RaiseAndSetIfChanged(ref _password, value);
-    }
-    
-    public string ConfirmPassword
-    {
-        get => _confirmPassword;
-        set => this.RaiseAndSetIfChanged(ref _confirmPassword, value);
-    }
+    [Reactive] public string Surname { get; set; }
 
-    public string ErrorText
-    {
-        get => _errorText;
-        set => this.RaiseAndSetIfChanged(ref _errorText, value);
-    }
+    [Reactive] public DateTime BirthDate { get; set; }
+
+    [Reactive] public string Nickname { get; set; }
+
+    [Reactive] public string Email { get; set; }
+
+    [Reactive] public string Password { get; set; }
+
+    [Reactive] public string ConfirmPassword { get; set; }
+
+    [Reactive] public string ErrorText { get; set; }
 
     public ReactiveCommand<Unit, Task> RegisterCommand { get; }
+    
+    [Reactive] public bool IsValid { get; set; }
+    
+    public ReactiveCommand<Unit, Unit> GoBackCommand { get; }
 
-    public RegistrationViewModel(INavigation navigation)
+    public RegistrationViewModel(INavigationService navigationService)
+
     {
-        _navigation = navigation;
+        _navigationService = navigationService;
+
+        this.WhenAnyValue(vm => vm.Email)
+                .Subscribe(email =>
+                {
+                    if (!string.IsNullOrWhiteSpace(email) && !Validator.IsEmailValid(email))
+                        ErrorText = "Invalid email";
+                });
+
+        this.WhenAnyValue(vm => vm.Password)
+            .Subscribe(password =>
+            {
+                if (!string.IsNullOrWhiteSpace(password) && !Validator.IsPasswordValid(password))
+                    ErrorText = "Invalid password";
+            });
 
         RegisterCommand = ReactiveCommand.Create(async () =>
         {
-            var validationRules = new Dictionary<string, Func<bool>>
-            {
-                { "Name", () => ValidationHelper.IsNameValid(Name) },
-                { "Surname", () => ValidationHelper.IsSurnameValid(Surname) },
-                { "Email", () => ValidationHelper.IsEmailValid(Email) },
-                { "Password", () => ValidationHelper.IsPasswordValid(Password) },
-                { "ConfirmPassword", () => ValidationHelper.IsPasswordConfirmed(Password, ConfirmPassword) },
-                { "BirthDate", () => ValidationHelper.IsBirthDateValid(BirthDate)}
-            };
+            //var validationRules = new Dictionary<string, Func<bool>>
+            //{
+            //    { nameof(Email), () => ValidationHelper.IsEmailValid(Email) },
+            //    { nameof(Password), () => ValidationHelper.IsPasswordValid(Password) },
+            //    { nameof(ConfirmPassword), () => ValidationHelper.IsPasswordConfirmed(Password, ConfirmPassword) }
+            //};
 
-            foreach (var rule in validationRules)
-            {
-                if (!rule.Value())
-                {
-                    ErrorText = Strings.ResourceManager.GetString("Invalid" + rule.Key);
-                    return;
-                }
-            }
-            
-            await _navigation.PushAsync(new HomePage());
+            //foreach (var rule in validationRules)
+            //{
+            //    if (!rule.Value())
+            //    {
+            //        ErrorText = Strings.ResourceManager.GetString("Invalid" + rule.Key);
+            //        IsValid = false;
+            //        return;
+            //    }
+            //}
+
+            IsValid = true;
+
+            await _navigationService.NavigateToTabAsync(nameof(HomePage));
         });
+
+        GoBackCommand = ReactiveCommand.CreateFromTask(GoBack);
+    }
+
+    private async Task GoBack()
+    {
+        await _navigationService.GoBackAsync();
+        Nickname = Email = Password = string.Empty;
     }
 }
