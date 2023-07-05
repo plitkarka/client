@@ -6,14 +6,14 @@
              x:Class="Plitkarka.Views.HomePage"
              xmlns:vm="clr-namespace:Plitkarka.ViewModels"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
-
+    
     <ContentPage.Behaviors>
-        <mct:StatusBarBehavior StatusBarColor="{StaticResource Primary}" />
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource MainColor}" />
     </ContentPage.Behaviors>
 
     <ScrollView>
         <StackLayout>
-            <StackLayout BackgroundColor="{StaticResource Primary}" Orientation="Horizontal">
+            <StackLayout BackgroundColor="{StaticResource MainColor}" Orientation="Horizontal">
                 <Label
                     VerticalOptions="Center"
                     Margin="20"
@@ -153,6 +153,5 @@
                 </BindableLayout.ItemTemplate>
             </StackLayout>
         </StackLayout>
-
     </ScrollView>
 </ContentPage>

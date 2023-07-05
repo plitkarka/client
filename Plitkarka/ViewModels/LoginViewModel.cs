@@ -12,32 +12,32 @@ public class LoginViewModel : ReactiveObject
     private readonly INavigationService _navigationService;
 
     [Reactive] public string Email { get; set; }
-
+    
     [Reactive] public string Password { get; set; }
     
     [Reactive] public string ErrorText { get; set; }
   
-    public ReactiveCommand<Unit, Task> LoginCommand { get; }
+    public ReactiveCommand<Unit, Unit> LoginCommand { get; }
+
+    public ReactiveCommand<Unit, Unit> GoBackCommand { get; }
 
     public LoginViewModel(INavigationService navigationService)
     {
         _navigationService = navigationService;
 
-        LoginCommand = ReactiveCommand.Create(async () =>
-        {
-            if (string.IsNullOrWhiteSpace(Email) || !Email.Contains("@"))
-            {
-                ErrorText = Strings.InvalidEmail;
-                return;
-            }
+        LoginCommand = ReactiveCommand.CreateFromTask(LoginToProfile);
 
-            if (string.IsNullOrWhiteSpace(Password) || Password.Length < 6)
-            {
-                ErrorText = Strings.InvalidEmail;
-                return;
-            }
+        GoBackCommand = ReactiveCommand.CreateFromTask(GoBack);
+    }
+    
+    private async Task LoginToProfile()
+    {
+        await _navigationService.NavigateToAsync(nameof(FeedDashboard));
+    }
 
-            await _navigationService.NavigateToTabAsync(nameof(HomePage));
-        });
+    private async Task GoBack()
+    {
+        await _navigationService.GoBackAsync();
+        Email = Password = string.Empty;
     }
 }

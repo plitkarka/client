@@ -14,12 +14,15 @@ public class MainViewModel : ReactiveObject
     {
         OpenRegistrationFormCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            await navigationService.NavigateToTabAsync(nameof(ProfilePage));
+            //await _navigation.PushAsync(new RegistrationPage());
+            await navigationService.NavigateToAsync(nameof(RegistrationPage));
         });
 
        OpenLoginFormCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            await navigationService.NavigateToTabAsync(nameof(EditProfilePage));
+            
+            await navigationService.NavigateToAsync(nameof(LoginPage));
+
         });
     }
 }
