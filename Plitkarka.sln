@@ -6,7 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plitkarka", "Plitkarka\Plitkarka.csproj", "{67030EA1-1B67-4386-8382-C0CB3E6C2AF7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plitkarka.Infrastructure", "Plitkarka.Infrastructure\Plitkarka.Infrastructure.csproj", "{6D908487-C24C-4BF9-B8EE-8CA9AFF8AB5A}"
-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EB073D99-5344-46E2-A453-C2483E052233}"
 	ProjectSection(SolutionItems) = preProject

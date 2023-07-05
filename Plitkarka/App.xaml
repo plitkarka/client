@@ -11,8 +11,17 @@
             </ResourceDictionary.MergedDictionaries>
 
             <converters:HeartImageConverter x:Key="HeartImageConverter"/>
+            <converters:SaveImageConverter x:Key="SaveImageConverter"/>
             <converters:AmountToFormattedTextConverter x:Key="AmountToFormattedTextConverter"/>
             <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+            <converters:CollectionToVisibilityConverter x:Key="CollectionToVisibilityConverter"/>
+            <converters:TextToEnabledButtonConverter x:Key="TextToEnabledButtonConverter"/>
+            <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+            <converters:LowercaseConverter x:Key="LowercaseConverter"/>
+            <converters:PostsWithImagesConverter x:Key="PostsWithImagesConverter"/>
+            <converters:RandomImageConverter x:Key="RandomImageConverter"/>
+            <converters:RandomTextConverter x:Key="RandomTextConverter"/>
+            <converters:SavedPostsConverter x:Key="SavedPostsConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
