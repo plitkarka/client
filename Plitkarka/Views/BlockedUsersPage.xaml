@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Plitkarka.Views.BlockedUsersPage"
+             xmlns:vm="clr-namespace:Plitkarka.ViewModels"
+             Shell.NavBarIsVisible="False"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
+    
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource MainColor}" />
+    </ContentPage.Behaviors>
+    
+    <StackLayout>
+        <StackLayout BackgroundColor="{StaticResource MainColor}" Orientation="Horizontal">
+            <Image
+                VerticalOptions="Start"
+                Margin="12,12,0,16"
+                HorizontalOptions="Start"
+                Source="back_button.png">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding GoBackCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Label
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Center"
+                Margin="0,12,20,16"
+                FontSize="21"
+                Text="Заблоковані"
+                TextColor="White"
+                FontAttributes="Bold" />
+        </StackLayout>
+        
+        <StackLayout Margin="16,16,16,0" BindableLayout.ItemsSource="{Binding BlockedUsers}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Horizontal" Margin="0,8">
+                        <Ellipse
+                            VerticalOptions="Center"
+                            Fill="Red"
+                            WidthRequest="34"
+                            HeightRequest="34" />
+                        <Label Text="{Binding Nickname}"
+                               Margin="8,0"
+                               VerticalOptions="Center"
+                               FontSize="15"
+                               FontAttributes="Bold" />
+                        <Button VerticalOptions="Center"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:BlockedUsersViewModel}}, Path=UnblockUserCommand}"
+                                CommandParameter="{Binding}"
+                                Text="Розблокувати"
+                                FontAttributes="Bold"
+                                HorizontalOptions="EndAndExpand" />
+                    </StackLayout>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </StackLayout>
+
+    </StackLayout>
+</ContentPage>
