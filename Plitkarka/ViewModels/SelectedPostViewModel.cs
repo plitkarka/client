@@ -9,6 +9,9 @@ namespace Plitkarka.ViewModels
 {
     public class SelectedPostViewModel : ReactiveObject
     {
+        private readonly INavigationService _navigationService;
+        private readonly IMessagingService _messagingService;
+
         [Reactive] public Comment UsersComment { get; set; }
         [Reactive] public bool IsDataLoaded { get; set; }
 
@@ -22,6 +25,9 @@ namespace Plitkarka.ViewModels
 
         public SelectedPostViewModel(INavigationService navigationService, IMessagingService messagingService)
         {
+            _navigationService = navigationService;
+            _messagingService = messagingService;
+
             Comments = new ObservableCollection<Comment>
             {
                 new() {AuthorName = "olena.kosak", CommentContent="Дуже важлива тема! Дякую за допис", CommentDate=DateTime.Now, LikesCount=10},
@@ -29,15 +35,18 @@ namespace Plitkarka.ViewModels
                 new() {AuthorName="sashkaaa", CommentContent="Ну хз, мені і так норм, понапридумують тут проблем....",CommentDate=DateTime.Now, LikesCount=2}
             };
             
-            GoBackCommand = ReactiveCommand.Create(() =>
-            {
-                navigationService.GoBackAsync();
-            });
+            GoBackCommand = ReactiveCommand.CreateFromTask(GoBack);
 
             LikeCommentCommand = ReactiveCommand.Create<Comment>(LikeComment);
-
-            messagingService.Subscribe<FeedDashboardViewModel, Post>(this, "SelectedPost", (sender, post) => OnPostSelected(sender, post));
         }
+
+        private void Subscribe()
+        {
+            _messagingService.Subscribe<FeedDashboardViewModel, Post>(this, "SelectedPost", (sender, post) => OnPostSelected(sender, post));
+            _messagingService.Subscribe<ProfileViewModel, Post>(this, "SelectedPost", (sender, post) => Post = post);
+        }
+
+        private async Task GoBack() => await _navigationService.GoBackAsync();
 
         private void OnPostSelected(FeedDashboardViewModel sender, Post post)
         {

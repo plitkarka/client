@@ -6,12 +6,12 @@
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
 
     <ContentPage.Behaviors>
-        <mct:StatusBarBehavior StatusBarColor="{StaticResource Primary}" />
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource MainColor}" />
     </ContentPage.Behaviors>
 
     <StackLayout>
         <!-- Navbar -->
-        <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource Primary}">
+        <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource MainColor}">
             <Image
                HorizontalOptions="StartAndExpand"
                Margin="12,16"
@@ -39,30 +39,39 @@
         </StackLayout>
         <!--Photo-->
         <StackLayout Margin="0,17,0,0">
-            <Ellipse Fill="Red" WidthRequest="120" HeightRequest="120"/>
+            <Image Source="{Binding PhotoUrl}"
+                   BackgroundColor="{StaticResource Gray}"
+                   WidthRequest="120"
+                   Aspect="AspectFill"
+                   HeightRequest="120">
+                <Image.Clip>
+                    <EllipseGeometry
+                        Center="60,60"
+                        RadiusX="60"
+                        RadiusY="60"/>
+                </Image.Clip>
+            </Image>
+
         </StackLayout>
-        <Button
-                Command="{Binding EditProfilePhotoCommand}"
+        <Label
                 HorizontalOptions="Center"
-                CornerRadius="8"
-                Padding="16,8"
-                TextColor="#9692D2"
+                TextColor="{StaticResource MainColor}"
                 Text="Змінити фото"
-                BackgroundColor="Transparent"
-                BorderColor="#9692D2"
                 Margin="0,16,0,0"
                 FontAttributes="Bold"
-                BorderWidth="2"
-                FontFamily="12"/>
+                FontSize="12">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding EditProfilePhotoCommand}"/>
+            </Label.GestureRecognizers>
+        </Label>
         <StackLayout Margin="16,24,17,15">
             <StackLayout>
                 <Label
                     FontSize="12"
                     TextColor="#8A8A8A"
                     Text="Ім’я користувача"/>
-                 <Entry
-                        Text="{Binding Profile.NickName, Mode=TwoWay}"
-                        Grid.Row="0"
+                <Entry
+                     Text="{Binding Nickname, Mode=TwoWay}"
                         PlaceholderColor="Transparent"
                         TextColor="#8A8A8A"
                         FontSize="16"
@@ -76,8 +85,7 @@
                     TextColor="#8A8A8A"
                     Text="Ім’я"/>
                 <Entry
-                        Text="{Binding Profile.Name, Mode=TwoWay}"
-                        Grid.Row="0"
+                    Text="{Binding Name, Mode=TwoWay}"
                         PlaceholderColor="Transparent"
                         TextColor="#8A8A8A"
                         FontSize="16"
@@ -91,14 +99,27 @@
                     TextColor="#8A8A8A"
                     Text="Про себе"/>
                 <Entry
-                        Text="{Binding Profile.Bio, Mode=TwoWay}"
-                        Grid.Row="0"
+                    Text="{Binding Bio, Mode=TwoWay}"
                         PlaceholderColor="Transparent"
                         TextColor="#8A8A8A"
                         FontSize="16"
                         FontFamily="12"
                         BackgroundColor="Transparent"
                         Margin="0,8,0,0"/>
+            </StackLayout>
+            <StackLayout Margin="0,19,0,0">
+                <Label
+                    FontSize="12"
+                    TextColor="#8A8A8A"
+                    Text="Посилання"/>
+                <Entry
+                    Text="{Binding Link, Mode=TwoWay}"
+                    PlaceholderColor="Transparent"
+                    TextColor="#8A8A8A"
+                    FontSize="16"
+                    FontFamily="12"
+                    BackgroundColor="Transparent"
+                    Margin="0,8,0,0"/>
             </StackLayout>
         </StackLayout>
     </StackLayout>

@@ -14,10 +14,13 @@ public class FeedDashboardViewModel : ReactiveObject
 {
     private readonly INavigationService _navigationService;
     private readonly IMessagingService _messagingService;
-
+    
     [Reactive] public ObservableCollection<Post> Posts { get; set; }
-
     public ReactiveCommand<Post, Unit> OpenSelectedPostCommand { get; }
+    
+    public ReactiveCommand<Post, Unit> LikePostCommand { get; }
+
+    public ReactiveCommand<Unit, Unit> OpenUsersProfileCommand { get; }
 
     public FeedDashboardViewModel(INavigationService navigationService, IMessagingService messagingService)
     {
@@ -49,10 +52,41 @@ public class FeedDashboardViewModel : ReactiveObject
                 PostContent =
                     "Нова річ у моєму житті - відкрила для себе йогу! Це така потрібна практика для зняття стресу та підвищення концентрації. А ще знайшла чудову студію з чайним баром, де можна розслабитись після тренування. Рекомендую всім спробувати!\n#yoga #wellness",
                 CommentsCount = 500, LikesCount = 20000, ReplitsCount = 450, SavesCount = 200, SharesCount = 100
+            },
+             new()
+            {
+                AuthorProfileImage = "https://example.com/user3.jpg", AuthorName = "alla.kurilenko",
+                PostDate = DateTime.Now,
+                PostContent =
+                    "This is just an example of post",
+                CommentsCount = 10, LikesCount = 10443, ReplitsCount = 22, SavesCount = 33, SharesCount = 12
             }
         };
 
+        _messagingService.Subscribe<FeedDashboardViewModel, Post>(this, "NewPost", OnNewPostReceived);
+
         OpenSelectedPostCommand = ReactiveCommand.CreateFromTask<Post>(OpenSelectedPost);
+        
+        LikePostCommand = ReactiveCommand.Create<Post>(LikePost);
+
+        OpenUsersProfileCommand = ReactiveCommand.CreateFromTask(OpenUsersProfile);
+    }
+
+    private async Task OpenUsersProfile()
+    {
+        await _navigationService.NavigateToAsync(nameof(UserProfilePage));
+    }
+
+    private void LikePost(Post post)
+    {
+        post.IsLiked = !post.IsLiked;
+        post.LikesCount += (post.IsLiked ? 1 : -1);
+    }
+
+    private void OnNewPostReceived(FeedDashboardViewModel sender, Post post)
+    {
+        Posts.Add(post);
+        Posts = new ObservableCollection<Post>(Posts.OrderByDescending(p => p.PostDate));
     }
 
     private async Task OpenSelectedPost(Post post)
@@ -61,5 +95,4 @@ public class FeedDashboardViewModel : ReactiveObject
 
         await Application.Current.Dispatcher.DispatchAsync(() => _messagingService.Send(this, "SelectedPost", post));
     }
-
 }

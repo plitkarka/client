@@ -8,18 +8,15 @@
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
 
     <ContentPage.Behaviors>
-        <mct:StatusBarBehavior StatusBarColor="{StaticResource Primary}" />
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource MainColor}" />
     </ContentPage.Behaviors>
 
     <StackLayout>
-        <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource Primary}">
+        <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource MainColor}">
             <!--Search-->
             <SearchBar
                 Placeholder="Знайти плітку"
                 Text="{Binding SearchRequest, Mode=TwoWay}"
-                TextColor="White"
-                BackgroundColor="{StaticResource Primary}"
-                PlaceholderColor="White"
                 SearchCommand="{Binding SearchCommand}"
                 x:Name="searchBar"
                 SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>
@@ -82,7 +79,7 @@
         <!--Show more recommendations-->
         <Label
             Margin="24"
-            TextColor="{StaticResource Primary}"
+            TextColor="{StaticResource MainColor}"
             FontAttributes="Bold"
             FontSize="14"
             Text="Показати ще">
