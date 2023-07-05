@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Plitkarka.Views.SettingsPage"
+             Shell.NavBarIsVisible="False"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
+    
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource MainColor}" />
+    </ContentPage.Behaviors>
+
+    <StackLayout>
+        <StackLayout>
+            <StackLayout BackgroundColor="{StaticResource MainColor}" Orientation="Horizontal">
+                <Image
+                    VerticalOptions="Start"
+                    Margin="12,12,0,16"
+                    HorizontalOptions="Start"
+                    Source="back_button.png">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding GoBackCommand}" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <Label
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="Center"
+                    Margin="0,12,20,16"
+                    FontSize="21"
+                    Text="Налаштування"
+                    TextColor="White"
+                    FontAttributes="Bold" />
+            </StackLayout>
+            
+            <Label Text="Конфіденційність"
+                   FontSize="12"
+                   Margin="16"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource Gray}" />
+            <StackLayout VerticalOptions="Center" Orientation="Horizontal">
+                <Image Source="block.png"
+                       VerticalOptions="Center"
+                       WidthRequest="23"
+                       HeightRequest="23"
+                       Margin="16,0" />
+                <Label Text="Заблоковані"
+                       VerticalOptions="Center"
+                       FontSize="15" />
+                <Label Text="31"
+                       FontSize="15"
+                       Margin="16,0"
+                       TextColor="{StaticResource Gray}"
+                       VerticalOptions="Center"
+                       HorizontalOptions="EndAndExpand" />
+                <Image Source="arrow.png"
+                       Margin="0,0,16,0"
+                       VerticalOptions="Center" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenBlockedUsersPageCommand}" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+            <StackLayout Margin="0,16" VerticalOptions="Center" Orientation="Horizontal">
+                <Image Source="change_password.png"
+                       WidthRequest="23"
+                       HeightRequest="23"
+                       VerticalOptions="Center"
+                       Margin="16,0" />
+                <Label Text="Змінити пароль"
+                       VerticalOptions="Center"
+                       FontSize="15" />
+                <Image Source="arrow.png"
+                       Margin="0,0,16,0"
+                       VerticalOptions="Center"
+                       HorizontalOptions="EndAndExpand" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OpenChangePasswordPageCommand}" />
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+            <BoxView Margin="16,0" HeightRequest="0.5" HorizontalOptions="FillAndExpand"
+                     BackgroundColor="{StaticResource LightGray}" />
+        </StackLayout>
+
+        <StackLayout>
+            <Label Text="Повідомлення"
+                   FontSize="12"
+                   Margin="16"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource Gray}" />
+            <StackLayout VerticalOptions="Center" Orientation="Horizontal">
+                <Image Source="bell_dark.png"
+                       WidthRequest="23"
+                       HeightRequest="23"
+                       VerticalOptions="Center"
+                       Margin="16,0" />
+                <Label Text="Повідомлення"
+                       VerticalOptions="Center"
+                       FontSize="15" />
+                <Switch HorizontalOptions="EndAndExpand"
+                        Margin="16,0">
+                    <Switch.Shadow>
+                        <Shadow Brush="{StaticResource Black}"
+                                Opacity="0.25" />
+                    </Switch.Shadow>
+                </Switch>
+            </StackLayout>
+            <BoxView Margin="16" HeightRequest="0.5" HorizontalOptions="FillAndExpand"
+                     BackgroundColor="{StaticResource LightGray}" />
+        </StackLayout>
+
+        <StackLayout>
+            <Label Text="Вхід"
+                   FontSize="12"
+                   Margin="16,0"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource Gray}" />
+            <StackLayout Margin="16" VerticalOptions="Center" Orientation="Horizontal">
+                <Label Text="Вийти"
+                       VerticalOptions="Center"
+                       FontSize="15" />
+                <Image Source="arrow.png"
+                       VerticalOptions="Center"
+                       HorizontalOptions="EndAndExpand" />
+            </StackLayout>
+            <StackLayout Margin="16,0" VerticalOptions="Center" Orientation="Horizontal">
+                <Label Text="Змінити аккаунт"
+                       VerticalOptions="Center"
+                       FontSize="15" />
+                <Image Source="arrow.png"
+                       VerticalOptions="Center"
+                       HorizontalOptions="EndAndExpand" />
+            </StackLayout>
+            <StackLayout Margin="16" VerticalOptions="Center" Orientation="Horizontal">
+                <Label Text="Видалити аккаунт"
+                       TextColor="{StaticResource LikesColor}"
+                       VerticalOptions="Center"
+                       FontSize="15" />
+                <Image Source="arrow_red.png"
+                       VerticalOptions="Center"
+                       HorizontalOptions="EndAndExpand" />
+            </StackLayout>
+        </StackLayout>
+    </StackLayout>
+
+</ContentPage>
