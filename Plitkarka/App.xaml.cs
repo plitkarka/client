@@ -2,10 +2,18 @@
 
 public partial class App : Application
 {
+    private MauiApp _app;
+
     public App()
     {
         InitializeComponent();        
-        var app = MauiProgram.CreateMauiApp();
-        MainPage = app.Services.GetService<AppShell>();
+        _app = MauiProgram.CreateMauiApp();
+        MainPage = _app.Services.GetService<AppShell>();
+    }
+
+    protected override void OnStart()
+    {
+        var mainPage = _app.Services.GetRequiredService<MainPage>();
+        MainPage.Navigation.PushAsync(mainPage);
     }
 }

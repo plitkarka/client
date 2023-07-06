@@ -1,16 +1,99 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Plitkarka.Views.RegistrationPage">
-    <StackLayout Margin="20">
-        <Entry Margin="10" Placeholder="Name" Text="{Binding Name}" />
-        <Entry Margin="10" Placeholder="Surname" Text="{Binding Surname}"/>
-        <DatePicker Margin="10" Date="{Binding BirthDate}"/>
-        <Entry Margin="10" Placeholder="Email" Text="{Binding Email, Mode=TwoWay}" />
-        <Entry Margin="10" Placeholder="Password" Text="{Binding Password, Mode=TwoWay}" IsPassword="True" />
-        <Entry Margin="10" Placeholder="Confirm password" Text="{Binding ConfirmPassword, Mode=TwoWay}" IsPassword="True" />
-        <Label TextColor="Red" Text="{Binding ErrorText}"/>
-        <Button Margin="10" Text="Register" Command="{Binding RegisterCommand}" />
+             x:Class="Plitkarka.Views.RegistrationPage"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource MainColor}"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
+
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource MainColor}" />
+    </ContentPage.Behaviors>
+
+    <StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <Image
+                    VerticalOptions="Center"
+                    Margin="24, 12, 8, 12"
+                    HorizontalOptions="Start"
+                    Source="back_button.png">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                            Command="{Binding GoBackCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Label
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="Center"
+                    Margin="0,12,20,16"
+                    FontSize="21"
+                    Text="Реєстрація у системі"
+                    TextColor="White"
+                    FontAttributes="Bold" />
+        </StackLayout>
+
+
+        <StackLayout Margin="16,100,16,0">
+            <Label HorizontalOptions="CenterAndExpand"
+                  VerticalOptions="Center"
+                  FontSize="21"
+                   Margin="0,42"
+                  Text="Давай знайомитись!"
+                  TextColor="White"
+                  FontAttributes="Bold" />
+
+            <Border Margin="0,8" BackgroundColor="{StaticResource White}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                 <Entry BackgroundColor="{StaticResource MainColor}"
+                        PlaceholderColor="{StaticResource MainColorSemi}"
+                        Text="{Binding Name, Mode=TwoWay}"
+                        Margin="1"
+                        TextColor="{StaticResource White}"
+                        Placeholder="Твоє ім'я"/>
+            </Border>
+
+            <Border Margin="0,8" BackgroundColor="{StaticResource White}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                 <Entry BackgroundColor="{StaticResource MainColor}"
+                        PlaceholderColor="{StaticResource MainColorSemi}"
+                        Text="{Binding Email, Mode=TwoWay}"
+                        Margin="1"
+                        TextColor="{StaticResource White}"
+                        Placeholder="Електронна пошта"/>
+            </Border>
+
+            <Border Margin="0,8" BackgroundColor="{StaticResource White}">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                 <Entry BackgroundColor="{StaticResource MainColor}"
+                        PlaceholderColor="{StaticResource MainColorSemi}"
+                        Text="{Binding Password, Mode=TwoWay}"
+                        Margin="1"
+                        TextColor="{StaticResource White}"
+                        Placeholder="Пароль"/>
+            </Border>
+
+            <Label Text="{Binding ErrorText}"
+                   IsVisible="{Binding IsValid, Converter={StaticResource InverseBooleanConverter}}"
+                   FontSize="12"
+                   Margin="0,16"
+                   TextColor="{StaticResource ErrorColor}"/>
+
+            <Button Text="Створити обліковий запис"
+                    IsEnabled="{Binding IsValid}"
+                    TextColor="{StaticResource MainColor}"
+                    BackgroundColor="{StaticResource White}"
+                    FontSize="12"
+                    FontAttributes="Bold"
+                    Command="{Binding RegisterCommand}"/>
+        </StackLayout>
     </StackLayout>
+
 </ContentPage>
