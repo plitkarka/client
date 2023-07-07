@@ -25,9 +25,9 @@ public class CommentClient : MyHttpClient, ICommentClient
         await DeleteRequest(CommentHandler.DeleteComment(id));
     }
 
-    public async Task<object> GetAllAsync(PaginationIdRequest request)
+    public async Task<object> GetAllCommentsAsync(PaginationIdRequest? request = null)
     {
-        return await GetRequest<object>(CommentHandler.GetAll(request));
+        return await GetRequest<object>(CommentHandler.GetAllComments(request));
     }
 
     public async Task<IdResponse> CreateCommentLikeAsync(Guid commentId)

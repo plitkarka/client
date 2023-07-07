@@ -13,7 +13,7 @@ public class UserHandler
     {
         return request switch
         {
-            var res when (res.Filter == string.Empty && res.Page == 0) => "user/all",
+            var res when (request == null || res.Filter == string.Empty && res.Page == 0) => "user/all",
             var res when (res.Page == 0) => $"user/all?Filter={request.Filter}",
             var res when (res.Filter == string.Empty) => $"user/all?Page={request.Page}",
             _ => $"user/all?Filter={request.Filter}&Page={request.Page}"

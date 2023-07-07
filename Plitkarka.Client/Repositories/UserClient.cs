@@ -29,7 +29,7 @@ public class UserClient : MyHttpClient, IUserClient
         return await GetRequest<StringResponse>(UserHandler.GetUserImageById(id));
     }
 
-    public async Task<PaginationResponse<UserPreview>> GetAllAsync(PaginationTextRequest request)
+    public async Task<PaginationResponse<UserPreview>> GetAllAsync(PaginationTextRequest? request = null)
     {
         return await GetRequest<PaginationResponse<UserPreview>>(UserHandler.GetAllUsers(request));
     }

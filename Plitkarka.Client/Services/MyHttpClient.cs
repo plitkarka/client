@@ -93,7 +93,6 @@ public class MyHttpClient : IHttpClient
         var token = new TokenRequest() { RefreshToken = authToken.RefreshToken, UniqueIdentifier = await DeviceIdService.GetDeviceRegistrationId() };
         var response = await _httpClient.GetAsync(CreateRequestURL(AuthHandler.GetNewTokenPair(token)));
 
-        Console.WriteLine(await response.Content.ReadAsStringAsync());
         if (response.IsSuccessStatusCode)
         {
             var tokenPair = JsonConvert.DeserializeObject<TokenPairResponse>(await response.Content.ReadAsStringAsync());

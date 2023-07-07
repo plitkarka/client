@@ -9,7 +9,7 @@ public interface ICommentClient
 
     Task DeleteCommentAsync(Guid id);
 
-    Task<object> GetAllAsync(PaginationIdRequest request);
+    Task<object> GetAllCommentsAsync(PaginationIdRequest? request = null);
 
     Task<IdResponse> CreateCommentLikeAsync(Guid commentId);
 
