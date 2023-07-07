@@ -1,11 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Plitkarka.MainPage">
-    <VerticalStackLayout 
-        VerticalOptions="Center"
-        Margin="20">
-        <Button Margin="10" Text="Register" Command="{Binding OpenRegistrationFormCommand}"/>
-        <Button Margin="10" Text="LOG IN" Command="{Binding OpenLoginFormCommand}"/>
-    </VerticalStackLayout>
+             x:Class="Plitkarka.MainPage"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+             BackgroundColor="{StaticResource MainColor}"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
+
+    <ContentPage.Behaviors>
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource MainColor}" />
+    </ContentPage.Behaviors>
+
+    <StackLayout>
+        <Label Text="Почни пліткувати вже зараз!"
+              FontAttributes="Bold"
+              FontSize="24"
+              TextColor="{StaticResource White}"
+              HorizontalTextAlignment="Center"
+              Margin="75,46,75,26"/>
+        
+        <Image Source="mascot_start.png"
+               WidthRequest="315"
+               HeightRequest="315"
+               Margin="20"/>
+
+
+        <Button Text="Зареєструватись"
+               TextColor="{StaticResource MainColor}"
+               CornerRadius="14"
+               Margin="68,0"
+               FontSize="12"
+               FontAttributes="Bold"
+               WidthRequest="256"
+               BackgroundColor="{StaticResource White}"
+               Command="{Binding OpenRegistrationFormCommand}"/>
+
+        <Button Text="Увійти до облікового запису"
+               TextColor="{StaticResource White}"
+               BackgroundColor="{StaticResource MainColor}"
+               BorderColor="{StaticResource White}"
+               BorderWidth="1"
+               CornerRadius="14"
+               Margin="68,24"
+               FontSize="12"
+               FontAttributes="Bold"
+               WidthRequest="256"
+               Command="{Binding OpenLoginFormCommand}"/>
+
+        <Label WidthRequest="270" Margin="70,40">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span FontSize="12" TextColor="{StaticResource MainColorSemi}" Text="Реєструючись, ви погоджуєтесь з " />
+                    <Span FontSize="12" Text="Умовами надання послуг" TextColor="{StaticResource White}" TextDecorations="Underline"/>
+                    <Span FontSize="12" TextColor="{StaticResource MainColorSemi}" Text=", " />
+                    <Span FontSize="12" Text="Політикою конфіденційності" TextColor="{StaticResource White}" TextDecorations="Underline" />
+                    <Span FontSize="12" TextColor="{StaticResource MainColorSemi}" Text=" та " />
+                    <Span FontSize="12" Text="Політикою щодо файлів cookie" TextColor="{StaticResource White}" TextDecorations="Underline" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+    </StackLayout>
 </ContentPage>

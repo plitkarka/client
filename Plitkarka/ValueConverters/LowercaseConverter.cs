@@ -1,19 +1,16 @@
-﻿
-using System;
 using System.Globalization;
 
 namespace Plitkarka.ValueConverters;
 
-public class EqualityConverter : IValueConverter
+public class LowercaseConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return value?.ToString() == parameter?.ToString();
+        return value.ToString()?.ToLower();
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return ((bool)value) ? parameter.ToString() : Binding.DoNothing;
+        throw new NotImplementedException();
     }
 }
-
