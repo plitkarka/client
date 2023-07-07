@@ -10,11 +10,11 @@ public interface IPostClient
 
     Task DeletePostAsync(Guid PostId);
 
-    Task<PaginationResponse<PostResponse>> GetPostsAsync(PaginationIdRequest request);
+    Task<PaginationResponse<PostResponse>> GetPostsAsync(PaginationIdRequest? request = null);
 
-    Task<PaginationResponse<PostResponse>> GetMediaPostsAsync(PaginationIdRequest request);
+    Task<PaginationResponse<PostResponse>> GetMediaPostsAsync(PaginationIdRequest? request = null);
 
-    Task<PaginationResponse<PostResponse>> GetFeedAsync(PaginationRequest request);
+    Task<PaginationResponse<PostResponse>> GetFeedAsync(PaginationRequest? request = null);
 
     Task<PaginationResponse<PostResponse>> SearchPostsAsync(PaginationTextRequest request);
 
@@ -22,17 +22,17 @@ public interface IPostClient
 
     Task DeletePostLikeAsync(Guid PostId);
 
-    Task<PaginationResponse<PostResponse>> GetLikedPostsAsync(PaginationIdRequest request);
+    Task<PaginationResponse<PostResponse>> GetLikedPostsAsync(PaginationIdRequest? request = null);
 
     Task<IdResponse> PinPostAsync(Guid PostId);
 
     Task UnpinPostAsync(Guid PostId);
 
-    Task<PaginationResponse<PostResponse>> GetPinnedPostsAsync(PaginationIdRequest request);
+    Task<PaginationResponse<PostResponse>> GetPinnedPostsAsync(PaginationIdRequest? request = null);
 
     Task<IdResponse> SharePostAsync(Guid PostId);
 
     Task DeleteSharedPostAsync(Guid PostId);
 
-    Task<PaginationResponse<PostResponse>> GetSharedPostsAsync(PaginationIdRequest request);
+    Task<PaginationResponse<PostResponse>> GetSharedPostsAsync(PaginationIdRequest? request = null);
 }

@@ -41,27 +41,23 @@ public class PostClient : MyHttpClient, IPostClient
         await DeleteRequest(PostHandler.DeletePost(PostId));
     }
 
-    public async Task<PaginationResponse<PostResponse>> GetPostsAsync(PaginationIdRequest request)
+    public async Task<PaginationResponse<PostResponse>> GetPostsAsync(PaginationIdRequest? request = null)
     {
         return await GetRequest<PaginationResponse<PostResponse>>(PostHandler.GetPosts(request));
     }
 
-    public async Task<PaginationResponse<PostResponse>> GetMediaPostsAsync(PaginationIdRequest request)
+    public async Task<PaginationResponse<PostResponse>> GetMediaPostsAsync(PaginationIdRequest? request = null)
     {
         return await GetRequest<PaginationResponse<PostResponse>>(PostHandler.GetMediaPosts(request));
     }
 
-    public async Task<PaginationResponse<PostResponse>> GetFeedAsync(PaginationRequest request)
+    public async Task<PaginationResponse<PostResponse>> GetFeedAsync(PaginationRequest? request = null)
     {
         return await GetRequest<PaginationResponse<PostResponse>>(PostHandler.GetFeed(request));
     }
 
     public async Task<PaginationResponse<PostResponse>> SearchPostsAsync(PaginationTextRequest request)
     {
-        Action<string> action;
-        action = s => GetRequest<PaginationResponse<PostResponse>>(s);
-        action("s");
-
         return await GetRequest<PaginationResponse<PostResponse>>(PostHandler.SearchPosts(request));
     }
 
@@ -75,7 +71,7 @@ public class PostClient : MyHttpClient, IPostClient
          await DeleteRequest(PostHandler.TogglePostLike(PostId));
     }
 
-    public async Task<PaginationResponse<PostResponse>> GetLikedPostsAsync(PaginationIdRequest request)
+    public async Task<PaginationResponse<PostResponse>> GetLikedPostsAsync(PaginationIdRequest? request = null)
     {
         return await GetRequest<PaginationResponse<PostResponse>>(PostHandler.GetLikedPosts(request));
     }
@@ -90,7 +86,7 @@ public class PostClient : MyHttpClient, IPostClient
         await DeleteRequest(PostHandler.TogglePinPost(PostId));
     }
 
-    public async Task<PaginationResponse<PostResponse>> GetPinnedPostsAsync(PaginationIdRequest request)
+    public async Task<PaginationResponse<PostResponse>> GetPinnedPostsAsync(PaginationIdRequest? request = null)
     {
         return await GetRequest<PaginationResponse<PostResponse>>(PostHandler.GetPinnedPosts(request));
     }
@@ -105,7 +101,7 @@ public class PostClient : MyHttpClient, IPostClient
         await DeleteRequest(PostHandler.ToggleSharePost(PostId));
     }
 
-    public async Task<PaginationResponse<PostResponse>> GetSharedPostsAsync(PaginationIdRequest request)
+    public async Task<PaginationResponse<PostResponse>> GetSharedPostsAsync(PaginationIdRequest? request = null)
     {
         return await GetRequest<PaginationResponse<PostResponse>>(PostHandler.GetSharedPosts(request));
     }

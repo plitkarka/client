@@ -30,6 +30,6 @@ public class JsonServices
 
     public static async Task ClearFileAsync(string fileName)
     {
-        await SerializeToFileAsync(fileName, string.Empty);   
+        await File.WriteAllTextAsync(fileName, string.Empty);
     }
 }

@@ -17,7 +17,7 @@ public class PostHandler
     {
         return request switch
         {
-            var res when (res.Id == Guid.Empty && res.Page == 0) => "posts/all",
+            var res when (request == null || res.Id == Guid.Empty && res.Page == 0) => "posts/all",
             var res when (res.Page == 0) => $"posts/all?Filter={request.Id}",
             var res when (res.Id == Guid.Empty) => $"posts/all?Page={request.Page}",
             _ => $"posts/all?Filter={request.Id}&Page={request.Page}"
@@ -28,7 +28,7 @@ public class PostHandler
     {
         return request switch
         {
-            var res when (res.Id == Guid.Empty && res.Page == 0) => "posts/all/media",
+            var res when (request == null || res.Id == Guid.Empty && res.Page == 0) => "posts/all/media",
             var res when (res.Page == 0) => $"posts/all/media?Filter={request.Id}",
             var res when (res.Id == Guid.Empty) => $"posts/all/media?Page={request.Page}",
             _ => $"posts/all/media?Filter={request.Id}&Page={request.Page}"
@@ -44,7 +44,7 @@ public class PostHandler
     {
         return request switch
         {
-            var res when (res.Id == Guid.Empty && res.Page == 0) => "posts/like/all",
+            var res when (request == null || res.Id == Guid.Empty && res.Page == 0) => "posts/like/all",
             var res when (res.Page == 0) => $"posts/like/all?Filter={request.Id}",
             var res when (res.Id == Guid.Empty) => $"posts/like/all?Page={request.Page}",
             _ => $"posts/like/all?Filter={request.Id}&Page={request.Page}"
@@ -60,7 +60,7 @@ public class PostHandler
     {
         return request switch
         {
-            var res when (res.Id == Guid.Empty && res.Page == 0) => "posts/pin/all",
+            var res when (request == null || res.Id == Guid.Empty && res.Page == 0) => "posts/pin/all",
             var res when (res.Page == 0) => $"posts/pin/all?Filter={request.Id}",
             var res when (res.Id == Guid.Empty) => $"posts/pin/all?Page={request.Page}",
             _ => $"posts/pin/all?Filter={request.Id}&Page={request.Page}"
@@ -76,7 +76,7 @@ public class PostHandler
     {
         return request switch
         {
-            var res when (res.Id == Guid.Empty && res.Page == 0) => "posts/share/all",
+            var res when (request == null || res.Id == Guid.Empty && res.Page == 0) => "posts/share/all",
             var res when (res.Page == 0) => $"posts/share/all?Filter={request.Id}",
             var res when (res.Id == Guid.Empty) => $"posts/share/all?Page={request.Page}",
             _ => $"posts/share/all?Filter={request.Id}&Page={request.Page}"
@@ -87,7 +87,7 @@ public class PostHandler
     {
         return request switch
         {
-            var res when (res.Page == 0) => $"posts/feed",
+            var res when (request == null || res.Page == 0) => $"posts/feed",
             _ => $"posts/feed?Page={request.Page}"
         };
     }

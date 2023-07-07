@@ -10,7 +10,7 @@ public interface ISubscriptionClient
 
     Task UnsubscribeAsync(Guid unsubscribeFromId);
 
-    Task<PaginationResponse<UserPreview>> GetAllSubscribersAsync(PaginationIdRequest request);
+    Task<PaginationResponse<UserPreview>> GetAllSubscribersAsync(PaginationIdRequest? request = null);
 
-    Task<PaginationResponse<UserPreview>> GetAllSuscriptionsAsync(PaginationIdRequest request);
+    Task<PaginationResponse<UserPreview>> GetAllSuscriptionsAsync(PaginationIdRequest? request = null);
 }

@@ -10,7 +10,7 @@ public interface IUserClient
 
     Task<StringResponse> GetImageUrlByUserIdAsync(Guid id);
 
-    Task<PaginationResponse<UserPreview>> GetAllAsync(PaginationTextRequest request);
+    Task<PaginationResponse<UserPreview>> GetAllAsync(PaginationTextRequest? request = null);
 
     Task<UserData> GetByIdAsync(Guid id);
 

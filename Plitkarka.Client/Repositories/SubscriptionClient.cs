@@ -11,12 +11,12 @@ public class SubscriptionClient : MyHttpClient, ISubscriptionClient
 {
     public SubscriptionClient(HttpClient httpClient) : base(httpClient) {}
 
-    public async Task<PaginationResponse<UserPreview>> GetAllSubscribersAsync(PaginationIdRequest request)
+    public async Task<PaginationResponse<UserPreview>> GetAllSubscribersAsync(PaginationIdRequest? request = null)
     {
         return await GetRequest<PaginationResponse<UserPreview>>(SubscriptionHandler.GetAllSubscribers(request));
     }
 
-    public async Task<PaginationResponse<UserPreview>> GetAllSuscriptionsAsync(PaginationIdRequest request)
+    public async Task<PaginationResponse<UserPreview>> GetAllSuscriptionsAsync(PaginationIdRequest? request = null)
     {
         return await GetRequest<PaginationResponse<UserPreview>>(SubscriptionHandler.GetAllSuscriptions(request));
     }
