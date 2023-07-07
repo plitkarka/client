@@ -13,4 +13,6 @@ public record UserData : User
     public int SubscribersCount { get; set; }
 
     public int SubscriptionsCount { get; set; }
+
+    public string? ImageUrl { get; set; }
 }

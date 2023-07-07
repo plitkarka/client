@@ -3,6 +3,7 @@ using Plitkarka.Client.Handler;
 using Plitkarka.Client.Interfaces;
 using Plitkarka.Client.Models;
 using Plitkarka.Client.Models.Comments;
+using Plitkarka.Client.Models.Pagination;
 using Plitkarka.Client.Services;
 using System.Text;
 
@@ -25,9 +26,9 @@ public class CommentClient : MyHttpClient, ICommentClient
         await DeleteRequest(CommentHandler.DeleteComment(id));
     }
 
-    public async Task<object> GetAllCommentsAsync(PaginationIdRequest? request = null)
+    public async Task<PaginationResponse<CommentResponse>> GetAllCommentsAsync(PaginationIdRequest? request = null)
     {
-        return await GetRequest<object>(CommentHandler.GetAllComments(request));
+        return await GetRequest<PaginationResponse<CommentResponse>>(CommentHandler.GetAllComments(request));
     }
 
     public async Task<IdResponse> CreateCommentLikeAsync(Guid commentId)
