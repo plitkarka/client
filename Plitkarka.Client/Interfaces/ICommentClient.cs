@@ -1,5 +1,7 @@
 ﻿using Plitkarka.Client.Models;
 using Plitkarka.Client.Models.Comments;
+using Plitkarka.Client.Models.Pagination;
+using Plitkarka.Client.Models.Post;
 
 namespace Plitkarka.Client.Interfaces;
 
@@ -9,7 +11,7 @@ public interface ICommentClient
 
     Task DeleteCommentAsync(Guid id);
 
-    Task<object> GetAllCommentsAsync(PaginationIdRequest? request = null);
+    Task<PaginationResponse<CommentResponse>> GetAllCommentsAsync(PaginationIdRequest? request = null);
 
     Task<IdResponse> CreateCommentLikeAsync(Guid commentId);
 

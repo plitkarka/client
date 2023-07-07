@@ -22,5 +22,11 @@ public record PostResponse
 
     public DateTime CreatedDate { get; set; }
 
+    public bool IsLiked { get; set; }
+
+    public bool IsShared { get; set; }
+
+    public bool IsPinned { get; set; }
+
     public UserPreview UserPreview { get; set; }
 }
