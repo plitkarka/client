@@ -8,5 +8,5 @@ public class FileHandler
 
     public static string GetHttpConfigFileLocation() => "httpclientconfig.json";
 
-    public static string GetDeviceIdFileLocation() => FILE_FOLDER + "diviceid.json";
+    public static string GetDeviceIdFileLocation() => FILE_FOLDER + "deviceid.json";
 }

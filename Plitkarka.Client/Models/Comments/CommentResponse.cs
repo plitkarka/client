@@ -10,7 +10,7 @@ public record CommentResponse
 
     public int LikesCount { get; set; }
 
-    public bool Isliked { get; set; }
+    public bool IsLiked { get; set; }
 
     public DateTime CreateDate { get; set; }
 
