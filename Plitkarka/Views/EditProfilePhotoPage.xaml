@@ -7,11 +7,11 @@
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
 
     <ContentPage.Behaviors>
-        <mct:StatusBarBehavior StatusBarColor="{StaticResource Primary}" />
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource MainColor}" />
     </ContentPage.Behaviors>
 
     <StackLayout>
-          <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource Primary}">
+          <StackLayout Orientation="Horizontal" BackgroundColor="{StaticResource MainColor}">
             <Image
                HorizontalOptions="StartAndExpand"
                Margin="12,16"

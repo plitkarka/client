@@ -11,7 +11,7 @@
         <ShellContent Icon="tab_home.png" ContentTemplate="{DataTemplate views:FeedDashboard}"/>
         <ShellContent Icon="tab_search.png"  ContentTemplate="{DataTemplate views:SearchPage}"/>
         <ShellContent Icon="tab_addpost.png" ContentTemplate="{DataTemplate views:CreatePostPage}"/>
-        <ShellContent Icon="tab_chat.png" ContentTemplate="{DataTemplate views:ChatPage}"/>
+        <ShellContent Icon="tab_chats.png" ContentTemplate="{DataTemplate views:ChatPage}"/>
         <ShellContent Icon="tab_profile.png" ContentTemplate="{DataTemplate views:ProfilePage}"/>
     </TabBar>
 </Shell>

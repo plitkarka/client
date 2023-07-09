@@ -14,7 +14,7 @@
 
 
     <ContentPage.Behaviors>
-        <mct:StatusBarBehavior StatusBarColor="{StaticResource Primary}" />
+        <mct:StatusBarBehavior StatusBarColor="{StaticResource MainColor}" />
     </ContentPage.Behaviors>
 
     <ContentPage.Resources>
@@ -25,7 +25,7 @@
 
     <StackLayout>
         <!--Navbar-->
-        <StackLayout BackgroundColor="{StaticResource Primary}" Orientation="Horizontal">
+        <StackLayout BackgroundColor="{StaticResource MainColor}" Orientation="Horizontal">
             <Image
                     VerticalOptions="Start"
                     Margin="12,12,0,16"
