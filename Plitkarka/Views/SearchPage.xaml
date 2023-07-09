@@ -17,6 +17,9 @@
             <SearchBar
                 Placeholder="Знайти плітку"
                 Text="{Binding SearchRequest, Mode=TwoWay}"
+                TextColor="White"
+                BackgroundColor="{StaticResource MainColor}"
+                PlaceholderColor="White"
                 SearchCommand="{Binding SearchCommand}"
                 x:Name="searchBar"
                 SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>

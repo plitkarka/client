@@ -39,6 +39,10 @@ public class RegistrationViewModel : ReactiveObject
     
     public ReactiveCommand<Unit, Unit> GoBackCommand { get; }
 
+    [Reactive] public bool IsValid { get; set; }
+
+    public ReactiveCommand<Unit, Unit> GoBackCommand { get; }
+
     public RegistrationViewModel(INavigationService navigationService)
 
     {

@@ -22,6 +22,9 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
 		<CreatePackage>false</CreatePackage>
 	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0-ios|AnyCPU'">
+	  <CreatePackage>false</CreatePackage>
+	</PropertyGroup>
 	<ItemGroup>
 	</ItemGroup>
 	<ItemGroup>
@@ -57,7 +60,7 @@
 		<MauiImage Update="Resources\Images\tab_search.svg" BaseSize="28,28" />
 		<MauiImage Update="Resources\Images\tab_addpost.svg" BaseSize="28,28" />
 		<MauiImage Update="Resources\Images\tab_profile.svg" BaseSize="28,28" />
-		<MauiImage Remove="Resources\Images\tab_chat.svg" BaseSize="28,28" />
+		<MauiImage Update="Resources\Images\tab_chats.svg" BaseSize="28,28" />
 		<MauiImage Update="Resources\Images\edit.svg" BaseSize="21,21" />
 		<MauiImage Update="Resources\Images\mascot_in_development1.svg" BaseSize="300,350" />
 		<MauiImage Update="Resources\Images\mascot_in_development2.svg" BaseSize="370,140" />
@@ -94,11 +97,11 @@
 		<None Remove="Resources\Images\tab_home %28copy%29 %283rd copy%29.svg" />
 		<None Remove="Resources\Images\tab_home %28copy%29 %284th copy%29.svg" />
 		<None Remove="Resources\Images\tab_search %28copy%29.svg" />
-		<None Remove="Resources\Images\tab_chat.svg" />
 		<None Remove="Resources\Images\settings %28copy%29.svg" />
 		<None Remove="Resources\Images\mascot_in_development1 %28copy%29.svg" />
 		<None Remove="Resources\Images\save %28copy%29.svg" />
 		<None Remove="Resources\Images\mascot_emptypost %28copy%29.svg" />
+		<None Remove="Stores\" />
 	</ItemGroup>
 	<ItemGroup>
 		<BundleResource Include="Resources\Images\new_releases.svg" />
@@ -126,13 +129,6 @@
 		<BundleResource Include="Resources\Images\chat.svg">
 		  <BaseSize>11,20</BaseSize>
 		</BundleResource>
-		<BundleResource Include="Resources\Images\tab_chat.svg">
-		  <BaseSize>11,20</BaseSize>
-		</BundleResource>
-		<BundleResource Include="Resources\Images\tab_chat.svg" />
-		<BundleResource Include="Resources\Images\tab_chat.svg">
-		  <BaseSize>28,28</BaseSize>
-		</BundleResource>
 		<BundleResource Include="Resources\Images\edit.svg">
 		  <BaseSize>11,20</BaseSize>
 		</BundleResource>
@@ -154,6 +150,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Views\ContentViews\" />
+		<Folder Include="Stores\" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Plitkarka.Infrastructure\Plitkarka.Infrastructure.csproj" />

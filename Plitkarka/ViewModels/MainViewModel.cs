@@ -9,18 +9,16 @@ public class MainViewModel : ReactiveObject
 {
     public ReactiveCommand<Unit, Unit> OpenRegistrationFormCommand { get; }
     public ReactiveCommand<Unit, Unit> OpenLoginFormCommand { get; }
-    
+
     public MainViewModel(INavigationService navigationService)
     {
         OpenRegistrationFormCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            //await _navigation.PushAsync(new RegistrationPage());
             await navigationService.NavigateToAsync(nameof(RegistrationPage));
         });
 
-       OpenLoginFormCommand = ReactiveCommand.CreateFromTask(async () =>
+        OpenLoginFormCommand = ReactiveCommand.CreateFromTask(async () =>
         {
-            
             await navigationService.NavigateToAsync(nameof(LoginPage));
 
         });

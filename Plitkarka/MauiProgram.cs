@@ -70,14 +70,14 @@ public static class MauiProgram
         builder.Services.AddTransient(s => new SettingsPage { BindingContext = s.GetService<SettingsViewModel>() });
         builder.Services.AddTransient(s => new ChangePasswordPage { BindingContext = s.GetService<ChangePasswordViewModel>() });
         builder.Services.AddTransient(s => new BlockedUsersPage { BindingContext = s.GetService<BlockedUsersViewModel>() });
+        builder.Services.AddTransient(s => new ChatPage());
 
-        builder.Services.AddTransient<ChatPage>();
         builder.Services.AddTransient<PlitkiView>();
         builder.Services.AddTransient<ReplitsView>();
         builder.Services.AddTransient<MediaView>();
         builder.Services.AddTransient<VpodobaikiView>();
 
-        builder.Services.AddTransient<AppShell>();
+        builder.Services.AddSingleton<AppShell>();
     }
 
     private static void ConfigureHandlers()

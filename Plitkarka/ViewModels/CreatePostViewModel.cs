@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive;
+using System.Threading.Tasks;
 using Plitkarka.Infrastructure.Helpers;
 using Plitkarka.Infrastructure.Interfaces;
 using Plitkarka.Infrastructure.Services;
@@ -18,6 +19,7 @@ namespace Plitkarka.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IMessagingService _messagingService;
         private readonly UserStore _userStore;
+
         [Reactive] public string PostImage { get; set; }
         
         [Reactive] public Profile Profile { get; set; }
@@ -75,7 +77,7 @@ namespace Plitkarka.ViewModels
             .HandleException<OperationCanceledException>(e => Console.WriteLine(e.Message))
             .ExecuteAsync();
         }
-        
+
         private async Task AddNewPost()
         {
             var newPost = new Post();
@@ -98,4 +100,3 @@ namespace Plitkarka.ViewModels
         }
     }
 }
-

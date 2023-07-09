@@ -1,5 +1,6 @@
 using Plitkarka.Models;
 
+
 namespace Plitkarka.Stores;
 
 public class UserStore
