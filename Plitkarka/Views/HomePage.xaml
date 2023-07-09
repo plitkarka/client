@@ -6,7 +6,7 @@
              x:Class="Plitkarka.Views.HomePage"
              xmlns:vm="clr-namespace:Plitkarka.ViewModels"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
-
+    
     <ContentPage.Behaviors>
         <mct:StatusBarBehavior StatusBarColor="{StaticResource MainColor}" />
     </ContentPage.Behaviors>
@@ -153,6 +153,5 @@
                 </BindableLayout.ItemTemplate>
             </StackLayout>
         </StackLayout>
-
     </ScrollView>
 </ContentPage>

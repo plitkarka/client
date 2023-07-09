@@ -12,7 +12,7 @@ public class LoginViewModel : ReactiveObject
     private readonly INavigationService _navigationService;
 
     [Reactive] public string Email { get; set; }
-
+    
     [Reactive] public string Password { get; set; }
 
     [Reactive] public string ErrorText { get; set; }

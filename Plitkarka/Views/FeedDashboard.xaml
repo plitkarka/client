@@ -5,13 +5,12 @@
              x:Class="Plitkarka.Views.FeedDashboard"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
              xmlns:viewModels="clr-namespace:Plitkarka.ViewModels">
-    
-    
+
+
     <ContentPage.Behaviors>
         <mct:StatusBarBehavior StatusBarColor="{StaticResource MainColor}" />
     </ContentPage.Behaviors>
-
-    <ScrollView>
+    <StackLayout>
         <StackLayout>
             <StackLayout BackgroundColor="{StaticResource MainColor}" Orientation="Horizontal">
                 <Label
@@ -89,7 +88,7 @@
                                 <Grid ColumnDefinitions="*,*,*,*,*">
                                     <StackLayout Orientation="Horizontal" Grid.Column="0">
                                         <Image
-                                        Source="like.png"
+                                            Source="{Binding IsLiked, Mode=OneWay, Converter={StaticResource HeartImageConverter}}"
                                         HeightRequest="20"
                                         VerticalOptions="Center" />
 
@@ -98,6 +97,10 @@
                                         FontSize="14"
                                         Margin="4,0,0,0"
                                         VerticalOptions="Center" />
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer  Command="{Binding Path=BindingContext.LikePostCommand, Source={x:Reference PostList}}"
+                                                                   CommandParameter="{Binding .}"/>
+                                        </StackLayout.GestureRecognizers>
                                     </StackLayout>
                                     <StackLayout Orientation="Horizontal" Grid.Column="1">
                                         <Image
@@ -165,5 +168,5 @@
                 </ListView.ItemTemplate>
             </ListView>
         </StackLayout>
-    </ScrollView>
+    </StackLayout>
 </ContentPage>

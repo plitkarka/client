@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Plitkarka.Views.UserProfilePage"
              Shell.NavBarIsVisible="False"
+             xmlns:vm="clr-namespace:Plitkarka.ViewModels"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui">
 
     <ContentPage.Behaviors>
@@ -36,7 +37,19 @@
             <StackLayout Orientation="Horizontal">
                 <!--Photo-->
                 <StackLayout Margin="13">
-                    <Ellipse Fill="Red" WidthRequest="120" HeightRequest="120" />
+                    <Image
+                        Source="https://img.freepik.com/free-photo/happy-man-restaurant-drinking-coffee_23-2148395383.jpg?w=2000"
+                        BackgroundColor="{StaticResource Gray}"
+                        WidthRequest="120"
+                        Aspect="AspectFill"
+                        HeightRequest="120">
+                        <Image.Clip>
+                            <EllipseGeometry
+                                Center="60,60"
+                                RadiusX="60"
+                                RadiusY="60" />
+                        </Image.Clip>
+                    </Image>
                 </StackLayout>
                 <!--Bio-->
                 <StackLayout>
@@ -47,22 +60,20 @@
                             Text="Олександр Петров"
                             FontSize="16"
                             FontAttributes="Bold" />
-                        <Image
-                            Margin="9,0,0,0"
-                            VerticalOptions="CenterAndExpand"
-                            Source="new_releases.png" />
                     </StackLayout>
                     <!--Username-->
                     <StackLayout Margin="0,6,0,0">
                         <Label
                             FontSize="14"
-                            Text="@OleksandrPetrov" />
+                            Text="oleksandrpetrov" />
                     </StackLayout>
                     <Button
+                        TextColor="{StaticResource MainColor}"
+                        BackgroundColor="{StaticResource MainColorLight}"
                         FontAttributes="Bold"
                         Margin="0,23,0,0"
                         FontSize="12"
-                        Text="Редагувати профіль"
+                        Text="Читаю"
                         CornerRadius="8" />
                 </StackLayout>
             </StackLayout>
@@ -93,7 +104,7 @@
                     <Label Margin="16,13,0,0" FontSize="14">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="212 " FontAttributes="Bold" />
+                                <Span Text="213 " FontAttributes="Bold" />
                                 <Span Text="читачів" />
                             </FormattedString>
                         </Label.FormattedText>
@@ -101,14 +112,100 @@
                 </StackLayout>
             </StackLayout>
             <!--Segmented Control-->
-            <HorizontalStackLayout BindableLayout.ItemsSource="{Binding Segments}">
+            <StackLayout Margin="16,16,16,0" BindableLayout.ItemsSource="{Binding Segments}" Orientation="Horizontal">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
-                        <RadioButton Margin="20,0,0,0" Content="{Binding SegmentName}"
-                                     Style="{StaticResource CustomRadioButtonStyle}" />
+                        <Grid HorizontalOptions="FillAndExpand">
+                            <Label Margin="0,8" HorizontalOptions="Center" FontAttributes="Bold" FontSize="12"
+                                   Text="{Binding SegmentName}" />
+                            <BoxView Color="{StaticResource SecondaryColor}" HeightRequest="2" VerticalOptions="End"
+                                     Grid.Row="1" IsVisible="{Binding IsSelected}" />
+                            <BoxView Color="#E4E4E4" HeightRequest="2" VerticalOptions="End" Grid.Row="1"
+                                     IsVisible="{Binding IsSelected, Converter={StaticResource InverseBooleanConverter}}" />
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProfileViewModel}}, Path=ChangeContentCommand}"
+                                    CommandParameter="{Binding .}" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
-            </HorizontalStackLayout>
+            </StackLayout>
+
+            <!--Recommendations-->
+            <!--Recommendations-->
+            <StackLayout IsVisible="{Binding IsRecommendationsVisible}"
+                         Margin="0,17,0,0"
+                         Orientation="Horizontal">
+                <Label
+                    FontSize="14"
+                    FontAttributes="Bold"
+                    Margin="17,0,0,0"
+                    Text="Вам може бути цікаво" />
+                <Image
+                    Margin="0,0,6,0"
+                    HorizontalOptions="EndAndExpand"
+                    Source="close_dark.png">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProfileViewModel}}, Path=CloseRecommendationsCommand}" />
+
+                    </Image.GestureRecognizers>
+
+                </Image>
+            </StackLayout>
+
+            <ScrollView HorizontalScrollBarVisibility="Never" Orientation="Horizontal"
+                        IsVisible="{Binding IsRecommendationsVisible}">
+                <StackLayout Margin="17,6,0,0" Orientation="Horizontal"
+                             BindableLayout.ItemsSource="{Binding Recommendations}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Frame CornerRadius="10"
+                                   Padding="10"
+                                   Margin="0,16,6,0"
+                                   WidthRequest="150"
+                                   HeightRequest="200">
+                                <StackLayout Orientation="Vertical">
+                                    <Image HorizontalOptions="End" Source="close.png" />
+                                    <!--<Image Source="{Binding PhotoUrl}"
+                                                               WidthRequest="100"
+                                                               HeightRequest="100"
+                                                               Aspect="AspectFill"
+                                                               HorizontalOptions="Center" />-->
+                                    <Image Source="{Binding PhotoUrl}"
+                                           BackgroundColor="{StaticResource Gray}"
+                                           WidthRequest="64"
+                                           Aspect="AspectFill"
+                                           HeightRequest="64">
+                                        <Image.Clip>
+                                            <EllipseGeometry
+                                                Center="32,32"
+                                                RadiusX="32"
+                                                RadiusY="32" />
+                                        </Image.Clip>
+                                    </Image>
+
+                                    <Label Text="{Binding Nickname}"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           Margin="0,0,0,8"
+                                           HorizontalOptions="Center" />
+                                    <Button Text="Читати"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProfileViewModel}}, Path=FollowCommand}"
+                                            CommandParameter="{Binding UserId}"
+                                            TextColor="White"
+                                            FontSize="12"
+                                            FontAttributes="Bold"
+                                            WidthRequest="112"
+                                            CornerRadius="8"
+                                            HorizontalOptions="Center" />
+                                </StackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </ScrollView>
             <!--Posts-->
             <StackLayout BindableLayout.ItemsSource="{Binding Posts}">
                 <BindableLayout.ItemTemplate>
@@ -121,12 +218,19 @@
                                 <!--     WidthRequest="40" -->
                                 <!--     Aspect="AspectFill" -->
                                 <!--     VerticalOptions="Center" /> -->
-                                <Ellipse
-                                    VerticalOptions="Center"
-                                    Fill="Red"
+                                <Image
+                                    Source="https://img.freepik.com/free-photo/happy-man-restaurant-drinking-coffee_23-2148395383.jpg?w=2000"
+                                    BackgroundColor="{StaticResource Gray}"
                                     WidthRequest="34"
-                                    HeightRequest="34" />
-
+                                    Aspect="AspectFill"
+                                    HeightRequest="34">
+                                    <Image.Clip>
+                                        <EllipseGeometry
+                                            Center="17,17"
+                                            RadiusX="17"
+                                            RadiusY="17" />
+                                    </Image.Clip>
+                                </Image>
                                 <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
                                     <Label
                                         Text="{Binding AuthorName}"
@@ -143,19 +247,19 @@
                                             Margin="12,0"
                                             WidthRequest="5"
                                             HeightRequest="5"
-                                            Fill="Gray"/>
+                                            Fill="Gray" />
 
                                         <Label
-                                        Text="{Binding PostDate, StringFormat='{0:dd/MM}'}"
-                                        FontSize="14"
-                                        TextColor="Gray" />
+                                            Text="{Binding PostDate, StringFormat='{0:dd/MM}'}"
+                                            FontSize="14"
+                                            TextColor="Gray" />
 
                                     </StackLayout>
 
                                     <Image
                                         VerticalOptions="Center"
                                         HorizontalOptions="EndAndExpand"
-                                        Source="meatballs_menu.png"/>
+                                        Source="meatballs_menu.png" />
                                 </StackLayout>
                             </StackLayout>
 

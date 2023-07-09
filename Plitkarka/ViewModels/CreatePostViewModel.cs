@@ -21,7 +21,7 @@ namespace Plitkarka.ViewModels
         private readonly UserStore _userStore;
 
         [Reactive] public string PostImage { get; set; }
-
+        
         [Reactive] public Profile Profile { get; set; }
 
         [Reactive] public string Content { get; set; }

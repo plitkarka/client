@@ -34,6 +34,10 @@ public class RegistrationViewModel : ReactiveObject
     [Reactive] public string ErrorText { get; set; }
 
     public ReactiveCommand<Unit, Task> RegisterCommand { get; }
+    
+    [Reactive] public bool IsValid { get; set; }
+    
+    public ReactiveCommand<Unit, Unit> GoBackCommand { get; }
 
     [Reactive] public bool IsValid { get; set; }
 
