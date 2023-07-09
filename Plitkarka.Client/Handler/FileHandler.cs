@@ -2,11 +2,11 @@
 
 public class FileHandler
 {
-    private const string FILE_FOLDER = @"Files\";
+    private static readonly string FILE_FOLDER = Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"\Plitkarka.Client";
 
-    public static string GetTokenPairFileLocation() => FILE_FOLDER + "tokenpair.json";
+    public static string GetTokenPairFileLocation() => FILE_FOLDER + @"\Files\tokenpair.json";
 
     public static string GetHttpConfigFileLocation() => "httpclientconfig.json";
 
-    public static string GetDeviceIdFileLocation() => FILE_FOLDER + "deviceid.json";
+    public static string GetDeviceIdFileLocation() => FILE_FOLDER + @"\Files\deviceid.json";
 }
