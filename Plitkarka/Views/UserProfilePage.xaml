@@ -38,7 +38,7 @@
                 <!--Photo-->
                 <StackLayout Margin="13">
                     <Image
-                        Source="https://img.freepik.com/free-photo/happy-man-restaurant-drinking-coffee_23-2148395383.jpg?w=2000"
+                        Source="{Binding UserProfile.PhotoUrl}"
                         BackgroundColor="{StaticResource Gray}"
                         WidthRequest="120"
                         Aspect="AspectFill"
@@ -57,7 +57,7 @@
                     <StackLayout VerticalOptions="Start" Orientation="Horizontal" Margin="0,17,0,0">
                         <Label
                             VerticalOptions="CenterAndExpand"
-                            Text="Олександр Петров"
+                            Text="{Binding UserProfile.Name}"
                             FontSize="16"
                             FontAttributes="Bold" />
                     </StackLayout>
@@ -65,15 +65,17 @@
                     <StackLayout Margin="0,6,0,0">
                         <Label
                             FontSize="14"
-                            Text="oleksandrpetrov" />
+                            Text="{Binding UserProfile.Nickname}" />
                     </StackLayout>
                     <Button
-                        TextColor="{StaticResource MainColor}"
-                        BackgroundColor="{StaticResource MainColorLight}"
+                        TextColor="{StaticResource White}"
+                        BackgroundColor="{StaticResource MainColor}"
                         FontAttributes="Bold"
                         Margin="0,23,0,0"
                         FontSize="12"
-                        Text="Читаю"
+                        Command="{Binding FollowCommand}"
+                        CommandParameter="{Binding UserProfile.UserId}"
+                        Text="{Binding UserProfile.IsSubscribed, Converter={StaticResource TextToSubscriptionConverter}}"
                         CornerRadius="8" />
                 </StackLayout>
             </StackLayout>
@@ -83,7 +85,7 @@
                     Margin="16,27,0,0"
                     FontAttributes="Bold"
                     FontSize="14"
-                    Text="Ви не фотографуєте, ви створюєте!" />
+                    Text="{Binding UserProfile.Bio}" />
             </StackLayout>
             <!--Followers-->
             <StackLayout Orientation="Horizontal">
@@ -96,16 +98,16 @@
                     <Label Margin="8,13,0,0" FontSize="14">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="71 " FontAttributes="Bold" />
-                                <Span Text="читає" />
+                                <Span Text="{Binding UserProfile.Following}" FontAttributes="Bold" />
+                                <Span Text=" читає" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
                     <Label Margin="16,13,0,0" FontSize="14">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="213 " FontAttributes="Bold" />
-                                <Span Text="читачів" />
+                                <Span Text="{Binding UserProfile.Followers}" FontAttributes="Bold" />
+                                <Span Text=" читачів" />
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
@@ -132,7 +134,6 @@
                 </BindableLayout.ItemTemplate>
             </StackLayout>
 
-            <!--Recommendations-->
             <!--Recommendations-->
             <StackLayout IsVisible="{Binding IsRecommendationsVisible}"
                          Margin="0,17,0,0"
@@ -168,11 +169,6 @@
                                    HeightRequest="200">
                                 <StackLayout Orientation="Vertical">
                                     <Image HorizontalOptions="End" Source="close.png" />
-                                    <!--<Image Source="{Binding PhotoUrl}"
-                                                               WidthRequest="100"
-                                                               HeightRequest="100"
-                                                               Aspect="AspectFill"
-                                                               HorizontalOptions="Center" />-->
                                     <Image Source="{Binding PhotoUrl}"
                                            BackgroundColor="{StaticResource Gray}"
                                            WidthRequest="64"
@@ -194,7 +190,8 @@
                                     <Button Text="Читати"
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProfileViewModel}}, Path=FollowCommand}"
                                             CommandParameter="{Binding UserId}"
-                                            TextColor="White"
+                                            TextColor="{StaticResource White}"
+                                            BackgroundColor="{StaticResource MainColor}"
                                             FontSize="12"
                                             FontAttributes="Bold"
                                             WidthRequest="112"
@@ -207,19 +204,13 @@
                 </StackLayout>
             </ScrollView>
             <!--Posts-->
-            <StackLayout BindableLayout.ItemsSource="{Binding Posts}">
+            <StackLayout BindableLayout.ItemsSource="{Binding UserPosts}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <StackLayout Margin="24" Spacing="10">
                             <StackLayout Orientation="Horizontal" Spacing="10">
-                                <!-- <Image -->
-                                <!--     Source="{Binding AuthorProfileImage}" -->
-                                <!--     HeightRequest="40" -->
-                                <!--     WidthRequest="40" -->
-                                <!--     Aspect="AspectFill" -->
-                                <!--     VerticalOptions="Center" /> -->
                                 <Image
-                                    Source="https://img.freepik.com/free-photo/happy-man-restaurant-drinking-coffee_23-2148395383.jpg?w=2000"
+                                    Source="{Binding AuthorProfileImage}"
                                     BackgroundColor="{StaticResource Gray}"
                                     WidthRequest="34"
                                     Aspect="AspectFill"
@@ -267,6 +258,15 @@
                                 Text="{Binding PostContent}"
                                 FontSize="15"
                                 LineBreakMode="WordWrap" />
+
+                            <Frame Padding="0"
+                               HeightRequest="140"
+                               IsClippedToBounds="True"
+                               IsVisible="{Binding PostImage, Converter={StaticResource StringToVisibilityConverter}}"
+                               CornerRadius="14">
+                                <Image Source="{Binding PostImage}"
+                               Aspect="AspectFill"/>
+                            </Frame>
 
                             <Grid ColumnDefinitions="*,*,*,*,*">
                                 <StackLayout Orientation="Horizontal" Grid.Column="0">

@@ -15,4 +15,8 @@ public record UserData : User
     public int SubscriptionsCount { get; set; }
 
     public string? ImageUrl { get; set; }
+
+    public bool IsAuthorized { get; set; }
+
+    public bool IsSubscribed { get; set; }
 }

@@ -7,4 +7,5 @@ public record PaginationResponse<T>
     public int TotalCount { get; set; }
 
     public IList<T> Items { get; set; }
+    public string ToViewModel { get; set; }
 }

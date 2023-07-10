@@ -5,7 +5,7 @@ namespace Plitkarka.Models;
 
 public class Profile : ReactiveObject
 {
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
 
     [Reactive] public string Nickname { get; set; }
     
@@ -20,4 +20,8 @@ public class Profile : ReactiveObject
     [Reactive] public string Link { get; set; }
 
     [Reactive] public string PhotoUrl { get; set; }
+
+    [Reactive] public bool IsAuthorized { get; set; }
+
+    [Reactive] public bool IsSubscribed { get; set; }
 }

@@ -39,7 +39,7 @@
         </StackLayout>
         <!--Photo-->
         <StackLayout Margin="0,17,0,0">
-            <Image Source="{Binding PhotoUrl}"
+            <Image Source="{Binding Profile.PhotoUrl}"
                    BackgroundColor="{StaticResource Gray}"
                    WidthRequest="120"
                    Aspect="AspectFill"
@@ -51,7 +51,12 @@
                         RadiusY="60"/>
                 </Image.Clip>
             </Image>
+            <!--
+            Отже, Україна. Місце, де сало і красиві жінки не просто частина культури, але і символи країни, яка бореться, любить і живе з повною інтенсивністю, що вирізняє її з-поміж інших. Незабутній досвід, який лишає відбиток у вашому серці. Це - Тарас Дерденчук, і я був тут.
+            -->
 
+<!--https://www.youtube.com/watch?v=J8FRBYOFu2w
+            -->
         </StackLayout>
         <Label
                 HorizontalOptions="Center"

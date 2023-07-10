@@ -15,17 +15,20 @@ public class JsonServices
         }
     }
 
-    public static async Task<T> DeserializeFromFileAsync<T>(string fileName)
+    public static async Task<T> DeserializeFromFileAsync<T>(string filePath) where T : class
     {
-        string json;
-
-        using (StreamReader r = new StreamReader(fileName))
+        if (!File.Exists(filePath))
         {
-            json = await r.ReadToEndAsync();
-            r.Close();
+            // File does not exist, handle appropriately.
+            // Maybe return null, throw a specific exception, or create the file.
+            return null;
         }
 
-        return JsonConvert.DeserializeObject<T>(json);
+        using (StreamReader file = new StreamReader(filePath))
+        {
+            string content = await file.ReadToEndAsync();
+            return JsonConvert.DeserializeObject<T>(content);
+        }
     }
 
     public static async Task ClearFileAsync(string fileName)
