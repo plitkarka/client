@@ -9,8 +9,18 @@ namespace Plitkarka.Views;
 
 public partial class ProfilePage : ContentPage
 {
-    public ProfilePage()
+    private ProfileViewModel _viewModel;
+    public ProfilePage(ProfileViewModel viewModel)
     {
         InitializeComponent();
+        BindingContext = viewModel;
+        _viewModel = viewModel;
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        _viewModel.LoadPosts();
     }
 }

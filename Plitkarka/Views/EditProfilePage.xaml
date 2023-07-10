@@ -39,7 +39,7 @@
         </StackLayout>
         <!--Photo-->
         <StackLayout Margin="0,17,0,0">
-            <Image Source="{Binding PhotoUrl}"
+            <Image Source="{Binding Profile.PhotoUrl}"
                    BackgroundColor="{StaticResource Gray}"
                    WidthRequest="120"
                    Aspect="AspectFill"
@@ -50,8 +50,7 @@
                         RadiusX="60"
                         RadiusY="60"/>
                 </Image.Clip>
-            </Image>
-
+            </Image>  
         </StackLayout>
         <Label
                 HorizontalOptions="Center"

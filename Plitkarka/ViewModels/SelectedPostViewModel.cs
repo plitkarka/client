@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Reactive;
+using Plitkarka.Client.Interfaces;
 using Plitkarka.Infrastructure.Interfaces;
 using Plitkarka.Models;
 using ReactiveUI;
@@ -11,8 +12,10 @@ namespace Plitkarka.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly IMessagingService _messagingService;
+        private readonly IApiClient _apiClient;
 
         [Reactive] public Comment UsersComment { get; set; }
+
         [Reactive] public bool IsDataLoaded { get; set; }
 
         [Reactive] public Post Post { get; set; }
@@ -23,10 +26,11 @@ namespace Plitkarka.ViewModels
 
         public ReactiveCommand<Comment, Unit> LikeCommentCommand { get; }
 
-        public SelectedPostViewModel(INavigationService navigationService, IMessagingService messagingService)
+        public SelectedPostViewModel(INavigationService navigationService, IMessagingService messagingService, IApiClient apiClient)
         {
             _navigationService = navigationService;
             _messagingService = messagingService;
+            _apiClient = apiClient;
 
             Comments = new ObservableCollection<Comment>
             {

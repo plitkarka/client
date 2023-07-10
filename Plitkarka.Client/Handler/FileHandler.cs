@@ -1,4 +1,6 @@
-﻿namespace Plitkarka.Client.Handler;
+﻿using System.Reflection;
+
+namespace Plitkarka.Client.Handler;
 
 public class FileHandler
 {
@@ -6,7 +8,7 @@ public class FileHandler
 
     public static string GetTokenPairFileLocation() => FILE_FOLDER + @"\Files\tokenpair.json";
 
-    public static string GetHttpConfigFileLocation() => "httpclientconfig.json";
+    public static Stream GetHttpConfigFileLocation() => Assembly.GetExecutingAssembly().GetManifestResourceStream("Plitkarka.Client.httpclientconfig.json");
 
     public static string GetDeviceIdFileLocation() => FILE_FOLDER + @"\Files\deviceid.json";
 }

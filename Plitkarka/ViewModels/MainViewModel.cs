@@ -20,7 +20,6 @@ public class MainViewModel : ReactiveObject
         OpenLoginFormCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             await navigationService.NavigateToAsync(nameof(LoginPage));
-
         });
     }
 }

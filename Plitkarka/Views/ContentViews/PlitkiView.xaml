@@ -6,31 +6,6 @@
              xmlns:vm="clr-namespace:Plitkarka.ViewModels">
 
     <StackLayout>
-        <StackLayout
-            HorizontalOptions="Center"
-            VerticalOptions="CenterAndExpand">
-            <Label
-                IsVisible="{Binding Posts,
-                Source={RelativeSource AncestorType={x:Type vm:ProfileViewModel}},
-                Converter={StaticResource CollectionToVisibilityConverter}}"
-                Margin="0,150,0,0"
-                FontSize="15"
-                FontAttributes="Bold"
-                TextColor="{StaticResource MainColor}"
-                Text="Тут буде ваша перша плітка..." />
-            <Button
-                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProfileViewModel}}, Path=OpenCreatePostPageCommand}"
-                IsVisible="{Binding Posts,
-            Source={RelativeSource AncestorType={x:Type vm:ProfileViewModel}},
-            Converter={StaticResource CollectionToVisibilityConverter}}"
-                CornerRadius="8"
-                Padding="8,16"
-                Text="Створити плітку"
-                Margin="0,8,0,0"
-                FontAttributes="Bold"
-                FontFamily="12" />
-        </StackLayout>
-
         <StackLayout BindableLayout.ItemsSource="{Binding Posts}"
                      x:Name="PostList"
                      IsVisible="{Binding Posts, Source={RelativeSource AncestorType={x:Type vm:ProfileViewModel}}, Converter={StaticResource CollectionToVisibilityConverter}, ConverterParameter=Inverse}">
@@ -180,5 +155,29 @@
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </StackLayout>
+        <!--<StackLayout
+            HorizontalOptions="Center"
+            VerticalOptions="CenterAndExpand">
+            <Label
+                IsVisible="{Binding Posts,
+                Source={RelativeSource AncestorType={x:Type vm:ProfileViewModel}},
+                Converter={StaticResource CollectionToVisibilityConverter}}"
+                Margin="0,150,0,0"
+                FontSize="15"
+                FontAttributes="Bold"
+                TextColor="{StaticResource MainColor}"
+                Text="Тут буде ваша перша плітка..." />
+            <Button
+                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProfileViewModel}}, Path=OpenCreatePostPageCommand}"
+                IsVisible="{Binding Posts,
+            Source={RelativeSource AncestorType={x:Type vm:ProfileViewModel}},
+            Converter={StaticResource CollectionToVisibilityConverter}}"
+                CornerRadius="8"
+                Padding="8,16"
+                Text="Створити плітку"
+                Margin="0,8,0,0"
+                FontAttributes="Bold"
+                FontFamily="12" />
+        </StackLayout>-->
     </StackLayout>
 </ContentView>

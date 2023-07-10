@@ -5,6 +5,9 @@ using Plitkarka.Infrastructure.Interfaces;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Plitkarka.Infrastructure.Helpers;
+using Plitkarka.Client.Interfaces;
+using Plitkarka.Stores;
+using Plitkarka.Client.Models.User;
 
 namespace Plitkarka.ViewModels;
 
@@ -12,6 +15,8 @@ public class EditProfileViewModel : ReactiveObject
 {
     private readonly INavigationService _navigationService;
     private readonly IMessagingService _messagingService;
+    private readonly IApiClient _apiClient;
+    private UserStore _userStore;
 
     [Reactive] public Profile Profile { get; set; }
 
@@ -31,12 +36,15 @@ public class EditProfileViewModel : ReactiveObject
 
     public ReactiveCommand<Unit, Unit> EditProfilePhotoCommand { get; }
     
-    public EditProfileViewModel(INavigationService navigationService, IMessagingService messagingService)
+    public EditProfileViewModel(INavigationService navigationService, IMessagingService messagingService, IApiClient apiClient, UserStore userStore)
     {
         _navigationService = navigationService;
         _messagingService = messagingService;
+        _apiClient = apiClient;
 
-        _messagingService.Subscribe<ProfileViewModel, Profile>(this, "ProfileToChange", OnProfileReceived);
+        _userStore = userStore;
+
+        Profile = _userStore.CurrentProfile;
         
         SaveChangesCommand = ReactiveCommand.CreateFromTask(SaveChanges);
         
@@ -44,8 +52,6 @@ public class EditProfileViewModel : ReactiveObject
 
         EditProfilePhotoCommand = ReactiveCommand.CreateFromTask(EditProfilePhoto);
     }
-
-    private void OnProfileReceived(ProfileViewModel sender, Profile profile) => Profile = profile;
 
     private async Task SaveChanges()
     {
@@ -55,9 +61,15 @@ public class EditProfileViewModel : ReactiveObject
         Profile.Link = string.IsNullOrWhiteSpace(Link) ? Profile.Link : Link;
         Profile.PhotoUrl = string.IsNullOrWhiteSpace(PhotoUrl) ? Profile.PhotoUrl : PhotoUrl;
 
+        await new AsyncRequestBuilder(async () =>
+        {
+            var request = new UserUpdateProfile() { Login = Nickname, Name = Name, Description = Bio, Link = Link };
+            var user = await _apiClient.BaseApi.UserClient.UpdateUserProfileAsync(request);
+        }).ExecuteAsync();
+
         Name = Nickname = Bio = Link = string.Empty;
 
-        _messagingService.Send(this, "EditedProfile", Profile);
+        _userStore.CurrentProfile = Profile;
 
         await _navigationService.GoBackAsync();
     }
