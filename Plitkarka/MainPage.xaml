@@ -12,7 +12,8 @@
     </ContentPage.Behaviors>
 
     <StackLayout>
-        <Label Text="Почни пліткувати вже зараз!"
+        <Label Text="{Binding ConverterParameter=MainPageGreetingMessage,
+            Converter={StaticResource ResourcesValueConverter}}"
               FontAttributes="Bold"
               FontSize="24"
               TextColor="{StaticResource White}"

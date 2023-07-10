@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Reactive;
+using Plitkarka.Client.Interfaces;
+using Plitkarka.Infrastructure.Helpers;
 using Plitkarka.Infrastructure.Interfaces;
 using Plitkarka.Infrastructure.Services;
 using Plitkarka.Models;
 using Plitkarka.Views;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Plitkarka.Extensions;
 
 namespace Plitkarka.ViewModels;
 
@@ -14,79 +17,66 @@ public class FeedDashboardViewModel : ReactiveObject
 {
     private readonly INavigationService _navigationService;
     private readonly IMessagingService _messagingService;
+    private readonly IApiClient _apiClient;
     
     [Reactive] public ObservableCollection<Post> Posts { get; set; }
+
     public ReactiveCommand<Post, Unit> OpenSelectedPostCommand { get; }
     
     public ReactiveCommand<Post, Unit> LikePostCommand { get; }
 
-    public ReactiveCommand<Unit, Unit> OpenUsersProfileCommand { get; }
+    public ReactiveCommand<Post, Unit> OpenUsersProfileCommand { get; }
 
-    public FeedDashboardViewModel(INavigationService navigationService, IMessagingService messagingService)
+    public FeedDashboardViewModel(INavigationService navigationService, IMessagingService messagingService, IApiClient apiClient)
     {
         _navigationService = navigationService;
         _messagingService = messagingService;
+        _apiClient = apiClient;
 
-        Posts = new ObservableCollection<Post>
-        {
-            new()
-            {
-                AuthorProfileImage = "https://example.com/user1.jpg", AuthorName = "firefly.li",
-                PostDate = DateTime.Now,
-                PostContent =
-                    "Стрес на роботі може стати складним викликом для багатьох людей\n#стрес #робота #психологія",
-                LikesCount = 648, CommentsCount = 34, ReplitsCount = 87, SavesCount = 93, SharesCount = 4
-            },
-            new()
-            {
-                AuthorProfileImage = "https://example.com/user2.jpg", AuthorName = "art_genius",
-                PostDate = DateTime.Now,
-                PostContent =
-                    "Крута стаття \"5 Creative Color Combinations for Your Next Design Project\" - допоможе вибрати комбінації кольорів для дизайну\n#colordesign #designprinciples #negativespace",
-                LikesCount = 10, CommentsCount = 5, ReplitsCount = 4, SavesCount = 2, SharesCount = 1
-            },
-            new()
-            {
-                AuthorProfileImage = "https://example.com/user3.jpg", AuthorName = "alla.kurilenko",
-                PostDate = DateTime.Now,
-                PostContent =
-                    "Нова річ у моєму житті - відкрила для себе йогу! Це така потрібна практика для зняття стресу та підвищення концентрації. А ще знайшла чудову студію з чайним баром, де можна розслабитись після тренування. Рекомендую всім спробувати!\n#yoga #wellness",
-                CommentsCount = 500, LikesCount = 20000, ReplitsCount = 450, SavesCount = 200, SharesCount = 100
-            },
-             new()
-            {
-                AuthorProfileImage = "https://example.com/user3.jpg", AuthorName = "alla.kurilenko",
-                PostDate = DateTime.Now,
-                PostContent =
-                    "This is just an example of post",
-                CommentsCount = 10, LikesCount = 10443, ReplitsCount = 22, SavesCount = 33, SharesCount = 12
-            }
-        };
-
-        _messagingService.Subscribe<FeedDashboardViewModel, Post>(this, "NewPost", OnNewPostReceived);
+        Posts = new ObservableCollection<Post>();
+        Init();
 
         OpenSelectedPostCommand = ReactiveCommand.CreateFromTask<Post>(OpenSelectedPost);
         
-        LikePostCommand = ReactiveCommand.Create<Post>(LikePost);
+        LikePostCommand = ReactiveCommand.CreateFromTask<Post>(LikePost);
 
-        OpenUsersProfileCommand = ReactiveCommand.CreateFromTask(OpenUsersProfile);
+        OpenUsersProfileCommand = ReactiveCommand.CreateFromTask<Post>(OpenUsersProfile);
     }
 
-    private async Task OpenUsersProfile()
+    private async void Init()
     {
-        await _navigationService.NavigateToAsync(nameof(UserProfilePage));
+        await new AsyncRequestBuilder(async () =>
+        {
+            var feed = await _apiClient.BaseApi.PostClient.GetFeedAsync();
+            if (feed == null) return;
+            foreach (var post in feed.Items)
+            {
+                Posts.Add(post.ToViewModel());
+            }
+        }).ExecuteAsync();
     }
 
-    private void LikePost(Post post)
+    private async Task OpenUsersProfile(Post post)
+    {
+        await new AsyncRequestBuilder(async () =>
+        {
+            var user = await _apiClient.BaseApi.UserClient.GetByIdAsync(post.UserId);
+            _messagingService.Send(this, "UsersProfile", user.ToViewModel());
+            await _navigationService.NavigateToAsync(nameof(UserProfilePage));
+        }).ExecuteAsync();
+    }
+
+    private async Task LikePost(Post post)
     {
         post.IsLiked = !post.IsLiked;
         post.LikesCount += (post.IsLiked ? 1 : -1);
-    }
-
-    private void OnNewPostReceived(FeedDashboardViewModel sender, Post post)
-    {
-        Posts.Add(post);
-        Posts = new ObservableCollection<Post>(Posts.OrderByDescending(p => p.PostDate));
+        await new AsyncRequestBuilder(async () =>
+        {
+            if (post.IsLiked)
+                await _apiClient.BaseApi.PostClient.CreatePostLikeAsync(post.Id);
+            else
+                await _apiClient.BaseApi.PostClient.DeletePostLikeAsync(post.Id);
+        }).ExecuteAsync();
     }
 
     private async Task OpenSelectedPost(Post post)

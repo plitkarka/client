@@ -1,14 +1,14 @@
-﻿using System;
-using System.Reactive;
+﻿using System.Reactive;
+using Plitkarka.Client.Interfaces;
+using Plitkarka.Client.Models.Post;
+using Plitkarka.Extensions;
 using Plitkarka.Infrastructure.Helpers;
 using Plitkarka.Infrastructure.Interfaces;
-using Plitkarka.Infrastructure.Services;
 using Plitkarka.Models;
 using Plitkarka.Stores;
 using Plitkarka.Views;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
-using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
 
 namespace Plitkarka.ViewModels
@@ -17,7 +17,10 @@ namespace Plitkarka.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly IMessagingService _messagingService;
+        private readonly IApiClient _apiClient;
         private readonly UserStore _userStore;
+        private readonly PostStore _postStore;
+
         [Reactive] public string PostImage { get; set; }
         
         [Reactive] public Profile Profile { get; set; }
@@ -30,11 +33,13 @@ namespace Plitkarka.ViewModels
 
         public ReactiveCommand<Unit, Unit> AddImageCommand { get; set; }
 
-        public CreatePostViewModel(INavigationService navigationService, IMessagingService messagingService, UserStore userStore)
+        public CreatePostViewModel(INavigationService navigationService, IMessagingService messagingService, IApiClient apiClient, UserStore userStore, PostStore postStore)
         {
             _navigationService = navigationService;
             _messagingService = messagingService;
+            _apiClient = apiClient;
             _userStore = userStore;
+            _postStore = postStore;
 
             Profile = _userStore.CurrentProfile;
 
@@ -75,10 +80,11 @@ namespace Plitkarka.ViewModels
             .HandleException<OperationCanceledException>(e => Console.WriteLine(e.Message))
             .ExecuteAsync();
         }
-        
+
         private async Task AddNewPost()
         {
             var newPost = new Post();
+            newPost.UserId = Profile.UserId;
             newPost.AuthorName = Profile.Nickname;
             newPost.AuthorProfileImage = Profile.PhotoUrl;
             newPost.PostDate = DateTime.Now;
@@ -90,12 +96,18 @@ namespace Plitkarka.ViewModels
             newPost.SharesCount = 0;
             newPost.PostImage = PostImage;
 
-            Content = PostImage = string.Empty;
+            var serverPost = newPost.ToServerModel();
+            await new AsyncRequestBuilder(async () =>
+            {
+                var request = new CreatePostRequest() { TextContent = serverPost.TextContent };
+                var post = await _apiClient.BaseApi.PostClient.CreatePostAsync(request);
+            }).ExecuteAsync();
 
-            _messagingService.Send(this, "NewPost", newPost);
+            _postStore.CurrentPost = newPost;
+
+            Content = PostImage = string.Empty;
 
             await _navigationService.NavigateToAsync(nameof(FeedDashboard));
         }
     }
 }
-

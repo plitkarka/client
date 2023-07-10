@@ -1,25 +1,25 @@
 using System.Reactive;
-using System.Resources;
 using ReactiveUI;
-using Plitkarka.Infrastructure.StringResources;
 using Plitkarka.Views;
 using ReactiveUI.Fody.Helpers;
 using Plitkarka.Infrastructure.Interfaces;
-using ReactiveUI.Fody.Helpers;
-using Plitkarka.Infrastructure.Interfaces;
-using Plitkarka.Infrastructure.Helpers;
 
 using Validator = Plitkarka.Infrastructure.Helpers.ValidationHelper;
+using Plitkarka.Client.Interfaces;
+using Plitkarka.Infrastructure.Helpers;
+using Plitkarka.Client.Models.Authorization;
+using Plitkarka.Stores;
+using Plitkarka.Extensions;
 
 namespace Plitkarka.ViewModels;
 
 public class RegistrationViewModel : ReactiveObject
 {
     private readonly INavigationService _navigationService;
+    private readonly IApiClient _apiClient;
+    private UserStore _userStore;
 
     [Reactive] public string Name { get; set; }
-
-    [Reactive] public string Surname { get; set; }
 
     [Reactive] public DateTime BirthDate { get; set; }
 
@@ -33,56 +33,38 @@ public class RegistrationViewModel : ReactiveObject
 
     [Reactive] public string ErrorText { get; set; }
 
-    public ReactiveCommand<Unit, Task> RegisterCommand { get; }
+    public ReactiveCommand<Unit, Unit> RegisterCommand { get; }
     
     [Reactive] public bool IsValid { get; set; }
     
     public ReactiveCommand<Unit, Unit> GoBackCommand { get; }
 
-    public RegistrationViewModel(INavigationService navigationService)
-
+    public RegistrationViewModel(INavigationService navigationService, IApiClient apiClient, UserStore userStore)
     {
         _navigationService = navigationService;
+        _apiClient = apiClient;
+        _userStore = userStore;
 
-        this.WhenAnyValue(vm => vm.Email)
-                .Subscribe(email =>
-                {
-                    if (!string.IsNullOrWhiteSpace(email) && !Validator.IsEmailValid(email))
-                        ErrorText = "Invalid email";
-                });
-
-        this.WhenAnyValue(vm => vm.Password)
-            .Subscribe(password =>
-            {
-                if (!string.IsNullOrWhiteSpace(password) && !Validator.IsPasswordValid(password))
-                    ErrorText = "Invalid password";
-            });
-
-        RegisterCommand = ReactiveCommand.Create(async () =>
-        {
-            //var validationRules = new Dictionary<string, Func<bool>>
-            //{
-            //    { nameof(Email), () => ValidationHelper.IsEmailValid(Email) },
-            //    { nameof(Password), () => ValidationHelper.IsPasswordValid(Password) },
-            //    { nameof(ConfirmPassword), () => ValidationHelper.IsPasswordConfirmed(Password, ConfirmPassword) }
-            //};
-
-            //foreach (var rule in validationRules)
-            //{
-            //    if (!rule.Value())
-            //    {
-            //        ErrorText = Strings.ResourceManager.GetString("Invalid" + rule.Key);
-            //        IsValid = false;
-            //        return;
-            //    }
-            //}
-
-            IsValid = true;
-
-            await _navigationService.NavigateToTabAsync(nameof(HomePage));
-        });
+        RegisterCommand = ReactiveCommand.CreateFromTask(Register);
 
         GoBackCommand = ReactiveCommand.CreateFromTask(GoBack);
+    }
+
+    private async Task Register()
+    {
+        await new AsyncRequestBuilder(async () =>
+        {
+            Console.WriteLine(Nickname);
+            //var request = new SignUpRequest() { Email = Email, Login = Nickname, Name = "Тарас Дерденчук", Password = "123", RepeatPassword = "123", BirthDate = DateTime.Now };
+            //var auth = await _apiClient.BaseApi.AuthClient.SignUpAsync(request);
+            var confirm = await _apiClient.BaseApi.AuthClient.VerifyEmailAsync(new VerifyEmailRequest() { Email = "Mrdurden@gmail.com", EmailCode = "189901" });
+            var user = await _apiClient.BaseApi.UserClient.GetByIdAsync();
+            _userStore.CurrentProfile = user.ToViewModel();
+        }).ExecuteAsync();
+
+        IsValid = true;
+
+        await _navigationService.NavigateToAsync(nameof(FeedDashboard));
     }
 
     private async Task GoBack()

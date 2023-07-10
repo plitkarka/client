@@ -50,7 +50,7 @@
                 </Border.StrokeShape>
                  <Entry BackgroundColor="{StaticResource MainColor}"
                         PlaceholderColor="{StaticResource MainColorSemi}"
-                        Text="{Binding Name, Mode=TwoWay}"
+                        Text="{Binding Nickname, Mode=TwoWay}"
                         Margin="1"
                         TextColor="{StaticResource White}"
                         Placeholder="Твоє ім'я"/>
