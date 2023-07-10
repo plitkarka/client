@@ -22,6 +22,8 @@
             <converters:RandomImageConverter x:Key="RandomImageConverter"/>
             <converters:RandomTextConverter x:Key="RandomTextConverter"/>
             <converters:SavedPostsConverter x:Key="SavedPostsConverter"/>
+            <converters:ResourcesValueConverter x:Key="ResourcesValueConverter"/>
+            <converters:TextToSubscriptionConverter x:Key="TextToSubscriptionConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

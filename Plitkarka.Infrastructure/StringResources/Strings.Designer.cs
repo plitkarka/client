@@ -110,5 +110,14 @@ namespace Plitkarka.Infrastructure.StringResources {
                 return ResourceManager.GetString("InvalidSurname", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Почни пліткувати вже зараз!.
+        /// </summary>
+        internal static string MainPageGreetingMessage {
+            get {
+                return ResourceManager.GetString("MainPageGreetingMessage", resourceCulture);
+            }
+        }
     }
 }

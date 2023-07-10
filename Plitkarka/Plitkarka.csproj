@@ -61,6 +61,7 @@
 		<MauiImage Update="Resources\Images\tab_addpost.svg" BaseSize="28,28" />
 		<MauiImage Update="Resources\Images\tab_profile.svg" BaseSize="28,28" />
 		<MauiImage Update="Resources\Images\tab_chats.svg" BaseSize="28,28" />
+		<MauiImage Update="Resources\Images\tab_createpost.svg" BaseSize="28,28" />
 		<MauiImage Update="Resources\Images\edit.svg" BaseSize="21,21" />
 		<MauiImage Update="Resources\Images\mascot_in_development1.svg" BaseSize="300,350" />
 		<MauiImage Update="Resources\Images\mascot_in_development2.svg" BaseSize="370,140" />
@@ -79,6 +80,8 @@
 		<PackageReference Include="ReactiveUI.Maui" Version="18.4.22" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.1.0" />
 		<PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Resources\Images\settings.svg" />
@@ -102,6 +105,7 @@
 		<None Remove="Resources\Images\save %28copy%29.svg" />
 		<None Remove="Resources\Images\mascot_emptypost %28copy%29.svg" />
 		<None Remove="Stores\" />
+		<None Remove="Extensions\" />
 	</ItemGroup>
 	<ItemGroup>
 		<BundleResource Include="Resources\Images\new_releases.svg" />
@@ -151,9 +155,11 @@
 	<ItemGroup>
 		<Folder Include="Views\ContentViews\" />
 		<Folder Include="Stores\" />
+		<Folder Include="Extensions\" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Plitkarka.Infrastructure\Plitkarka.Infrastructure.csproj" />
+		<ProjectReference Include="..\Plitkarka.Client\Plitkarka.Client.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 	  <MauiSplashScreen Include="Resources\Splash\splash.svg" />

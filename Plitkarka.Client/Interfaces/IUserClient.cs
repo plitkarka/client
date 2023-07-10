@@ -12,7 +12,7 @@ public interface IUserClient
 
     Task<PaginationResponse<UserPreview>> GetAllAsync(PaginationTextRequest? request = null);
 
-    Task<UserData> GetByIdAsync(Guid id);
+    Task<UserData> GetByIdAsync(Guid id = default);
 
     Task<UserData> UpdateUserProfileAsync(UserUpdateProfile request);
 }

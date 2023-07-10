@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Reactive;
+using Plitkarka.Client.Interfaces;
+using Plitkarka.Client.Models;
+using Plitkarka.Infrastructure.Helpers;
 using Plitkarka.Models;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -31,10 +34,10 @@ namespace Plitkarka.ViewModels
                 new(){RecommendationTag="#Ukraine", Amount=113200}
             };
 
-            SearchCommand = ReactiveCommand.Create<string>(Search);
+            SearchCommand = ReactiveCommand.CreateFromTask<string>(Search);
         }
 
-        private void Search(string searchRequest)
+        private async Task Search(string searchRequest)
         {
             if (!string.IsNullOrEmpty(searchRequest))
             {

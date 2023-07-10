@@ -30,25 +30,33 @@
             Margin="16,25"
             FontSize="14"
             Text="Недавніх запитів на плітки немає" />
-        <!--<ListView
-            Margin="16"
-            IsVisible="{Binding IsSearchRequestsVisible}"
-            ItemsSource="{Binding SearchRequests}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Label FontSize="14" Margin="0,8" Text="{Binding}" />
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>-->
         <StackLayout  
             Margin="16"
             IsVisible="{Binding IsSearchRequestsVisible}"
             BindableLayout.ItemsSource="{Binding SearchRequests}">
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
-                    <Label FontSize="14" Margin="0,8" Text="{Binding}" />
+                    <StackLayout Orientation="Horizontal" BindableLayout.ItemsSource="{Binding UserSearchRequests}">
+                         <Image Source="{Binding PhotoUrl}"
+                                IsVisible="{Binding PhotoUrl,Converter={StaticResource StringToVisibilityConverter}}"
+                                       BackgroundColor="{StaticResource Gray}"
+                                       WidthRequest="34"
+                                       Aspect="AspectFill"
+                                VerticalOptions="Center"
+                                Margin="8,0"
+                                       HeightRequest="34">
+                                    <Image.Clip>
+                                        <EllipseGeometry
+                                            Center="17,17"
+                                            RadiusX="17"
+                                            RadiusY="17"/>
+                                    </Image.Clip>
+                                </Image>
+                             <Label FontSize="14" Margin="0,8"
+                                VerticalOptions="Center"
+
+                                     Text="{Binding Nickname}" />
+                    </StackLayout>
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </StackLayout>

@@ -5,6 +5,8 @@ namespace Plitkarka.Models;
 
 public class Post : ReactiveObject
 {
+    public Guid Id { get; set; }
+    public Guid UserId { get; set; }
     public string AuthorProfileImage { get; set; }
     public string AuthorName { get; set; }
     public DateTime PostDate { get; set; }

@@ -24,7 +24,7 @@ public class UserClient : MyHttpClient, IUserClient
         return await PostRequest<IdResponse>(UserHandler.SendUserImage(), content);
     }
 
-    public async Task<StringResponse> GetImageUrlByUserIdAsync(Guid id)
+    public async Task<StringResponse> GetImageUrlByUserIdAsync(Guid id = default)
     {
         return await GetRequest<StringResponse>(UserHandler.GetUserImageById(id));
     }
